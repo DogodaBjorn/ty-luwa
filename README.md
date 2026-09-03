@@ -20,6 +20,7 @@ public/                    de gebouwde site (Vite-output)
   index.html
   assets/                  gehashte js/css + foto's en brandmateriaal
 docs/AZURE-SETUP.md        Azure, DNS bij Strato, TLS, deployment, boekingsadmin
+docs/MEERTALIGHEID.md      drie domeinen / vier talen: doelopzet, slugs, wat de bron moet doen
 .github/workflows/         deploy naar Azure bij push op main
 ```
 
@@ -74,9 +75,23 @@ TrainerBjörn-site doet — werkt ook voor crawlers die geen JavaScript uitvoere
 reden om er de voorkeur aan te geven. Of client-side in React, wat eenvoudiger is maar
 afhankelijk van rendering door de crawler.
 
-### 4. Boekingsadmin
+Dit wacht op de definitieve URL-structuur: canonical, `hreflang` en sitemap verwijzen
+allemaal naar de slugs, en die veranderen nog. Zie punt 4.
 
-Zie `docs/AZURE-SETUP.md` §7.
+### 4. Taal per domein op de root, met vertaalde slugs
+
+De afgesproken eindvorm — `ty-luwa.com/accommodation` in plaats van
+`ty-luwa.com/en/verblijf`, en een taalwisselaar die naar het domein van die taal springt —
+vergt een wijziging in de Vite-broncode, niet in de server. Volledige specificatie, inclusief
+de voorgestelde slugtabel en wat er precies in de bron moet veranderen:
+[`docs/MEERTALIGHEID.md`](docs/MEERTALIGHEID.md).
+
+Geblokkeerd door punt 1: zonder de broncode in deze repo is dit niet te bouwen.
+
+### 5. Boekingsadmin
+
+Zie `docs/AZURE-SETUP.md` §7 en `docs/MEERTALIGHEID.md` §5 (één gedeelde database, één
+Nederlandstalige beheertool).
 
 ## Opruimen in de DoGoDa-repo
 

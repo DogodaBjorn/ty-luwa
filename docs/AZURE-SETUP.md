@@ -130,6 +130,12 @@ hebben — dat werkt hieronder exact hetzelfde als bij een canoniek domein. Wat 
 alleen wélke URL elk domein uiteindelijk toont; zie **De taal-redirect** aan het eind van
 deze sectie.
 
+> **Dit is een tussenstand.** De taal staat nu nog in de URL (`ty-luwa.com/en/verblijf`).
+> De afgesproken eindvorm is de taal op de root met vertaalde slugs
+> (`ty-luwa.com/accommodation`), en dat vergt een wijziging in de Vite-broncode die nog niet
+> in deze repo staat. De volledige specificatie staat in [`MEERTALIGHEID.md`](MEERTALIGHEID.md).
+> De DNS- en TLS-stappen hieronder blijven ongewijzigd geldig.
+
 ### Per domein in Azure
 
 Web App → **Custom domains → Add custom domain**. Voer het domein in; Azure toont dan twee

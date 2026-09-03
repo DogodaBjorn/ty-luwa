@@ -11,34 +11,46 @@ app.set("trust proxy", true);
 
 const PUBLIC_DIR = path.join(__dirname, "public");
 
-// Ty LuWa runs on three domains (ty-luwa.com, ty-luwa.fr, ty-luwa.nl). Serving
-// the same pages on all three splits the search ranking three ways, so one is
-// canonical and the other two redirect. Set CANONICAL_HOST in the App Service
-// configuration; leave it unset locally and no redirect happens.
-const CANONICAL_HOST = process.env.CANONICAL_HOST || "";
+// Ty LuWa runs on three ccTLDs, each the home for one language: ty-luwa.nl is
+// Dutch (unprefixed — the SPA's own default), ty-luwa.fr is French, ty-luwa.com
+// is English. German has no domain of its own; it stays reachable as a path
+// under any of them (ty-luwa.com/de/..., as agreed). This is a deliberate
+// per-country strategy, not a placeholder — do not collapse it back to a
+// single canonical host.
+//
+// The site is a client-side SPA (React Router reads the URL the browser
+// actually navigated to), so the only way to make a bare domain default to a
+// language is a redirect that adds the prefix — there is no server-side
+// rewrite that a client router would ever see.
+const DOMAIN_DEFAULT_LANG_PREFIX = {
+  "ty-luwa.nl": "",
+  "ty-luwa.fr": "/fr",
+  "ty-luwa.com": "/en",
+};
 
-// Deliberately an allowlist, not "redirect everything that is not canonical".
-// Azure's platform probes, the azurewebsites.net hostname and local requests
-// all arrive with a host this app never advertises; bouncing those to the
-// public domain can make App Service read the instance as unhealthy. Override
-// with REDIRECT_DOMAINS (comma-separated) if a domain is ever added.
-const REDIRECT_DOMAINS = (process.env.REDIRECT_DOMAINS ||
-  "ty-luwa.com,ty-luwa.fr,ty-luwa.nl")
-  .split(",")
-  .map((d) => d.trim().toLowerCase())
-  .filter(Boolean);
+const LANG_PREFIXED_PATH = /^\/(en|de|fr)(\/|$)/;
 
-if (CANONICAL_HOST) {
-  app.use((req, res, next) => {
-    const host = (req.headers.host || "").toLowerCase().split(":")[0];
-    if (!host || host === CANONICAL_HOST.toLowerCase()) return next();
-    const isOurs = REDIRECT_DOMAINS.some(
-      (d) => host === d || host.endsWith(`.${d}`)
-    );
-    if (!isOurs) return next();
-    return res.redirect(301, `https://${CANONICAL_HOST}${req.originalUrl}`);
-  });
-}
+app.use((req, res, next) => {
+  const rawHost = (req.headers.host || "").toLowerCase().split(":")[0];
+  const apex = rawHost.startsWith("www.") ? rawHost.slice(4) : rawHost;
+  const defaultLangPrefix = DOMAIN_DEFAULT_LANG_PREFIX[apex];
+
+  // Anything not one of our three domains — Azure's platform probes, the
+  // azurewebsites.net hostname, an IP, localhost — is left alone. Redirecting
+  // those can make App Service read the instance as unhealthy.
+  if (defaultLangPrefix === undefined) return next();
+
+  const needsWwwStrip = rawHost !== apex;
+  const needsLangPrefix =
+    defaultLangPrefix !== "" && !LANG_PREFIXED_PATH.test(req.path);
+  if (!needsWwwStrip && !needsLangPrefix) return next();
+
+  const newPath = needsLangPrefix
+    ? defaultLangPrefix + (req.path === "/" ? "/" : req.path)
+    : req.path;
+  const query = req.originalUrl.slice(req.path.length);
+  return res.redirect(301, `https://${apex}${newPath}${query}`);
+});
 
 // Liveness probe. Kept above the static handler so it never touches disk.
 app.get("/healthz", (req, res) => res.type("text/plain").send("ok"));

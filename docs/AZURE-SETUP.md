@@ -79,11 +79,11 @@ node Server.js
 
 ## 4. Applicatie-instellingen
 
-**Configuration → Application settings**, voeg toe:
+Niets verplicht hier voor de site zelf — de taal-per-domein-redirect (§6) staat vast in
+`Server.js`, geen Application setting nodig. Eén optionele:
 
 | Naam | Waarde | Waarom |
 |---|---|---|
-| `CANONICAL_HOST` | `www.ty-luwa.com` | Stuurt `.fr` en `.nl` door naar één adres. Zie §6. Laat dit leeg tot alle domeinen geverifieerd zijn en TLS actief is. |
 | `WEBSITE_RUN_FROM_PACKAGE` | `1` | Alleen als je zonder GitHub Actions deployt. Bij de workflow hieronder niet nodig. |
 
 `PORT` zet je **niet** zelf — App Service injecteert die.
@@ -118,11 +118,17 @@ er weer twee tegelijk.
 
 ## 6. De drie Strato-domeinen koppelen
 
-Je hebt `ty-luwa.com`, `ty-luwa.fr` en `ty-luwa.nl`. **Kies er één als het echte adres.**
-Alle drie dezelfde site laten serveren splitst je vindbaarheid in drieën en Google kiest
-dan zelf welke versie telt. Advies: **`www.ty-luwa.com`** als canoniek — de site is
-viertalig (NL/EN/DE/FR) en spreekt gasten uit meerdere landen aan, dus een landspecifieke
-extensie werkt tegen je. `.fr` en `.nl` houd je als doorverwijzers en als merkbescherming.
+Je hebt `ty-luwa.com`, `ty-luwa.fr` en `ty-luwa.nl` en wilt elk domein de eigen taalpagina's
+laten tonen: `ty-luwa.nl` toont Nederlands, `ty-luwa.fr` toont Frans, `ty-luwa.com` toont
+Engels. Duits heeft geen eigen domein — dat blijft bereikbaar als pad onder elk van de drie
+(`ty-luwa.com/de/...`, maar ook `ty-luwa.nl/de/...`), precies zoals de site het al aankan.
+Dit is bewust drie ccTLD's met elk hun eigen taal, geen canoniek-domein-plus-doorverwijzers
+zoals een eerdere versie van dit document voorstelde.
+
+Alle zes de hostnamen (apex + `www` van elk domein) moeten op de App Service staan en TLS
+hebben — dat werkt hieronder exact hetzelfde als bij een canoniek domein. Wat verschilt is
+alleen wélke URL elk domein uiteindelijk toont; zie **De taal-redirect** aan het eind van
+deze sectie.
 
 ### Per domein in Azure
 
@@ -168,13 +174,27 @@ Zodra een domein in Custom domains groen staat: klik het aan → **Add binding**
 Doe dit voor alle zes de namen. Een managed certificate kan geen wildcard, dus apex en
 `www` krijgen elk hun eigen certificaat — dat is prima.
 
-### De doorverwijzing
+### De taal-redirect
 
-Als alle zes de namen op de App Service staan en TLS overal actief is, zet je
-`CANONICAL_HOST=www.ty-luwa.com` in de Application settings. `Server.js` stuurt dan alles
-wat op `.fr`, `.nl` of `ty-luwa.com` zonder `www` binnenkomt met een 301 door naar het
-canonieke adres. Het `azurewebsites.net`-adres wordt bewust niet doorgestuurd, zodat je
-altijd een directe ingang houdt om te testen.
+Dit staat vast in `Server.js` (`DOMAIN_DEFAULT_LANG_PREFIX`), niet in een Application
+setting — geen configuratiestap nodig, het werkt zodra de domeinen en TLS staan:
+
+| Binnenkomend | Resultaat |
+|---|---|
+| `ty-luwa.nl/verblijf` | 200, toont direct (Nederlands is de taal zonder prefix in de site zelf) |
+| `www.ty-luwa.nl/*` | 301 → `ty-luwa.nl/*` (www eraf) |
+| `ty-luwa.fr/verblijf` | 301 → `ty-luwa.fr/fr/verblijf` |
+| `www.ty-luwa.fr/*` | 301 → `ty-luwa.fr/fr/*` (www eraf én taal erbij, in één stap) |
+| `ty-luwa.com/verblijf` | 301 → `ty-luwa.com/en/verblijf` |
+| `www.ty-luwa.com/*` | 301 → `ty-luwa.com/en/*` |
+| `ty-luwa.com/de/verblijf` | 200, toont direct — Duits via het pad, op elk van de drie domeinen |
+| onbekende host (`azurewebsites.net`, Azure-probes, een IP) | nooit doorgestuurd |
+
+De reden dat dit een redirect moet zijn en geen server-side rewrite: de site is een
+client-side SPA, React Router leest de URL die in de browser staat. De server kan intern
+een pad herschrijven zonder dat de browser het merkt, maar dat verandert niets aan wat de
+router in de browser ziet — dus de enige manier om een kaal domein een taal te laten tonen
+is de browser echt naar `/fr/...` of `/en/...` sturen.
 
 ---
 

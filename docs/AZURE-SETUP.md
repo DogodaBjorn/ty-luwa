@@ -92,37 +92,27 @@ node Server.js
 
 ## 5. Deployment vanaf GitHub
 
-Twee routes. De eerste is het minste werk.
+Gekozen: **continuous deployment aangezet in de creation wizard** (het "Deployment"-tabblad
+bij het aanmaken van de Web App), niet een los workflow-bestand in deze repo. Azure heeft
+daar zelf de GitHub-koppeling, de app-registratie, de federated credential (OIDC) en een
+workflow-bestand voor aangemaakt en naar `main` gepusht. Er staat daarom **geen**
+`.github/workflows/`-bestand in deze repo — dat zou een tweede, botsende deploy geven bij
+elke push. Dit is dezelfde route als DoGoDa gebruikt.
 
-### Route A — Deployment Center (aanbevolen, zo deed je DoGoDa)
+Controleren of het goed staat:
 
-Web App → **Deployment Center** → Source: **GitHub** → autoriseer → kies
-organisatie `DogodaBjorn`, repository `ty-luwa`, branch `main` → Authentication type:
-**User-assigned identity** (OIDC) → **Save**.
+- Web App → **Deployment Center** toont de koppeling met `DogodaBjorn/ty-luwa`, branch `main`,
+  en de laatste deployment-status.
+- In de repo staat het door Azure gegenereerde workflow-bestand onder `.github/workflows/`
+  op `main` (niet op deze feature-branch — dat komt pas binnen zodra deze PR gemerged is).
+- **Gebruik geen publish profile als je dit ooit handmatig overzet.** Basic authentication
+  staat op nieuwe App Services standaard uit en dat is terecht — een publish profile is een
+  langlevend wachtwoord in een secret. OIDC heeft geen wachtwoord dat kan lekken.
 
-Azure maakt dan zelf de app-registratie, de federated credential, de repository-secrets én
-een workflow-bestand aan. **Verwijder in dat geval `.github/workflows/main_app-tyluwa-prod.yml`
-uit deze repo**, anders deployen er twee workflows tegelijk.
-
-### Route B — de workflow in deze repo gebruiken
-
-De meegeleverde workflow verwacht drie repository-secrets. Aanmaken:
-
-1. Azure Portal → **Microsoft Entra ID → App registrations → New registration**, naam
-   `gh-tyluwa-deploy`. Noteer de **Application (client) ID** en de **Directory (tenant) ID**.
-2. Bij die registratie → **Certificates & secrets → Federated credentials → Add credential**:
-   - Scenario: **GitHub Actions deploying Azure resources**
-   - Organization: `DogodaBjorn` · Repository: `ty-luwa` · Entity type: **Branch** · Branch: `main`
-3. Web App → **Access control (IAM) → Add role assignment** → rol **Website Contributor**
-   (of **Contributor**) → toewijzen aan `gh-tyluwa-deploy`.
-4. GitHub → repo **Settings → Secrets and variables → Actions → New repository secret**:
-   `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_SUBSCRIPTION_ID`.
-
-Push naar `main` deployt vanaf dat moment automatisch.
-
-> Gebruik geen publish profile. Basic authentication staat op nieuwe App Services standaard
-> uit en dat is terecht — een publish profile is een langlevend wachtwoord in een secret.
-> OIDC heeft geen wachtwoord dat kan lekken.
+Wil je later toch naar een handmatig workflow-bestand in de repo (bijvoorbeeld om build-stappen
+toe te voegen die de Azure-gegenereerde workflow niet doet), verwijder dan eerst de koppeling
+in Deployment Center voordat je zelf een `.github/workflows/*.yml` toevoegt — anders deployen
+er weer twee tegelijk.
 
 ---
 

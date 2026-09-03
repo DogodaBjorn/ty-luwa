@@ -1,0 +1,1034 @@
+{
+  "nl": {
+    "titles": {
+      "/": "Ty LuWa · Le Conguel, Quiberon",
+      "/verblijf": "Het verblijf · Ty LuWa",
+      "/le-conguel": "Camping Le Conguel · Ty LuWa",
+      "/quiberon": "Quiberon & Bretagne · Ty LuWa",
+      "/beschikbaarheid": "Beschikbaarheid op aanvraag · Ty LuWa",
+      "/faq": "Veelgestelde vragen · Ty LuWa",
+      "/contact": "Contact · Ty LuWa"
+    },
+    "layout": {
+      "nav": [
+        [
+          "/",
+          "Home"
+        ],
+        [
+          "/verblijf",
+          "Het verblijf"
+        ],
+        [
+          "/le-conguel",
+          "Le Conguel"
+        ],
+        [
+          "/quiberon",
+          "Quiberon"
+        ],
+        [
+          "/beschikbaarheid",
+          "Beschikbaarheid"
+        ]
+      ],
+      "cta": "Informeer naar beschikbaarheid",
+      "ctaShort": "Informeer",
+      "mobileBar": "Beschikbaar op aanvraag",
+      "menuAria": "Menu openen of sluiten",
+      "navAria": "Hoofdnavigatie",
+      "footerNavAria": "Footernavigatie",
+      "skipLink": "Direct naar inhoud",
+      "fineprint": "Ty LuWa is een particulier vakantieverblijf op Camping Le Conguel. De camping wordt niet door Ty LuWa beheerd."
+    },
+    "home": {
+      "heroTitlePre": "Een comfortabel vakantieplekje aan de ",
+      "heroTitleEm": "Bretonse kust",
+      "heroTitlePost": ".",
+      "heroBody": "Ruimte om buiten te leven, een complete mobil-home voor maximaal 6 personen en de voorzieningen van Le Conguel binnen handbereik.",
+      "heroCtaSecondary": "Ontdek Ty LuWa",
+      "facts": [
+        {
+          "title": "Max. 6 personen",
+          "sub": "2 slaapkamers + slaapbank"
+        },
+        {
+          "title": "Ruime veranda",
+          "sub": "Overdekt buitenleven"
+        },
+        {
+          "title": "Complete keuken",
+          "sub": "Oven · magnetron · vaatwasser"
+        },
+        {
+          "title": "Eigen parkeerplek",
+          "sub": "1 auto bij de mobil-home"
+        }
+      ],
+      "intro": {
+        "title": "Binnen comfortabel. Buiten vakantie.",
+        "text": "Ty LuWa combineert een lichte open leefruimte met een ruime veranda en privé-tuintje.",
+        "link": "Bekijk het hele verblijf →"
+      },
+      "stay": {
+        "title": "Alles wat je nodig hebt voor een ontspannen verblijf.",
+        "body": "De mobil-home is ingericht voor maximaal zes personen. De hoofdslaapkamer heeft een tweepersoonsbed en inloopkast, de tweede slaapkamer twee eenpersoonsbedden en de hoekbank kan worden omgebouwd tot tweepersoons slaapplaats.",
+        "features": [
+          "2 aparte slaapkamers + slaapbank",
+          "Badkamer met ruime douche en wasmachine",
+          "Apart toilet",
+          "Vaatwasser en complete keuken"
+        ],
+        "button": "Alle voorzieningen"
+      },
+      "conguel": {
+        "eyebrow": "Van je eigen terras naar de camping",
+        "title": "Le Conguel maakt het vakantiegevoel compleet.",
+        "body": "Ty LuWa ligt op Camping Le Conguel. Zwembad, activiteiten en campingvoorzieningen wanneer je daar zin in hebt — en je eigen rustige plek om naar terug te keren.",
+        "button": "Ontdek Le Conguel"
+      },
+      "quiberon": {
+        "title": "Quiberon, zee en Bretagne.",
+        "body": "Gebruik Ty LuWa als uitvalsbasis voor kust, markten, fietsen, eten, boottochten en de sfeer van het schiereiland Quiberon.",
+        "button": "Ontdek de omgeving"
+      },
+      "booking": {
+        "eyebrow": "Geen boekingsmachine",
+        "title": "Ty LuWa is af en toe beschikbaar, altijd op aanvraag.",
+        "body": "Stuur je gewenste periode en gezelschap door. Luuk en Wanda bekijken of het verblijf beschikbaar is en nemen persoonlijk contact op."
+      }
+    },
+    "stay": {
+      "eyebrow": "Het verblijf",
+      "title": "Een complete mobil-home voor maximaal 6 personen.",
+      "text": "Open leefruimte, twee slaapkamers, ruime veranda, eigen tuintje en een keuken waar je echt in kunt koken.",
+      "sleepTitle": "Waar je slaapt",
+      "amenitiesTitle": "Voorzieningen",
+      "sleeping": [
+        {
+          "title": "Hoofdslaapkamer",
+          "detail": "1 tweepersoonsbed · inloopkast"
+        },
+        {
+          "title": "Tweede slaapkamer",
+          "detail": "2 eenpersoonsbedden"
+        },
+        {
+          "title": "Woonkamer",
+          "detail": "slaapbank voor 2 personen"
+        }
+      ],
+      "amenities": [
+        "gasfornuis",
+        "gasoven",
+        "magnetron",
+        "koelkast met vriesvak",
+        "vaatwasser",
+        "ruime douche",
+        "wastafelmeubel",
+        "wasmachine",
+        "apart toilet",
+        "ruime overdekte veranda",
+        "privé-tuintje",
+        "ligbedden",
+        "parkeren voor 1 auto bij de mobil-home"
+      ],
+      "gallery": {
+        "exterior": {
+          "alt": "Buitenzijde van Ty LuWa met terras en veranda",
+          "category": "Buiten"
+        },
+        "living": {
+          "alt": "Open woonruimte van Ty LuWa",
+          "category": "Wonen"
+        },
+        "livingKitchen": {
+          "alt": "Woonkamer en keuken in één overzicht",
+          "category": "Wonen"
+        },
+        "kitchen": {
+          "alt": "Complete keuken met oven, magnetron, koelkast en vaatwasser",
+          "category": "Keuken"
+        },
+        "doubleBedroom": {
+          "alt": "Hoofdslaapkamer met tweepersoonsbed",
+          "category": "Slapen"
+        },
+        "twinBedroom": {
+          "alt": "Tweede slaapkamer met twee eenpersoonsbedden",
+          "category": "Slapen"
+        },
+        "bathroom": {
+          "alt": "Badkamer met ruime douche",
+          "category": "Badkamer"
+        },
+        "closet": {
+          "alt": "Inloopkast bij de hoofdslaapkamer",
+          "category": "Slapen"
+        },
+        "garden": {
+          "alt": "Privé-tuintje en terras",
+          "category": "Buiten"
+        },
+        "veranda": {
+          "alt": "Overdekte veranda",
+          "category": "Buiten"
+        }
+      }
+    },
+    "availability": {
+      "eyebrow": "Beschikbaar op aanvraag",
+      "title": "Wanneer zouden jullie willen komen?",
+      "text": "Ty LuWa is niet direct online boekbaar. Stuur je gewenste periode en gezelschap door; Luuk en Wanda bekijken de beschikbaarheid en nemen persoonlijk contact op.",
+      "arrival": "Aankomst",
+      "departure": "Vertrek",
+      "adults": "Volwassenen",
+      "children": "Kinderen",
+      "name": "Naam",
+      "email": "E-mail",
+      "message": "Bericht",
+      "phName": "Voor- en achternaam",
+      "phEmail": "naam@voorbeeld.nl",
+      "phMessage": "Vertel kort met wie je komt en of je vragen hebt.",
+      "submit": "Aanvraag versturen",
+      "status": "Het online versturen wordt op dit moment nog ingericht — er is niets verzonden. Neem voorlopig rechtstreeks contact op met Luuk en Wanda; binnenkort werkt het formulier volledig.",
+      "note": "Beschikbaarheid wordt persoonlijk bevestigd. Geen automatische boeking, geen betaling vooraf."
+    },
+    "conguel": {
+      "eyebrow": "De camping",
+      "title": "Le Conguel, de camping voor de deur.",
+      "text": "Ty LuWa is het verblijf; de camping ligt eromheen. Je gebruikt er zoveel of zo weinig van als je wilt.",
+      "cards": [
+        {
+          "title": "Gelegen op een 4★ camping",
+          "body": "Ty LuWa staat op Camping Le Conguel van Siblu, een viersterrencamping aan de zuidoostpunt van het schiereiland Quiberon, vlak bij zee."
+        },
+        {
+          "title": "Faciliteiten",
+          "body": "De camping biedt eigen faciliteiten en activiteiten. Bekijk het actuele aanbod en de openingstijden per seizoen op de officiële site van Le Conguel."
+        },
+        {
+          "title": "Fun Pass",
+          "body": "Voor sommige campingfaciliteiten vraagt Siblu een Fun Pass. Vraag bij je aanvraag aan Luuk en Wanda wat er voor jouw verblijf inbegrepen is."
+        }
+      ],
+      "link": "Officiële Le Conguel-site"
+    },
+    "quiberon": {
+      "eyebrow": "De bestemming",
+      "title": "Quiberon: kust, buiten zijn en goed eten.",
+      "text": "Ty LuWa ligt op het schiereiland Quiberon in Bretagne: een smalle landtong met stranden, een ruige westkust en levendige havenplaatsjes.",
+      "cards": [
+        {
+          "title": "De zee op",
+          "body": "Boottochten, eilanden en de havens rondom Quiberon."
+        },
+        {
+          "title": "De kust ontdekken",
+          "body": "Fietsen, wandelen en de Côte Sauvage."
+        },
+        {
+          "title": "Proef Quiberon",
+          "body": "Markten, vis, crêpes en lokale adressen."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "items": [
+        {
+          "q": "Voor hoeveel personen is Ty LuWa geschikt?",
+          "a": "Maximaal 6 personen: twee slaapkamers en een slaapbank voor twee personen."
+        },
+        {
+          "q": "Kan ik direct boeken?",
+          "a": "Nee. Ty LuWa is alleen op aanvraag beschikbaar. Luuk en Wanda bevestigen een verblijf persoonlijk."
+        },
+        {
+          "q": "Kan ik bij de mobil-home parkeren?",
+          "a": "Ja, er is plaats voor één auto direct bij de mobil-home."
+        }
+      ]
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Persoonlijk contact met Ty LuWa",
+      "text": "Contact verloopt via een beschikbaarheidsaanvraag: laat je gewenste periode en gegevens achter en Luuk en Wanda nemen persoonlijk contact met je op."
+    },
+    "mosaicAria": "Foto-impressie van Ty LuWa"
+  },
+  "en": {
+    "titles": {
+      "/": "Ty LuWa · Le Conguel, Quiberon",
+      "/verblijf": "The accommodation · Ty LuWa",
+      "/le-conguel": "Le Conguel campsite · Ty LuWa",
+      "/quiberon": "Quiberon & Brittany · Ty LuWa",
+      "/beschikbaarheid": "Availability on request · Ty LuWa",
+      "/faq": "Frequently asked questions · Ty LuWa",
+      "/contact": "Contact · Ty LuWa"
+    },
+    "layout": {
+      "nav": [
+        [
+          "/",
+          "Home"
+        ],
+        [
+          "/verblijf",
+          "The accommodation"
+        ],
+        [
+          "/le-conguel",
+          "Le Conguel"
+        ],
+        [
+          "/quiberon",
+          "Quiberon"
+        ],
+        [
+          "/beschikbaarheid",
+          "Availability"
+        ]
+      ],
+      "cta": "Ask about availability",
+      "ctaShort": "Enquire",
+      "mobileBar": "Available on request",
+      "menuAria": "Open or close menu",
+      "navAria": "Main navigation",
+      "footerNavAria": "Footer navigation",
+      "skipLink": "Skip to content",
+      "fineprint": "Ty LuWa is a privately owned holiday home at Camping Le Conguel. The campsite is not operated by Ty LuWa."
+    },
+    "home": {
+      "heroTitlePre": "A comfortable holiday spot on the ",
+      "heroTitleEm": "Breton coast",
+      "heroTitlePost": ".",
+      "heroBody": "Room to live outdoors, a fully equipped mobile home for up to 6 people, and the facilities of Le Conguel close at hand.",
+      "heroCtaSecondary": "Discover Ty LuWa",
+      "facts": [
+        {
+          "title": "Up to 6 people",
+          "sub": "2 bedrooms + sofa bed"
+        },
+        {
+          "title": "Spacious veranda",
+          "sub": "Covered outdoor living"
+        },
+        {
+          "title": "Complete kitchen",
+          "sub": "Oven · microwave · dishwasher"
+        },
+        {
+          "title": "Private parking",
+          "sub": "1 car by the mobile home"
+        }
+      ],
+      "intro": {
+        "title": "Comfortable inside. Holiday outside.",
+        "text": "Ty LuWa combines a bright, open living space with a spacious veranda and private garden.",
+        "link": "See the whole accommodation →"
+      },
+      "stay": {
+        "title": "Everything you need for a relaxed stay.",
+        "body": "The mobile home sleeps up to six. The main bedroom has a double bed and walk-in wardrobe, the second bedroom has two single beds, and the corner sofa converts into a double sleeping place.",
+        "features": [
+          "2 separate bedrooms + sofa bed",
+          "Bathroom with spacious shower and washing machine",
+          "Separate toilet",
+          "Dishwasher and complete kitchen"
+        ],
+        "button": "All amenities"
+      },
+      "conguel": {
+        "eyebrow": "From your own terrace to the campsite",
+        "title": "Le Conguel completes the holiday feeling.",
+        "body": "Ty LuWa sits within Camping Le Conguel. Swimming pool, activities and campsite facilities whenever you feel like it — and your own quiet spot to come back to.",
+        "button": "Discover Le Conguel"
+      },
+      "quiberon": {
+        "title": "Quiberon, the sea and Brittany.",
+        "body": "Use Ty LuWa as your base for the coast, markets, cycling, good food, boat trips and the atmosphere of the Quiberon peninsula.",
+        "button": "Explore the area"
+      },
+      "booking": {
+        "eyebrow": "Not a booking machine",
+        "title": "Ty LuWa is available now and then, always on request.",
+        "body": "Send us your preferred dates and party size. Luuk and Wanda will check whether the accommodation is available and get in touch personally."
+      }
+    },
+    "stay": {
+      "eyebrow": "The accommodation",
+      "title": "A complete mobile home for up to 6 people.",
+      "text": "Open living space, two bedrooms, a spacious veranda, your own garden and a kitchen you can really cook in.",
+      "sleepTitle": "Where you sleep",
+      "amenitiesTitle": "Amenities",
+      "sleeping": [
+        {
+          "title": "Main bedroom",
+          "detail": "1 double bed · walk-in wardrobe"
+        },
+        {
+          "title": "Second bedroom",
+          "detail": "2 single beds"
+        },
+        {
+          "title": "Living room",
+          "detail": "sofa bed for 2 people"
+        }
+      ],
+      "amenities": [
+        "gas hob",
+        "gas oven",
+        "microwave",
+        "fridge with freezer compartment",
+        "dishwasher",
+        "spacious shower",
+        "washbasin unit",
+        "washing machine",
+        "separate toilet",
+        "large covered veranda",
+        "private garden",
+        "sun loungers",
+        "parking for 1 car by the mobile home"
+      ],
+      "gallery": {
+        "exterior": {
+          "alt": "Exterior of Ty LuWa with terrace and veranda",
+          "category": "Outside"
+        },
+        "living": {
+          "alt": "Open living space of Ty LuWa",
+          "category": "Living"
+        },
+        "livingKitchen": {
+          "alt": "Living room and kitchen in one view",
+          "category": "Living"
+        },
+        "kitchen": {
+          "alt": "Complete kitchen with oven, microwave, fridge and dishwasher",
+          "category": "Kitchen"
+        },
+        "doubleBedroom": {
+          "alt": "Main bedroom with double bed",
+          "category": "Sleeping"
+        },
+        "twinBedroom": {
+          "alt": "Second bedroom with two single beds",
+          "category": "Sleeping"
+        },
+        "bathroom": {
+          "alt": "Bathroom with spacious shower",
+          "category": "Bathroom"
+        },
+        "closet": {
+          "alt": "Walk-in wardrobe by the main bedroom",
+          "category": "Sleeping"
+        },
+        "garden": {
+          "alt": "Private garden and terrace",
+          "category": "Outside"
+        },
+        "veranda": {
+          "alt": "Covered veranda",
+          "category": "Outside"
+        }
+      }
+    },
+    "availability": {
+      "eyebrow": "Available on request",
+      "title": "When would you like to come?",
+      "text": "Ty LuWa cannot be booked online directly. Send us your preferred dates and party size; Luuk and Wanda will check availability and get in touch personally.",
+      "arrival": "Arrival",
+      "departure": "Departure",
+      "adults": "Adults",
+      "children": "Children",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "phName": "First and last name",
+      "phEmail": "name@example.com",
+      "phMessage": "Tell us briefly who is coming and whether you have any questions.",
+      "submit": "Send request",
+      "status": "Online sending is still being set up — nothing has been sent. For now, please contact Luuk and Wanda directly; the form will be fully working soon.",
+      "note": "Availability is confirmed personally. No automatic booking, no upfront payment."
+    },
+    "conguel": {
+      "eyebrow": "The campsite",
+      "title": "Le Conguel, the campsite on your doorstep.",
+      "text": "Ty LuWa is the accommodation; the campsite surrounds it. Use as much or as little of it as you like.",
+      "cards": [
+        {
+          "title": "Set on a 4★ campsite",
+          "body": "Ty LuWa stands at Camping Le Conguel by Siblu, a four-star campsite on the southeastern tip of the Quiberon peninsula, right by the sea."
+        },
+        {
+          "title": "Facilities",
+          "body": "The campsite offers its own facilities and activities. Check the current offer and seasonal opening times on the official Le Conguel website."
+        },
+        {
+          "title": "Fun Pass",
+          "body": "Some campsite facilities require a Siblu Fun Pass. When making your request, ask Luuk and Wanda what is included for your stay."
+        }
+      ],
+      "link": "Official Le Conguel website"
+    },
+    "quiberon": {
+      "eyebrow": "The destination",
+      "title": "Quiberon: coast, outdoor life and good food.",
+      "text": "Ty LuWa lies on the Quiberon peninsula in Brittany: a narrow spit of land with beaches, a rugged west coast and lively harbour towns.",
+      "cards": [
+        {
+          "title": "Out to sea",
+          "body": "Boat trips, islands and the harbours around Quiberon."
+        },
+        {
+          "title": "Discover the coast",
+          "body": "Cycling, walking and the Côte Sauvage."
+        },
+        {
+          "title": "Taste Quiberon",
+          "body": "Markets, fish, crêpes and local addresses."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "items": [
+        {
+          "q": "How many people can Ty LuWa accommodate?",
+          "a": "Up to 6 people: two bedrooms and a sofa bed for two."
+        },
+        {
+          "q": "Can I book directly?",
+          "a": "No. Ty LuWa is available on request only. Luuk and Wanda confirm every stay personally."
+        },
+        {
+          "q": "Can I park at the mobile home?",
+          "a": "Yes, there is space for one car right by the mobile home."
+        }
+      ]
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Personal contact with Ty LuWa",
+      "text": "Contact starts with an availability request: leave your preferred dates and details, and Luuk and Wanda will get in touch with you personally."
+    },
+    "mosaicAria": "Photo impression of Ty LuWa"
+  },
+  "de": {
+    "titles": {
+      "/": "Ty LuWa · Le Conguel, Quiberon",
+      "/verblijf": "Die Unterkunft · Ty LuWa",
+      "/le-conguel": "Campingplatz Le Conguel · Ty LuWa",
+      "/quiberon": "Quiberon & Bretagne · Ty LuWa",
+      "/beschikbaarheid": "Verfügbarkeit auf Anfrage · Ty LuWa",
+      "/faq": "Häufige Fragen · Ty LuWa",
+      "/contact": "Kontakt · Ty LuWa"
+    },
+    "layout": {
+      "nav": [
+        [
+          "/",
+          "Start"
+        ],
+        [
+          "/verblijf",
+          "Die Unterkunft"
+        ],
+        [
+          "/le-conguel",
+          "Le Conguel"
+        ],
+        [
+          "/quiberon",
+          "Quiberon"
+        ],
+        [
+          "/beschikbaarheid",
+          "Verfügbarkeit"
+        ]
+      ],
+      "cta": "Verfügbarkeit anfragen",
+      "ctaShort": "Anfragen",
+      "mobileBar": "Auf Anfrage verfügbar",
+      "menuAria": "Menü öffnen oder schließen",
+      "navAria": "Hauptnavigation",
+      "footerNavAria": "Footer-Navigation",
+      "skipLink": "Direkt zum Inhalt",
+      "fineprint": "Ty LuWa ist eine private Ferienunterkunft auf dem Campingplatz Le Conguel. Der Campingplatz wird nicht von Ty LuWa betrieben."
+    },
+    "home": {
+      "heroTitlePre": "Ein gemütliches Urlaubsplätzchen an der ",
+      "heroTitleEm": "bretonischen Küste",
+      "heroTitlePost": ".",
+      "heroBody": "Platz zum Draußenleben, ein komplett ausgestattetes Mobilheim für bis zu 6 Personen und die Einrichtungen von Le Conguel direkt nebenan.",
+      "heroCtaSecondary": "Ty LuWa entdecken",
+      "facts": [
+        {
+          "title": "Max. 6 Personen",
+          "sub": "2 Schlafzimmer + Schlafsofa"
+        },
+        {
+          "title": "Große Veranda",
+          "sub": "Überdachtes Draußenleben"
+        },
+        {
+          "title": "Komplette Küche",
+          "sub": "Backofen · Mikrowelle · Spülmaschine"
+        },
+        {
+          "title": "Eigener Parkplatz",
+          "sub": "1 Auto am Mobilheim"
+        }
+      ],
+      "intro": {
+        "title": "Drinnen gemütlich. Draußen Urlaub.",
+        "text": "Ty LuWa verbindet einen hellen, offenen Wohnraum mit einer großen Veranda und eigenem Gärtchen.",
+        "link": "Die ganze Unterkunft ansehen →"
+      },
+      "stay": {
+        "title": "Alles, was ihr für einen entspannten Urlaub braucht.",
+        "body": "Das Mobilheim ist für bis zu sechs Personen eingerichtet. Das Hauptschlafzimmer hat ein Doppelbett und einen begehbaren Kleiderschrank, das zweite Schlafzimmer zwei Einzelbetten, und das Ecksofa lässt sich zum Doppelschlafplatz umbauen.",
+        "features": [
+          "2 separate Schlafzimmer + Schlafsofa",
+          "Bad mit großer Dusche und Waschmaschine",
+          "Separates WC",
+          "Spülmaschine und komplette Küche"
+        ],
+        "button": "Alle Ausstattungen"
+      },
+      "conguel": {
+        "eyebrow": "Von der eigenen Terrasse auf den Campingplatz",
+        "title": "Le Conguel macht das Urlaubsgefühl komplett.",
+        "body": "Ty LuWa liegt auf dem Campingplatz Le Conguel. Pool, Aktivitäten und Campingeinrichtungen, wann immer ihr Lust habt — und euer eigenes ruhiges Plätzchen zum Zurückkommen.",
+        "button": "Le Conguel entdecken"
+      },
+      "quiberon": {
+        "title": "Quiberon, Meer und Bretagne.",
+        "body": "Nutzt Ty LuWa als Ausgangspunkt für Küste, Märkte, Radtouren, gutes Essen, Bootsausflüge und die Atmosphäre der Halbinsel Quiberon.",
+        "button": "Die Umgebung entdecken"
+      },
+      "booking": {
+        "eyebrow": "Keine Buchungsmaschine",
+        "title": "Ty LuWa ist ab und zu verfügbar, immer auf Anfrage.",
+        "body": "Schickt uns euren Wunschzeitraum und wer mitkommt. Luuk und Wanda prüfen, ob die Unterkunft frei ist, und melden sich persönlich."
+      }
+    },
+    "stay": {
+      "eyebrow": "Die Unterkunft",
+      "title": "Ein komplettes Mobilheim für bis zu 6 Personen.",
+      "text": "Offener Wohnraum, zwei Schlafzimmer, große Veranda, eigenes Gärtchen und eine Küche, in der man wirklich kochen kann.",
+      "sleepTitle": "Wo ihr schlaft",
+      "amenitiesTitle": "Ausstattung",
+      "sleeping": [
+        {
+          "title": "Hauptschlafzimmer",
+          "detail": "1 Doppelbett · begehbarer Kleiderschrank"
+        },
+        {
+          "title": "Zweites Schlafzimmer",
+          "detail": "2 Einzelbetten"
+        },
+        {
+          "title": "Wohnzimmer",
+          "detail": "Schlafsofa für 2 Personen"
+        }
+      ],
+      "amenities": [
+        "Gasherd",
+        "Gasbackofen",
+        "Mikrowelle",
+        "Kühlschrank mit Gefrierfach",
+        "Spülmaschine",
+        "große Dusche",
+        "Waschtisch",
+        "Waschmaschine",
+        "separates WC",
+        "große überdachte Veranda",
+        "eigenes Gärtchen",
+        "Sonnenliegen",
+        "Parkplatz für 1 Auto am Mobilheim"
+      ],
+      "gallery": {
+        "exterior": {
+          "alt": "Außenansicht von Ty LuWa mit Terrasse und Veranda",
+          "category": "Draußen"
+        },
+        "living": {
+          "alt": "Offener Wohnraum von Ty LuWa",
+          "category": "Wohnen"
+        },
+        "livingKitchen": {
+          "alt": "Wohnzimmer und Küche in einem Blick",
+          "category": "Wohnen"
+        },
+        "kitchen": {
+          "alt": "Komplette Küche mit Backofen, Mikrowelle, Kühlschrank und Spülmaschine",
+          "category": "Küche"
+        },
+        "doubleBedroom": {
+          "alt": "Hauptschlafzimmer mit Doppelbett",
+          "category": "Schlafen"
+        },
+        "twinBedroom": {
+          "alt": "Zweites Schlafzimmer mit zwei Einzelbetten",
+          "category": "Schlafen"
+        },
+        "bathroom": {
+          "alt": "Badezimmer mit großer Dusche",
+          "category": "Bad"
+        },
+        "closet": {
+          "alt": "Begehbarer Kleiderschrank am Hauptschlafzimmer",
+          "category": "Schlafen"
+        },
+        "garden": {
+          "alt": "Eigenes Gärtchen und Terrasse",
+          "category": "Draußen"
+        },
+        "veranda": {
+          "alt": "Überdachte Veranda",
+          "category": "Draußen"
+        }
+      }
+    },
+    "availability": {
+      "eyebrow": "Auf Anfrage verfügbar",
+      "title": "Wann möchtet ihr kommen?",
+      "text": "Ty LuWa ist nicht direkt online buchbar. Schickt uns euren Wunschzeitraum und wer mitkommt; Luuk und Wanda prüfen die Verfügbarkeit und melden sich persönlich.",
+      "arrival": "Anreise",
+      "departure": "Abreise",
+      "adults": "Erwachsene",
+      "children": "Kinder",
+      "name": "Name",
+      "email": "E-Mail",
+      "message": "Nachricht",
+      "phName": "Vor- und Nachname",
+      "phEmail": "name@beispiel.de",
+      "phMessage": "Erzählt kurz, wer mitkommt und ob ihr Fragen habt.",
+      "submit": "Anfrage senden",
+      "status": "Der Online-Versand wird derzeit noch eingerichtet — es wurde nichts gesendet. Kontaktiert vorerst bitte Luuk und Wanda direkt; das Formular funktioniert bald vollständig.",
+      "note": "Die Verfügbarkeit wird persönlich bestätigt. Keine automatische Buchung, keine Vorauszahlung."
+    },
+    "conguel": {
+      "eyebrow": "Der Campingplatz",
+      "title": "Le Conguel, der Campingplatz vor der Tür.",
+      "text": "Ty LuWa ist die Unterkunft; der Campingplatz liegt drumherum. Ihr nutzt davon so viel oder so wenig, wie ihr möchtet.",
+      "cards": [
+        {
+          "title": "Auf einem 4★-Campingplatz",
+          "body": "Ty LuWa steht auf dem Campingplatz Le Conguel von Siblu, einem Vier-Sterne-Campingplatz an der Südostspitze der Halbinsel Quiberon, direkt am Meer."
+        },
+        {
+          "title": "Einrichtungen",
+          "body": "Der Campingplatz bietet eigene Einrichtungen und Aktivitäten. Das aktuelle Angebot und die saisonalen Öffnungszeiten findet ihr auf der offiziellen Website von Le Conguel."
+        },
+        {
+          "title": "Fun Pass",
+          "body": "Für manche Campingeinrichtungen verlangt Siblu einen Fun Pass. Fragt bei eurer Anfrage Luuk und Wanda, was für euren Aufenthalt inbegriffen ist."
+        }
+      ],
+      "link": "Offizielle Le-Conguel-Website"
+    },
+    "quiberon": {
+      "eyebrow": "Das Reiseziel",
+      "title": "Quiberon: Küste, Draußensein und gutes Essen.",
+      "text": "Ty LuWa liegt auf der Halbinsel Quiberon in der Bretagne: eine schmale Landzunge mit Stränden, einer rauen Westküste und lebendigen Hafenorten.",
+      "cards": [
+        {
+          "title": "Raus aufs Meer",
+          "body": "Bootsausflüge, Inseln und die Häfen rund um Quiberon."
+        },
+        {
+          "title": "Die Küste entdecken",
+          "body": "Radfahren, Wandern und die Côte Sauvage."
+        },
+        {
+          "title": "Quiberon schmecken",
+          "body": "Märkte, Fisch, Crêpes und lokale Adressen."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Häufige Fragen",
+      "items": [
+        {
+          "q": "Für wie viele Personen ist Ty LuWa geeignet?",
+          "a": "Für maximal 6 Personen: zwei Schlafzimmer und ein Schlafsofa für zwei."
+        },
+        {
+          "q": "Kann ich direkt buchen?",
+          "a": "Nein. Ty LuWa ist nur auf Anfrage verfügbar. Luuk und Wanda bestätigen jeden Aufenthalt persönlich."
+        },
+        {
+          "q": "Kann ich am Mobilheim parken?",
+          "a": "Ja, direkt am Mobilheim ist Platz für ein Auto."
+        }
+      ]
+    },
+    "contact": {
+      "eyebrow": "Kontakt",
+      "title": "Persönlicher Kontakt mit Ty LuWa",
+      "text": "Der Kontakt läuft über eine Verfügbarkeitsanfrage: Hinterlasst euren Wunschzeitraum und eure Daten, und Luuk und Wanda melden sich persönlich bei euch."
+    },
+    "mosaicAria": "Foto-Eindrücke von Ty LuWa"
+  },
+  "fr": {
+    "titles": {
+      "/": "Ty LuWa · Le Conguel, Quiberon",
+      "/verblijf": "Le logement · Ty LuWa",
+      "/le-conguel": "Camping Le Conguel · Ty LuWa",
+      "/quiberon": "Quiberon & Bretagne · Ty LuWa",
+      "/beschikbaarheid": "Disponibilités sur demande · Ty LuWa",
+      "/faq": "Questions fréquentes · Ty LuWa",
+      "/contact": "Contact · Ty LuWa"
+    },
+    "layout": {
+      "nav": [
+        [
+          "/",
+          "Accueil"
+        ],
+        [
+          "/verblijf",
+          "Le logement"
+        ],
+        [
+          "/le-conguel",
+          "Le Conguel"
+        ],
+        [
+          "/quiberon",
+          "Quiberon"
+        ],
+        [
+          "/beschikbaarheid",
+          "Disponibilités"
+        ]
+      ],
+      "cta": "Demander les disponibilités",
+      "ctaShort": "Demander",
+      "mobileBar": "Disponible sur demande",
+      "menuAria": "Ouvrir ou fermer le menu",
+      "navAria": "Navigation principale",
+      "footerNavAria": "Navigation du pied de page",
+      "skipLink": "Aller au contenu",
+      "fineprint": "Ty LuWa est un hébergement de vacances privé situé au Camping Le Conguel. Le camping n’est pas exploité par Ty LuWa."
+    },
+    "home": {
+      "heroTitlePre": "Un coin de vacances confortable sur la ",
+      "heroTitleEm": "côte bretonne",
+      "heroTitlePost": ".",
+      "heroBody": "De l’espace pour vivre dehors, un mobil-home tout équipé pour 6 personnes maximum et les services du Conguel à portée de main.",
+      "heroCtaSecondary": "Découvrir Ty LuWa",
+      "facts": [
+        {
+          "title": "6 personnes max.",
+          "sub": "2 chambres + canapé-lit"
+        },
+        {
+          "title": "Grande véranda",
+          "sub": "Vie en plein air couverte"
+        },
+        {
+          "title": "Cuisine complète",
+          "sub": "Four · micro-ondes · lave-vaisselle"
+        },
+        {
+          "title": "Parking privé",
+          "sub": "1 voiture près du mobil-home"
+        }
+      ],
+      "intro": {
+        "title": "Confortable dedans. Vacances dehors.",
+        "text": "Ty LuWa associe un espace de vie clair et ouvert à une grande véranda et un petit jardin privé.",
+        "link": "Voir tout le logement →"
+      },
+      "stay": {
+        "title": "Tout ce qu’il faut pour un séjour détendu.",
+        "body": "Le mobil-home est aménagé pour six personnes maximum. La chambre principale dispose d’un lit double et d’un dressing, la seconde chambre de deux lits simples, et le canapé d’angle se transforme en couchage double.",
+        "features": [
+          "2 chambres séparées + canapé-lit",
+          "Salle de bain avec grande douche et lave-linge",
+          "WC séparés",
+          "Lave-vaisselle et cuisine complète"
+        ],
+        "button": "Tous les équipements"
+      },
+      "conguel": {
+        "eyebrow": "De votre terrasse au camping",
+        "title": "Le Conguel complète l’esprit vacances.",
+        "body": "Ty LuWa se trouve au Camping Le Conguel. Piscine, animations et services du camping quand vous en avez envie — et votre coin tranquille pour y revenir.",
+        "button": "Découvrir Le Conguel"
+      },
+      "quiberon": {
+        "title": "Quiberon, la mer et la Bretagne.",
+        "body": "Faites de Ty LuWa votre point de départ pour la côte, les marchés, le vélo, la bonne cuisine, les sorties en bateau et l’ambiance de la presqu’île de Quiberon.",
+        "button": "Découvrir les environs"
+      },
+      "booking": {
+        "eyebrow": "Pas une machine à réserver",
+        "title": "Ty LuWa est disponible de temps en temps, toujours sur demande.",
+        "body": "Envoyez-nous vos dates souhaitées et la composition de votre groupe. Luuk et Wanda vérifient si le logement est disponible et vous contactent personnellement."
+      }
+    },
+    "stay": {
+      "eyebrow": "Le logement",
+      "title": "Un mobil-home complet pour 6 personnes maximum.",
+      "text": "Espace de vie ouvert, deux chambres, grande véranda, jardin privé et une cuisine où l’on peut vraiment cuisiner.",
+      "sleepTitle": "Où vous dormez",
+      "amenitiesTitle": "Équipements",
+      "sleeping": [
+        {
+          "title": "Chambre principale",
+          "detail": "1 lit double · dressing"
+        },
+        {
+          "title": "Seconde chambre",
+          "detail": "2 lits simples"
+        },
+        {
+          "title": "Salon",
+          "detail": "canapé-lit pour 2 personnes"
+        }
+      ],
+      "amenities": [
+        "plaque de cuisson au gaz",
+        "four à gaz",
+        "micro-ondes",
+        "réfrigérateur avec compartiment congélateur",
+        "lave-vaisselle",
+        "grande douche",
+        "meuble vasque",
+        "lave-linge",
+        "WC séparés",
+        "grande véranda couverte",
+        "petit jardin privé",
+        "bains de soleil",
+        "parking pour 1 voiture près du mobil-home"
+      ],
+      "gallery": {
+        "exterior": {
+          "alt": "Extérieur de Ty LuWa avec terrasse et véranda",
+          "category": "Extérieur"
+        },
+        "living": {
+          "alt": "Espace de vie ouvert de Ty LuWa",
+          "category": "Séjour"
+        },
+        "livingKitchen": {
+          "alt": "Salon et cuisine en un seul coup d’œil",
+          "category": "Séjour"
+        },
+        "kitchen": {
+          "alt": "Cuisine complète avec four, micro-ondes, réfrigérateur et lave-vaisselle",
+          "category": "Cuisine"
+        },
+        "doubleBedroom": {
+          "alt": "Chambre principale avec lit double",
+          "category": "Chambres"
+        },
+        "twinBedroom": {
+          "alt": "Seconde chambre avec deux lits simples",
+          "category": "Chambres"
+        },
+        "bathroom": {
+          "alt": "Salle de bain avec grande douche",
+          "category": "Salle de bain"
+        },
+        "closet": {
+          "alt": "Dressing attenant à la chambre principale",
+          "category": "Chambres"
+        },
+        "garden": {
+          "alt": "Jardin privé et terrasse",
+          "category": "Extérieur"
+        },
+        "veranda": {
+          "alt": "Véranda couverte",
+          "category": "Extérieur"
+        }
+      }
+    },
+    "availability": {
+      "eyebrow": "Disponible sur demande",
+      "title": "Quand aimeriez-vous venir ?",
+      "text": "Ty LuWa ne se réserve pas directement en ligne. Envoyez-nous vos dates souhaitées et la composition de votre groupe ; Luuk et Wanda vérifient les disponibilités et vous contactent personnellement.",
+      "arrival": "Arrivée",
+      "departure": "Départ",
+      "adults": "Adultes",
+      "children": "Enfants",
+      "name": "Nom",
+      "email": "E-mail",
+      "message": "Message",
+      "phName": "Prénom et nom",
+      "phEmail": "nom@exemple.fr",
+      "phMessage": "Dites-nous en quelques mots qui vient et si vous avez des questions.",
+      "submit": "Envoyer la demande",
+      "status": "L’envoi en ligne est encore en cours de mise en place — rien n’a été envoyé. Pour l’instant, contactez directement Luuk et Wanda ; le formulaire sera bientôt pleinement opérationnel.",
+      "note": "Les disponibilités sont confirmées personnellement. Pas de réservation automatique, pas de paiement à l’avance."
+    },
+    "conguel": {
+      "eyebrow": "Le camping",
+      "title": "Le Conguel, le camping au pas de la porte.",
+      "text": "Ty LuWa est le logement ; le camping l’entoure. Vous en profitez autant ou aussi peu que vous le souhaitez.",
+      "cards": [
+        {
+          "title": "Sur un camping 4★",
+          "body": "Ty LuWa se trouve au Camping Le Conguel de Siblu, un camping quatre étoiles à la pointe sud-est de la presqu’île de Quiberon, tout près de la mer."
+        },
+        {
+          "title": "Services",
+          "body": "Le camping propose ses propres services et animations. Consultez l’offre actuelle et les horaires selon la saison sur le site officiel du Conguel."
+        },
+        {
+          "title": "Fun Pass",
+          "body": "Certains services du camping nécessitent un Fun Pass de Siblu. Lors de votre demande, demandez à Luuk et Wanda ce qui est inclus pour votre séjour."
+        }
+      ],
+      "link": "Site officiel du Conguel"
+    },
+    "quiberon": {
+      "eyebrow": "La destination",
+      "title": "Quiberon : la côte, le grand air et la bonne cuisine.",
+      "text": "Ty LuWa se situe sur la presqu’île de Quiberon en Bretagne : une étroite langue de terre avec des plages, une côte ouest sauvage et des ports animés.",
+      "cards": [
+        {
+          "title": "Prendre le large",
+          "body": "Sorties en bateau, îles et ports autour de Quiberon."
+        },
+        {
+          "title": "Découvrir la côte",
+          "body": "Vélo, randonnée et la Côte Sauvage."
+        },
+        {
+          "title": "Goûter Quiberon",
+          "body": "Marchés, poisson, crêpes et bonnes adresses locales."
+        }
+      ]
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "items": [
+        {
+          "q": "Pour combien de personnes Ty LuWa convient-il ?",
+          "a": "Pour 6 personnes maximum : deux chambres et un canapé-lit pour deux."
+        },
+        {
+          "q": "Puis-je réserver directement ?",
+          "a": "Non. Ty LuWa est disponible uniquement sur demande. Luuk et Wanda confirment chaque séjour personnellement."
+        },
+        {
+          "q": "Puis-je me garer près du mobil-home ?",
+          "a": "Oui, il y a de la place pour une voiture juste à côté du mobil-home."
+        }
+      ]
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Un contact personnel avec Ty LuWa",
+      "text": "Le contact passe par une demande de disponibilités : laissez vos dates souhaitées et vos coordonnées, et Luuk et Wanda vous contacteront personnellement."
+    },
+    "mosaicAria": "Impressions photo de Ty LuWa"
+  }
+}

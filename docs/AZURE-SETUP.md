@@ -18,7 +18,7 @@ Express draait. Je kent het al en je kunt er later API-routes naast zetten zonde
 | Resource group | `rg-tyluwa-prod` | Alles van Ty LuWa bij elkaar, apart van DoGoDa. Eén klik om alles te verwijderen als het ooit stopt. |
 | Regio | **West Europe** | Dichtst bij de bezoekers (NL/FR/DE). Kies dezelfde regio voor alle resources, anders betaal je dataverkeer tussen regio's. |
 | App Service Plan | **B1, Linux** | Zie hieronder. |
-| Web App | `app-tyluwa-prod`, Node 24 LTS | Naam moet wereldwijd uniek zijn op `azurewebsites.net`. Is hij bezet, kies bijv. `app-tyluwa-web`. |
+| Web App | `ty-luwa`, Node 24 LTS | Naam moet wereldwijd uniek zijn op `azurewebsites.net`; dit is de naam die daadwerkelijk is aangemaakt. |
 | Database | PostgreSQL Flexible Server, B1ms | Pas nodig bij de boekingsadmin. Zie §7. |
 
 ### Waarom B1 en niet F1 (gratis)
@@ -26,7 +26,7 @@ Express draait. Je kent het al en je kunt er later API-routes naast zetten zonde
 Dit is de beslissing die telt:
 
 - **F1 (gratis)** kan geen eigen domein met TLS aan. Je site zou alleen op
-  `app-tyluwa-prod.azurewebsites.net` draaien. Ook geen Always On, dus na 20 minuten stilte
+  `ty-luwa.azurewebsites.net` draaien. Ook geen Always On, dus na 20 minuten stilte
   slaapt de app en wacht de eerste bezoeker 10–20 seconden. Onbruikbaar voor een site die
   gasten moet overtuigen.
 - **B1 (Basic, ± €12–13 per maand)** geeft eigen domeinen, een **gratis automatisch
@@ -36,7 +36,7 @@ Dit is de beslissing die telt:
 
 **Kostentip die je echt geld scheelt:** een App Service *Plan* is de machine, een *Web App*
 is een site die erop draait. Meerdere Web Apps mogen hetzelfde plan delen, en dat kost niets
-extra. Als je DoGoDa al op een B1-plan of hoger hebt draaien, kun je `app-tyluwa-prod`
+extra. Als je DoGoDa al op een B1-plan of hoger hebt draaien, kun je `ty-luwa`
 daarop zetten: eigen repo, eigen App Service, eigen domein, eigen deployment — alleen de
 onderliggende machine is gedeeld. Dat scheelt €12–13 per maand.
 
@@ -51,7 +51,7 @@ eigenaar — neem dan een eigen plan. Dan is de hele resource group in één kee
 
 1. **Resource group** → naam `rg-tyluwa-prod`, regio West Europe.
 2. **Create a resource → Web App**:
-   - Name: `app-tyluwa-prod`
+   - Name: `ty-luwa`
    - Publish: **Code**
    - Runtime stack: **Node 24 LTS**
    - Operating System: **Linux**
@@ -138,7 +138,7 @@ Voor `ty-luwa.com`:
 |---|---|---|
 | A | `@` (leeg / apex) | het **inbound IP-adres** uit Custom domains |
 | TXT | `asuid` | de **Domain verification ID** uit Custom domains |
-| CNAME | `www` | `app-tyluwa-prod.azurewebsites.net` |
+| CNAME | `www` | `ty-luwa.azurewebsites.net` |
 | TXT | `asuid.www` | dezelfde **Domain verification ID** |
 
 Herhaal exact hetzelfde voor `ty-luwa.fr` en `ty-luwa.nl`. De verification ID is voor alle

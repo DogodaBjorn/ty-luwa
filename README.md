@@ -6,7 +6,7 @@ Website voor het vakantiehuis op Le Conguel, Quiberon (Bretagne). Drie domeinen,
 | Domein | Taal | Voorbeeld |
 |---|---|---|
 | `ty-luwa.nl` | Nederlands | `ty-luwa.nl/verblijf` |
-| `ty-luwa.com` | Engels | `ty-luwa.com/accommodation` |
+| `ty-luwa.com` | Engels | `ty-luwa.com/the-house` |
 | `ty-luwa.fr` | Frans | `ty-luwa.fr/le-logement` |
 | `ty-luwa.com/de/` | Duits | `ty-luwa.com/de/unterkunft` |
 
@@ -34,6 +34,7 @@ curl -H "Host: ty-luwa.fr" localhost:8080/le-logement
 content/site-content.json   alle teksten, vier talen        ← bewerk hier
 content/routes.json         domeinen, talen, slug per taal  ← bewerk hier
 assets/                     site.css, site.js, foto's, logo's
+photo-masters/              onbewerkte foto's, niet meegebouwd
 scripts/build-site.js       genereert public/
 Server.js                   host → taal, redirects, sitemap
 public/                     GEGENEREERD, gitignored — nooit met de hand bewerken
@@ -82,9 +83,19 @@ verwijst is bij de herbouw verwijderd; hij staat nog in de git-historie
 
 ### Foto's
 
-`assets/photos/provisional/` — de naam zegt het. Vervangen door definitieve beelden. De
-bestandsnamen zijn de sleutel in `scripts/build-site.js` (`PHOTOS`), dus houd ze gelijk of
-pas die tabel aan.
+Het zijn echte foto's van de stacaravan, met de persoonlijke rommel eruit geretoucheerd.
+Alleen heeft die retouche ze ook verkleind: de meeste staan nu op ~1184×864 terwijl het
+origineel 1536×1152 was, en de keuken is fors bijgesneden. Voor de hero, die schermbreed
+staat, is dat aan de krappe kant op een groot scherm.
+
+De originelen staan in `photo-masters/` (niet meegebouwd) zodat het opruimen op volle
+resolutie overgedaan kan worden. Zie de README daar voor de maten per bestand.
+
+`shower.jpg` en `separate-toilet.jpg` worden nergens getoond: ze hebben geen alt-tekst en
+categorie in de content, dus ze stonden ook in de oude site al buiten de galerij.
+
+De bestandsnamen zijn de sleutel in `scripts/build-site.js` (`PHOTOS`), dus bij vervanging
+gelijk houden of die tabel aanpassen.
 
 ### Het aanvraagformulier verstuurt nog niets
 

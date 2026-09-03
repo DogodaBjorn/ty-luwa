@@ -181,11 +181,11 @@ configuratiestap, het werkt zodra de domeinen en TLS staan.
 | Binnenkomend | Resultaat |
 |---|---|
 | `ty-luwa.nl/verblijf` | 200, Nederlands |
-| `ty-luwa.com/accommodation` | 200, Engels |
+| `ty-luwa.com/the-house` | 200, Engels |
 | `ty-luwa.fr/le-logement` | 200, Frans |
 | `ty-luwa.com/de/unterkunft` | 200, Duits |
 | `www.<domein>/*` | 301 → zonder `www` |
-| `ty-luwa.com/en/verblijf` (oude vorm) | 301 → `ty-luwa.com/accommodation` |
+| `ty-luwa.com/en/verblijf` (oude vorm) | 301 → `ty-luwa.com/the-house` |
 | `<domein>/sitemap.xml`, `/robots.txt` | per domein een eigen bestand |
 | onbekende host (`azurewebsites.net`, probes, een IP) | nooit doorgestuurd |
 

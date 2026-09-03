@@ -14,7 +14,7 @@ een Franse URL ziet.
 | | Domein | Taal | Home | Voorbeeldpagina |
 |---|---|---|---|---|
 | | `ty-luwa.nl` | Nederlands | `ty-luwa.nl/` | `ty-luwa.nl/verblijf` |
-| | `ty-luwa.com` | Engels | `ty-luwa.com/` | `ty-luwa.com/accommodation` |
+| | `ty-luwa.com` | Engels | `ty-luwa.com/` | `ty-luwa.com/the-house` |
 | | `ty-luwa.fr` | Frans | `ty-luwa.fr/` | `ty-luwa.fr/le-logement` |
 | | `ty-luwa.com/de/` | Duits | `ty-luwa.com/de/` | `ty-luwa.com/de/unterkunft` |
 
@@ -35,7 +35,7 @@ oude-naar-nieuwe regel toe in `Server.js`.
 | Pagina | NL (`.nl`) | EN (`.com`) | FR (`.fr`) | DE (`.com/de`) |
 |---|---|---|---|---|
 | Home | `/` | `/` | `/` | `/de/` |
-| Het verblijf | `/verblijf` | `/accommodation` | `/le-logement` | `/de/unterkunft` |
+| Het verblijf | `/verblijf` | `/the-house` | `/le-logement` | `/de/unterkunft` |
 | Le Conguel | `/le-conguel` | `/le-conguel` | `/le-conguel` | `/de/le-conguel` |
 | Quiberon | `/quiberon` | `/quiberon` | `/quiberon` | `/de/quiberon` |
 | Beschikbaarheid | `/beschikbaarheid` | `/availability` | `/disponibilites` | `/de/verfuegbarkeit` |
@@ -56,7 +56,7 @@ een map met echte pagina's, en `Server.js` kiest die map op basis van de host:
 
 ```
 ty-luwa.nl/verblijf        ->  public/nl/verblijf.html
-ty-luwa.com/accommodation  ->  public/en/accommodation.html
+ty-luwa.com/the-house  ->  public/en/the-house.html
 ty-luwa.com/de/unterkunft  ->  public/de/unterkunft.html
 ty-luwa.fr/le-logement     ->  public/fr/le-logement.html
 ```
@@ -84,7 +84,7 @@ Alles hieronder werkt en is getest met echte host-headers.
 - **Host naar taalmap**, met de prefix-uitzondering voor Duits.
 - **Oude URL's opvangen.** De vorige opzet had de taal in het pad en overal de Nederlandse
   slug. `ty-luwa.com/en/verblijf` en `ty-luwa.com/verblijf` 301'en allebei naar
-  `ty-luwa.com/accommodation`. De tabel staat in `routes.json` onder `legacyPaths`.
+  `ty-luwa.com/the-house`. De tabel staat in `routes.json` onder `legacyPaths`.
 - **`sitemap.xml` en `robots.txt` per domein.** `ty-luwa.com` draagt de Engelse en de
   Duitse URL's omdat die het domein delen; de andere twee alleen hun eigen taal. Elke
   `<url>` draagt zijn `hreflang`-alternatieven mee.

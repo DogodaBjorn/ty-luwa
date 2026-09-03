@@ -4,7 +4,7 @@ npm-debug.log*
 .env.local
 .DS_Store
 
-# Vite source tree for the SPA. Move it in here from your machine (see README);
-# until then the built output in public/ is committed as-is.
-/app/node_modules/
-/app/dist/
+# Gegenereerd door `npm run build` (scripts/build-site.js). Draait ook in CI en
+# bij npm start, dus de gebouwde site hoort niet in git. Bewerk assets/ en
+# content/, nooit public/.
+/public/

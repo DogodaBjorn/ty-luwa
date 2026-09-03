@@ -5,7 +5,8 @@
   "main": "Server.js",
   "private": true,
   "scripts": {
-    "start": "node Server.js"
+    "build": "node scripts/build-site.js",
+    "start": "node scripts/build-site.js && node Server.js"
   },
   "engines": {
     "node": "24.x"

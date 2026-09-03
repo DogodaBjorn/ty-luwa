@@ -26,11 +26,11 @@ met de slug in die taal**. Vanaf `ty-luwa.fr/le-logement` op NL klikken levert
 `https://ty-luwa.nl/verblijf`, niet de homepage en niet een Franse slug op een Nederlands
 domein.
 
-## 2. Voorgestelde slugs
+## 2. De slugs
 
-De labels komen uit de bestaande vertalingen in de app; de slugs zijn daarvan afgeleid.
-**Dit is een voorstel — Björn stelt vast voordat het gebouwd wordt.** Eenmaal live is een
-slug wijzigen een redirect waard, dus liever nu goed.
+Vastgelegd in `content/routes.json`; dat is de enige plek waar een URL staat. Een slug
+wijzigen is één regel daar, maar wel eentje die een bestaande URL verandert — voeg dan een
+oude-naar-nieuwe regel toe in `Server.js`.
 
 | Pagina | NL (`.nl`) | EN (`.com`) | FR (`.fr`) | DE (`.com/de`) |
 |---|---|---|---|---|
@@ -49,60 +49,50 @@ Twee keuzes die bewust zo staan:
 - **Geen accenten of umlauts in slugs** (`disponibilites`, `verfuegbarkeit`). Ze werken wel,
   maar worden in links en analytics als percent-encoding weergegeven en dat leest slecht.
 
-## 3. Waarom dit niet in deze repo op te lossen is
+## 3. Hoe het werkt
 
-De site is een client-side SPA. React Router leest de URL die **in de adresbalk van de
-browser** staat. De server kan intern een pad herschrijven, maar dat verandert niets aan wat
-de router in de browser ziet — de server stuurt bij elk pad hetzelfde `index.html` met
-dezelfde bundle. De taal en de routetabel worden dus volledig in de app-code bepaald.
+De site is statische HTML, geen client-side app. `scripts/build-site.js` genereert per taal
+een map met echte pagina's, en `Server.js` kiest die map op basis van de host:
 
-Wat er in de huidige bundle staat (bevestigd door inspectie van `public/assets/`):
+```
+ty-luwa.nl/verblijf        ->  public/nl/verblijf.html
+ty-luwa.com/accommodation  ->  public/en/accommodation.html
+ty-luwa.com/de/unterkunft  ->  public/de/unterkunft.html
+ty-luwa.fr/le-logement     ->  public/fr/le-logement.html
+```
 
-- Talen: `["nl", "en", "de", "fr"]`, met vier vertaalwoordenboeken.
-- Een padbouwer met de vorm `(taal, pad) => taal === "nl" ? pad : "/" + taal + pad`.
-  Nederlands zonder prefix, de rest met.
-- De layout leest de taal uit de **`:lang`-URL-parameter**, valt terug op `nl`, en stript de
-  prefix om het "kale" pad over te houden.
-- **De routes gebruiken in alle vier de talen de Nederlandse slugs.** `/verblijf`,
-  `/beschikbaarheid` en de rest zijn hardcoded routepaden; vertaald wordt alleen het label.
-  Op de Franse site heet de pagina "Le logement" maar de URL is `/verblijf`.
-- `document.title` wordt opgezocht met het kale Nederlandse pad als sleutel.
+Duits is de enige taal met een prefix, en de server sorteert de prefixen van lang naar kort
+zodat de lege prefix van Engels `/de/` niet wegkaapt.
 
-Om bij de doelopzet te komen moet dus in de **Vite-broncode**:
+De taalwisselaar staat als gewone absolute links in de HTML: vanaf `ty-luwa.fr/le-logement`
+wijst NL naar `https://ty-luwa.nl/verblijf`. Geen JavaScript nodig.
 
-1. De taal komen uit `location.hostname` in plaats van uit een URL-prefix — met `/de/` op
-   `.com` als enige uitzondering die nog wél uit het pad komt.
-2. Er een **slugtabel per taal** komen, en de router die tabel gebruiken in plaats van één
-   vaste set Nederlandse paden. Sleutel op een taalonafhankelijke pagina-id (`home`,
-   `accommodation`, `availability`, ...), niet op het Nederlandse pad.
-3. `document.title` en alles wat nu op het Nederlandse pad indexeert, om naar die pagina-id.
-4. De taalwisselaar **absolute cross-domain URL's** bouwen: pagina-id + doeltaal → domein +
-   slug. Nu bouwt hij een relatief pad binnen hetzelfde domein.
-5. Lokaal ontwikkelen moet blijven werken op `localhost`, waar geen domein de taal aangeeft.
-   Een override via query (`?lang=fr`) of een env-variabele is daar genoeg.
+**Waarom dit niet de vorige opzet is.** De site was een React-SPA waarin de router de URL
+uit de adresbalk las, de taal uit een `:lang`-segment haalde, en in alle vier de talen de
+Nederlandse slugs gebruikte — alleen de labels waren vertaald. De taal op de root zetten was
+daar onmogelijk zonder de broncode, en die bestaat niet meer (zie de README). Bij het
+herbouwen was statische HTML de betere keuze: `canonical` en `hreflang` staan nu gewoon in
+het bestand, en dat is precies waar drie domeinen hun waarde uit halen.
 
-**Die broncode staat niet in deze repo.** Hij staat gitignored op de Windows-machine, in de
-map `Ty-LuWa/` naast de DoGoDa-repo. Wat hier is meegecommit is alleen de gebouwde output.
-Zolang dat zo is kan deze wijziging niet gemaakt worden — het patchen van een geminificeerde
-bundle is geen begaanbare weg voor een permanente architectuur.
+## 4. Wat de server doet
 
-Zie de README, "De broncode hierheen halen", voor de overzetstappen.
+Alles hieronder werkt en is getest met echte host-headers.
 
-## 4. Wat de server dan nog doet
+- **`www` strippen** naar het kale domein, via een allowlist van de drie eigen domeinen.
+  Azure's health probes, `azurewebsites.net` en lokale requests worden nooit omgeleid;
+  dat kan de instance ongezond maken.
+- **Host naar taalmap**, met de prefix-uitzondering voor Duits.
+- **Oude URL's opvangen.** De vorige opzet had de taal in het pad en overal de Nederlandse
+  slug. `ty-luwa.com/en/verblijf` en `ty-luwa.com/verblijf` 301'en allebei naar
+  `ty-luwa.com/accommodation`. De tabel staat in `routes.json` onder `legacyPaths`.
+- **`sitemap.xml` en `robots.txt` per domein.** `ty-luwa.com` draagt de Engelse en de
+  Duitse URL's omdat die het domein delen; de andere twee alleen hun eigen taal. Elke
+  `<url>` draagt zijn `hreflang`-alternatieven mee.
+- **Cache-headers.** Assets dragen een inhoudshash en mogen een jaar gecached worden;
+  HTML nooit, zodat een deploy meteen doorkomt.
 
-Zodra de app de taal zelf uit het domein haalt, vervalt de taal-redirect in `Server.js`
-(`DOMAIN_DEFAULT_LANG_PREFIX`). Wat blijft, en wat erbij komt:
-
-- **`www` strippen** naar het kale domein. Blijft.
-- **Oude prefix-URL's opvangen.** `ty-luwa.com/en/verblijf` moet 301'en naar
-  `ty-luwa.com/accommodation`. Dit is nu de live vorm, dus die links bestaan al.
-- **`canonical` en `hreflang` injecteren.** Per pagina een self-canonical plus een
-  `hreflang`-set die naar de drie andere taalversies wijst, inclusief `x-default`. Dit hoort
-  server-side omdat crawlers dan geen JavaScript hoeven uit te voeren. Dit is precies waar de
-  drie-domeinen-opzet zijn waarde haalt: zonder `hreflang` ziet Google drie losse sites.
-- **`sitemap.xml` en `robots.txt`** per domein, met alleen de URL's van dat domein.
-
-Die drie zijn pas te bouwen als de slugtabel vaststaat, want ze verwijzen er allemaal naar.
+`canonical`, `hreflang`, Open Graph en JSON-LD worden niet door de server geïnjecteerd maar
+door de build in de HTML gezet — hetzelfde resultaat, één bewegend deel minder.
 
 ## 5. Gevolg voor de boekingsadmin
 
@@ -121,10 +111,8 @@ in het Nederlands**, voor zijn ouders.
 De keuze van database en authenticatie staat in `AZURE-SETUP.md` §7 en verandert hier niet
 door.
 
-## 6. Volgorde
+## 6. Wat er nog moet
 
-1. Slugs uit §2 vaststellen.
-2. Broncode naar deze repo (README).
-3. Bronwijziging §3, met de build die naar `public/` schrijft.
-4. Server-side `hreflang`, canonical, sitemap en de oude-URL-redirects (§4).
-5. Pas daarna de boekingsadmin (§5).
+1. Definitieve foto's in plaats van `assets/photos/provisional/`.
+2. Het aanvraagformulier echt laten versturen — wacht op de boekingsadmin (§5).
+3. De boekingsadmin zelf.

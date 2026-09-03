@@ -7,11 +7,12 @@ wat het kost, en hoe je de drie Strato-domeinen eraan hangt. Volg de stappen op 
 
 ## 1. Wat je bouwt, en waarom
 
-De site is een Vite/React single-page app. Statisch geserveerd zou een Static Web App
-volstaan, maar de boekingsadmin die erbij komt (beschikbaarheidskalender, aanvragen
-goedkeuren, inloggen) heeft server-side code en een database nodig. Daarom een **Web App
-op Linux met Node 24**, hetzelfde patroon als DoGoDa en TrainerBjörn — een `Server.js` die
-Express draait. Je kent het al en je kunt er later API-routes naast zetten zonder te migreren.
+De site is statische HTML, gegenereerd door een buildscript. Een Static Web App zou daar
+op zich voor volstaan, maar de server kiest per domein de juiste taalmap en de boekingsadmin
+die erbij komt (beschikbaarheidskalender, aanvragen goedkeuren, inloggen) heeft server-side
+code en een database nodig. Daarom een **Web App op Linux met Node 24**, hetzelfde patroon
+als DoGoDa en TrainerBjörn — een `Server.js` die Express draait. Je kent het al en je kunt er
+later API-routes naast zetten zonder te migreren.
 
 | Resource | Keuze | Waarom |
 |---|---|---|
@@ -67,8 +68,9 @@ eigenaar — neem dan een eigen plan. Dan is de hele resource group in één kee
 
 ## 3. Startcommando
 
-App Service detecteert Node en draait `npm start`, wat `node Server.js` is. Dat werkt
-zonder configuratie. Zie je toch de Azure-welkomstpagina, zet dan expliciet in
+App Service detecteert Node en draait `npm start`, wat de site bouwt en daarna
+`node Server.js` start. De GitHub-workflow draait `npm run build` al vóór het uploaden, dus
+in productie is het bouwen bij het starten alleen een vangnet. Dat werkt zonder configuratie. Zie je toch de Azure-welkomstpagina, zet dan expliciet in
 **Configuration → General settings → Startup Command**:
 
 ```
@@ -79,8 +81,8 @@ node Server.js
 
 ## 4. Applicatie-instellingen
 
-Niets verplicht hier voor de site zelf — de taal-per-domein-redirect (§6) staat vast in
-`Server.js`, geen Application setting nodig. Eén optionele:
+Niets verplicht hier voor de site zelf — welke taal een domein toont (§6) staat vast in
+`content/routes.json`, geen Application setting nodig. Eén optionele:
 
 | Naam | Waarde | Waarom |
 |---|---|---|
@@ -103,8 +105,9 @@ Controleren of het goed staat:
 
 - Web App → **Deployment Center** toont de koppeling met `DogodaBjorn/ty-luwa`, branch `main`,
   en de laatste deployment-status.
-- In de repo staat het door Azure gegenereerde workflow-bestand onder `.github/workflows/`
-  op `main` (niet op deze feature-branch — dat komt pas binnen zodra deze PR gemerged is).
+- In de repo staat het door Azure gegenereerde workflow-bestand op `main`:
+  `.github/workflows/main_ty-luwa.yml`. Die draait `npm install`, `npm run build` en uploadt
+  het resultaat, dus `public/` hoeft niet in git.
 - **Gebruik geen publish profile als je dit ooit handmatig overzet.** Basic authentication
   staat op nieuwe App Services standaard uit en dat is terecht — een publish profile is een
   langlevend wachtwoord in een secret. OIDC heeft geen wachtwoord dat kan lekken.
@@ -118,23 +121,13 @@ er weer twee tegelijk.
 
 ## 6. De drie Strato-domeinen koppelen
 
-Je hebt `ty-luwa.com`, `ty-luwa.fr` en `ty-luwa.nl` en wilt elk domein de eigen taalpagina's
-laten tonen: `ty-luwa.nl` toont Nederlands, `ty-luwa.fr` toont Frans, `ty-luwa.com` toont
-Engels. Duits heeft geen eigen domein — dat blijft bereikbaar als pad onder elk van de drie
-(`ty-luwa.com/de/...`, maar ook `ty-luwa.nl/de/...`), precies zoals de site het al aankan.
-Dit is bewust drie ccTLD's met elk hun eigen taal, geen canoniek-domein-plus-doorverwijzers
-zoals een eerdere versie van dit document voorstelde.
+Elk domein is een eigen website in een eigen taal: `ty-luwa.nl` Nederlands, `ty-luwa.com`
+Engels, `ty-luwa.fr` Frans, en Duits onder `ty-luwa.com/de/` omdat er geen `ty-luwa.de` is.
+Drie ccTLD's met elk hun eigen taal, geen canoniek domein met doorverwijzers.
 
 Alle zes de hostnamen (apex + `www` van elk domein) moeten op de App Service staan en TLS
-hebben — dat werkt hieronder exact hetzelfde als bij een canoniek domein. Wat verschilt is
-alleen wélke URL elk domein uiteindelijk toont; zie **De taal-redirect** aan het eind van
-deze sectie.
-
-> **Dit is een tussenstand.** De taal staat nu nog in de URL (`ty-luwa.com/en/verblijf`).
-> De afgesproken eindvorm is de taal op de root met vertaalde slugs
-> (`ty-luwa.com/accommodation`), en dat vergt een wijziging in de Vite-broncode die nog niet
-> in deze repo staat. De volledige specificatie staat in [`MEERTALIGHEID.md`](MEERTALIGHEID.md).
-> De DNS- en TLS-stappen hieronder blijven ongewijzigd geldig.
+hebben. Hoe de taal per domein werkt staat in [`MEERTALIGHEID.md`](MEERTALIGHEID.md);
+hieronder alleen wat je in Azure en bij Strato instelt.
 
 ### Per domein in Azure
 
@@ -180,27 +173,21 @@ Zodra een domein in Custom domains groen staat: klik het aan → **Add binding**
 Doe dit voor alle zes de namen. Een managed certificate kan geen wildcard, dus apex en
 `www` krijgen elk hun eigen certificaat — dat is prima.
 
-### De taal-redirect
+### Wat elk domein toont
 
-Dit staat vast in `Server.js` (`DOMAIN_DEFAULT_LANG_PREFIX`), niet in een Application
-setting — geen configuratiestap nodig, het werkt zodra de domeinen en TLS staan:
+Dit zit in de build en in `Server.js`, niet in een Application setting — geen
+configuratiestap, het werkt zodra de domeinen en TLS staan.
 
 | Binnenkomend | Resultaat |
 |---|---|
-| `ty-luwa.nl/verblijf` | 200, toont direct (Nederlands is de taal zonder prefix in de site zelf) |
-| `www.ty-luwa.nl/*` | 301 → `ty-luwa.nl/*` (www eraf) |
-| `ty-luwa.fr/verblijf` | 301 → `ty-luwa.fr/fr/verblijf` |
-| `www.ty-luwa.fr/*` | 301 → `ty-luwa.fr/fr/*` (www eraf én taal erbij, in één stap) |
-| `ty-luwa.com/verblijf` | 301 → `ty-luwa.com/en/verblijf` |
-| `www.ty-luwa.com/*` | 301 → `ty-luwa.com/en/*` |
-| `ty-luwa.com/de/verblijf` | 200, toont direct — Duits via het pad, op elk van de drie domeinen |
-| onbekende host (`azurewebsites.net`, Azure-probes, een IP) | nooit doorgestuurd |
-
-De reden dat dit een redirect moet zijn en geen server-side rewrite: de site is een
-client-side SPA, React Router leest de URL die in de browser staat. De server kan intern
-een pad herschrijven zonder dat de browser het merkt, maar dat verandert niets aan wat de
-router in de browser ziet — dus de enige manier om een kaal domein een taal te laten tonen
-is de browser echt naar `/fr/...` of `/en/...` sturen.
+| `ty-luwa.nl/verblijf` | 200, Nederlands |
+| `ty-luwa.com/accommodation` | 200, Engels |
+| `ty-luwa.fr/le-logement` | 200, Frans |
+| `ty-luwa.com/de/unterkunft` | 200, Duits |
+| `www.<domein>/*` | 301 → zonder `www` |
+| `ty-luwa.com/en/verblijf` (oude vorm) | 301 → `ty-luwa.com/accommodation` |
+| `<domein>/sitemap.xml`, `/robots.txt` | per domein een eigen bestand |
+| onbekende host (`azurewebsites.net`, probes, een IP) | nooit doorgestuurd |
 
 ---
 
@@ -224,14 +211,18 @@ gehashte wachtwoorden en sessies in Postgres.
 **Secrets.** Connection strings horen niet in de repo. Zet ze in **Application settings**,
 of beter in **Azure Key Vault** met een Key Vault reference. `.env` staat in `.gitignore`.
 
-**Structuur.** Voeg `routes/api.js` toe naast `Server.js` en mount die vóór de SPA-fallback
-in `Server.js` — de `app.get("*")` aan het eind vangt anders elke API-route af. Dat is de
-enige valkuil in de huidige serveropzet.
+**Structuur.** Voeg `routes/api.js` toe naast `Server.js` en mount die **vóór** de
+pagina-handler — die staat aan het eind van `Server.js` en vangt anders elke API-route af,
+net als de 404-handler daaronder. Zet het beheer op één taal en één domein
+(`ty-luwa.nl/beheer`), buiten de `hreflang`-set; `robots.txt` sluit `/beheer` al uit.
 
 ---
 
 ## 8. Wat er nog moet gebeuren aan de site zelf
 
-Zie de README. Kort: de Vite-broncode staat nog alleen op je eigen machine en moet hierheen,
-en de pagina's hebben nog geen canonical-, Open Graph- en hreflang-tags terwijl de site wel
-vier talen op eigen URL's serveert (`/verblijf`, `/en/verblijf`, `/de/verblijf`, `/fr/verblijf`).
+Zie de README. Kort: definitieve foto's in plaats van `assets/photos/provisional/`, en het
+aanvraagformulier dat nog niets verstuurt omdat dat op de boekingsadmin wacht.
+
+De SEO-kant is af: elke pagina draagt een self-canonical, `hreflang` naar alle vier de
+taalversies plus `x-default`, Open Graph, JSON-LD en een eigen meta description, en er is
+per domein een `sitemap.xml` en `robots.txt`.

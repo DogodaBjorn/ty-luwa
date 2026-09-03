@@ -1,0 +1,62 @@
+{
+  "_comment": "Domeinen, talen en de slug per pagina per taal. Dit is de enige plek waar een URL wordt vastgelegd: de build, de taalwisselaar, de hreflang-verwijzingen, de sitemaps en de server lezen hier allemaal uit. Een slug wijzigen is dus een regel hier, maar wel eentje die de URL verandert die al geindexeerd is - voeg dan een oude-naar-nieuwe regel toe aan Server.js.",
+
+  "languages": ["nl", "en", "de", "fr"],
+  "defaultLanguage": "en",
+
+  "domains": {
+    "nl": { "host": "ty-luwa.nl", "prefix": "" },
+    "en": { "host": "ty-luwa.com", "prefix": "" },
+    "de": { "host": "ty-luwa.com", "prefix": "/de" },
+    "fr": { "host": "ty-luwa.fr", "prefix": "" }
+  },
+
+  "slugs": {
+    "home": { "nl": "", "en": "", "de": "", "fr": "" },
+    "stay": {
+      "nl": "verblijf",
+      "en": "accommodation",
+      "de": "unterkunft",
+      "fr": "le-logement"
+    },
+    "conguel": {
+      "nl": "le-conguel",
+      "en": "le-conguel",
+      "de": "le-conguel",
+      "fr": "le-conguel"
+    },
+    "quiberon": {
+      "nl": "quiberon",
+      "en": "quiberon",
+      "de": "quiberon",
+      "fr": "quiberon"
+    },
+    "availability": {
+      "nl": "beschikbaarheid",
+      "en": "availability",
+      "de": "verfuegbarkeit",
+      "fr": "disponibilites"
+    },
+    "faq": { "nl": "faq", "en": "faq", "de": "faq", "fr": "faq" },
+    "contact": {
+      "nl": "contact",
+      "en": "contact",
+      "de": "kontakt",
+      "fr": "contact"
+    }
+  },
+
+  "nav": ["home", "stay", "conguel", "quiberon", "availability"],
+  "footerNav": ["home", "stay", "conguel", "quiberon", "availability", "faq", "contact"],
+
+  "legacyPaths": {
+    "_comment": "Wat de vorige SPA-opzet als URL had. De server 301't deze naar de nieuwe vorm zodat bestaande links en zoekresultaten niet doodlopen.",
+    "/": "home",
+    "/verblijf": "stay",
+    "/le-conguel": "conguel",
+    "/quiberon": "quiberon",
+    "/beschikbaarheid": "availability",
+    "/faq": "faq",
+    "/contact": "contact"
+  }
+}

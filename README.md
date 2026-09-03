@@ -1,106 +1,109 @@
 # Ty LuWa
 
-Website voor het vakantiehuis op Le Conguel, Quiberon (Bretagne). Viertalig: NL, EN, DE, FR.
+Website voor het vakantiehuis op Le Conguel, Quiberon (Bretagne). Drie domeinen, vier talen,
+één codebase.
 
-Een Vite/React single-page app, geserveerd door een kleine Express-server op Azure App
-Service. Draaide eerder als submap op `dogoda.nl/ty-luwa`; staat nu op eigen benen.
+| Domein | Taal | Voorbeeld |
+|---|---|---|
+| `ty-luwa.nl` | Nederlands | `ty-luwa.nl/verblijf` |
+| `ty-luwa.com` | Engels | `ty-luwa.com/accommodation` |
+| `ty-luwa.fr` | Frans | `ty-luwa.fr/le-logement` |
+| `ty-luwa.com/de/` | Duits | `ty-luwa.com/de/unterkunft` |
+
+Statische HTML, gegenereerd door een buildscript en geserveerd door een kleine
+Express-server op Azure App Service. Geen framework.
 
 ## Draaien
 
 ```bash
 npm install
-npm start          # http://localhost:8080
+npm start          # bouwt en start op http://localhost:8080
+npm run build      # alleen bouwen
+```
+
+Lokaal draait alles op `localhost`, waar geen domein de taal aangeeft. Ga direct naar
+`/nl/`, `/en/`, `/de/` of `/fr/`, of test met een echte host-header:
+
+```bash
+curl -H "Host: ty-luwa.fr" localhost:8080/le-logement
 ```
 
 ## Structuur
 
 ```
-Server.js                  Express: statische bestanden, SPA-fallback, canonical redirect
-public/                    de gebouwde site (Vite-output)
-  index.html
-  assets/                  gehashte js/css + foto's en brandmateriaal
-docs/AZURE-SETUP.md        Azure, DNS bij Strato, TLS, deployment, boekingsadmin
-docs/MEERTALIGHEID.md      drie domeinen / vier talen: doelopzet, slugs, wat de bron moet doen
-.github/workflows/         deploy naar Azure bij push op main
+content/site-content.json   alle teksten, vier talen        ← bewerk hier
+content/routes.json         domeinen, talen, slug per taal  ← bewerk hier
+assets/                     site.css, site.js, foto's, logo's
+scripts/build-site.js       genereert public/
+Server.js                   host → taal, redirects, sitemap
+public/                     GEGENEREERD, gitignored — nooit met de hand bewerken
+docs/AZURE-SETUP.md         Azure, DNS bij Strato, TLS, deployment, boekingsadmin
+docs/MEERTALIGHEID.md       hoe de drie domeinen en vier talen in elkaar zitten
 ```
 
-Routes komen van React Router: `/`, `/verblijf`, `/le-conguel`, `/quiberon`,
-`/beschikbaarheid`, `/faq`, `/contact`, elk ook onder een taalprefix (`/en/verblijf`,
-`/de/faq`, `/fr/contact`). De server serveert voor al die paden `public/index.html`.
+Een tekst wijzigen is `content/site-content.json`. Een URL wijzigen is
+`content/routes.json`. Beide zijn de enige plek waar hun soort informatie staat: de
+build, de taalwisselaar, de `hreflang`-verwijzingen, de sitemaps en de server lezen daar
+allemaal uit.
+
+## Wat de build doet
+
+`npm run build` genereert 28 pagina's (4 talen × 7 pagina's), drie sitemaps en drie
+`robots.txt`. Elke pagina krijgt automatisch:
+
+- een self-canonical
+- `hreflang` naar alle vier de taalversies plus `x-default`
+- Open Graph en Twitter-tags
+- JSON-LD (`LodgingBusiness`, op de FAQ-pagina ook `FAQPage`)
+- een eigen meta description, afgeleid van de introtekst van die pagina
+
+Omdat het echte HTML is, ziet een crawler dat zonder JavaScript uit te voeren. Dat is de
+reden dat de drie domeinen zin hebben.
+
+`site.css` en `site.js` krijgen een inhoudshash in hun bestandsnaam, zodat ze een jaar
+gecached mogen worden en een deploy toch meteen doorkomt.
+
+## Herkomst van de content
+
+De site draaide eerder als React/Vite-app onder `dogoda.nl/ty-luwa`. Die broncode bestaat
+niet meer: hij stond gitignored in een remote container die is opgeruimd, en alleen de
+gebouwde output is ooit gecommit.
+
+`content/site-content.json` is teruggehaald uit die geminificeerde bundle met
+`content/extract-from-bundle.js` — alle teksten in vier talen kwamen er compleet uit. De
+CSS en de foto's waren al gecommit. Daarmee is de site herbouwd als statische HTML, wat
+beter past bij wat hij moet doen dan een client-side app.
+
+Het bestand `extract-from-bundle.js` is bewaard als bewijsstuk. De bundle waar het naar
+verwijst is bij de herbouw verwijderd; hij staat nog in de git-historie
+(commit `99c3480`, `public/assets/index-BShhf7FK.js`).
 
 ## Nog te doen
 
-### 1. De broncode hierheen halen
+### Foto's
 
-`public/` is nu **gebouwde output die is meegecommit**, overgezet uit `dogoda/ty-luwa-app/`.
-De Vite-broncode staat alleen nog op de Windows-machine, in de map `Ty-LuWa/` naast de
-DoGoDa-repo, waar hij bewust in `.gitignore` stond.
+`assets/photos/provisional/` — de naam zegt het. Vervangen door definitieve beelden. De
+bestandsnamen zijn de sleutel in `scripts/build-site.js` (`PHOTOS`), dus houd ze gelijk of
+pas die tabel aan.
 
-Overzetten:
+### Het aanvraagformulier verstuurt nog niets
 
-1. Kopieer de broncode naar `app/` in deze repo (zonder `node_modules/` en `dist/`).
-2. Zet in `app/vite.config.*` de `base` terug van `'/ty-luwa/'` naar `'/'`.
-   De site staat nu op de root van een eigen domein, niet meer in een submap.
-3. Laat de build naar `public/` schrijven (`build.outDir`), voeg
-   `"build": "cd app && npm install && npm run build"` toe aan de scripts hier,
-   en zet `/public/` in `.gitignore`.
-4. Verwijder daarna de map `public/` uit git — de workflow bouwt hem voortaan zelf.
+`assets/site.js` vangt de submit af en toont de melding die in de content staat. Echt
+versturen wacht op de boekingsadmin.
 
-**Let op de onbewerkte bronfoto's.** Die zaten in `Ty-LuWa/` en hoorden nooit te deployen.
-Neem alleen de bewerkte foto's mee die nu in `public/assets/photos/` staan, of houd de
-bronmap buiten git.
+### Boekingsadmin
 
-Tot dat gebeurd is, is een sitewijziging alleen mogelijk door lokaal te bouwen en de
-`public/`-map te vervangen. De basispaden in de meegeleverde build zijn al van
-`/ty-luwa/` naar `/` herschreven, dus de site werkt zoals hij is.
-
-### 2. Foto's
-
-`public/assets/photos/provisional/` — de naam zegt het. Vervangen door definitieve beelden.
-
-### 3. SEO
-
-De pagina's dragen nu alleen een `<title>` en een meta description, en die zijn voor alle
-vier de talen en alle zeven de pagina's hetzelfde, omdat het één SPA-shell is. Wat ontbreekt:
-
-- `<link rel="canonical">` per pagina
-- `hreflang`-verwijzingen tussen de vier taalversies — juist hier waardevol, want de talen
-  hebben elk hun eigen URL
-- Open Graph en Twitter-tags, zodat een gedeelde link een beeld toont
-- JSON-LD (`LodgingBusiness` of `VacationRental`)
-- `sitemap.xml` en `robots.txt`
-
-Twee manieren om dat op te lossen. Server-side injectie per route in `Server.js`, zoals de
-TrainerBjörn-site doet — werkt ook voor crawlers die geen JavaScript uitvoeren, en dat is de
-reden om er de voorkeur aan te geven. Of client-side in React, wat eenvoudiger is maar
-afhankelijk van rendering door de crawler.
-
-Dit wacht op de definitieve URL-structuur: canonical, `hreflang` en sitemap verwijzen
-allemaal naar de slugs, en die veranderen nog. Zie punt 4.
-
-### 4. Taal per domein op de root, met vertaalde slugs
-
-De afgesproken eindvorm — `ty-luwa.com/accommodation` in plaats van
-`ty-luwa.com/en/verblijf`, en een taalwisselaar die naar het domein van die taal springt —
-vergt een wijziging in de Vite-broncode, niet in de server. Volledige specificatie, inclusief
-de voorgestelde slugtabel en wat er precies in de bron moet veranderen:
-[`docs/MEERTALIGHEID.md`](docs/MEERTALIGHEID.md).
-
-Geblokkeerd door punt 1: zonder de broncode in deze repo is dit niet te bouwen.
-
-### 5. Boekingsadmin
-
-Zie `docs/AZURE-SETUP.md` §7 en `docs/MEERTALIGHEID.md` §5 (één gedeelde database, één
-Nederlandstalige beheertool).
+Eén gedeelde planningsdatabase, één Nederlandstalige beheertool voor Luuk en Wanda.
+Zie `docs/AZURE-SETUP.md` §7 en `docs/MEERTALIGHEID.md` §5.
 
 ## Opruimen in de DoGoDa-repo
 
-Zolang deze site nog niet live staat, blijft `dogoda.nl/ty-luwa` gewoon werken. Zodra
-`www.ty-luwa.com` draait, kan daar weg:
+`dogoda.nl/ty-luwa` draait nog steeds de oude versie. Zodra de domeinen live zijn kan daar
+weg:
 
 - de map `ty-luwa-app/`
-- het `/ty-luwa`-blok in `Server.js` (regels 14–29)
+- het `/ty-luwa`-blok in `Server.js`
 - de regel `/Ty-LuWa/` in `.gitignore`
 
-Zet er wel een 301 van `/ty-luwa/*` naar `https://www.ty-luwa.com/` voor in de plaats, zodat
-bestaande links en zoekresultaten niet doodlopen. Dit is nog niet gedaan.
+Zet er een 301 van `/ty-luwa/*` naar `https://ty-luwa.com/` voor in de plaats. Dit is nog
+niet gedaan.

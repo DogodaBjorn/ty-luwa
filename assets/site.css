@@ -5,3 +5,10 @@
    deze regel is specifieker (klasse + attribuut) en wint dus in beide
    volgordes, zonder !important. */
 .mobile-menu[hidden]{display:none}
+
+/* Panorama's (breedte/hoogte > 2,4) krijgen in de galerij een volle rij op
+   natuurlijke hoogte, anders blijft van een 4,7:1-beeld in een 280px hoge
+   uitsnede alleen een smalle strook over. De build zet de klasse op basis van
+   de echte afmetingen van het bestand. */
+.gallery-grid figure.panorama{grid-column:1/-1}
+.gallery-grid figure.panorama img{height:auto;aspect-ratio:auto}

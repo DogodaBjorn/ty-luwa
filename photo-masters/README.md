@@ -6,35 +6,34 @@ meegebouwd en komt niet op de website — `scripts/build-site.js` kopieert allee
 
 ## Waarom ze hier staan
 
-Wat op de site staat (`assets/photos/provisional/`) is een bewerkte versie: er is
-persoonlijke rommel uit weggepoetst — schoenen op het terras, een parasolvoet, een
-handdoek over de reling, glazen op tafel, tuingereedschap. Terecht voor een verhuursite.
+Wat op de site staat (`assets/photos/provisional/`) is een bewerkte versie op de volle
+resolutie van deze originelen. De bewerking is in september 2026 opnieuw gedaan, omdat de
+eerste retouche (de versie uit de DoGoDa-repo) elf van de twaalf foto's een kwart had
+verkleind, de keuken fors had bijgesneden en de veranda had opgeschaald.
 
-Die bewerking heeft alleen ook de resolutie gekost. Elf van de twaalf zijn kleiner
-geworden, ongeveer een kwart in elke richting:
+Hoe de huidige versie is gemaakt staat in de README van de repo onder "Foto's". Kort: het
+1536px-origineel is de basis; alleen binnen de contouren van weggehaalde rommel zijn de
+pixels van de eerste retouche gebruikt, uitgelijnd en licht verscherpt. Drie foto's zijn
+bijgesneden in plaats van bewerkt.
 
-| Bestand | Origineel | Op de site |
-|---|---|---|
-| bathroom-wide.jpg | 1152×1536 | 864×1184 |
-| double-bedroom.jpg | 1152×1536 | 864×1184 |
-| exterior-main.jpg | 1536×1152 | 1184×864 |
-| garden-terrace.jpg | 1536×1152 | 1184×864 |
-| kitchen-overview.jpg | 1152×1536 | 570×1089 |
-| living-kitchen-wide.jpg | 1536×1015 | 1248×832 |
-| living-overview.jpg | 1536×1152 | 1184×864 |
-| separate-toilet.jpg | 1152×1536 | 864×1184 |
-| shower.jpg | 1152×1536 | 864×1184 |
-| twin-bedroom.jpg | 1152×1536 | 864×1184 |
-| walkin-closet.jpg | 1152×1536 | 864×1184 |
-| veranda-panorama.jpg | 1536×329 | 2048×512 (opgeschaald) |
+| Bestand | Origineel | Op de site | Wat er gebeurd is |
+|---|---|---|---|
+| bathroom-wide.jpg | 1152×1536 | 1152×1536 | tas en etui uit de kast, tandenborstel |
+| double-bedroom.jpg | 1152×1536 | 1152×1536 | kleding van het bed, knuffels van de plank |
+| exterior-main.jpg | 1536×1152 | 1536×1152 | handdoek, trui, schoenen, parasol, tafelspullen, gereedschap |
+| garden-terrace.jpg | 1536×1152 | 1536×1085 | trui, kom, handdoek, tafelspullen; onderrand met schoenen weggesneden |
+| kitchen-overview.jpg | 1152×1536 | 682×1065 | alleen bijgesneden: stoel met tas links en slippers onderin eruit |
+| living-kitchen-wide.jpg | 1536×1015 | 976×800 | alleen bijgesneden: volle eettafel eruit |
+| living-overview.jpg | 1536×1152 | 1536×1152 | eettafel leeggemaakt |
+| separate-toilet.jpg | 1152×1536 | 1152×1536 | bezem, fles op de vensterbank, wc-rol; schoonmaakflessen staan er nog |
+| shower.jpg | 1152×1536 | 1152×1536 | flessen uit het mandje |
+| twin-bedroom.jpg | 1152×1536 | 1152×1536 | schoenen, tas, plankspullen, kleding |
+| walkin-closet.jpg | 1152×1536 | 1152×1010 | alleen bijgesneden: stapel op de vloer eruit; kleren hangen er nog |
+| veranda-panorama.jpg | 1536×329 | 1536×329 | tas onder de tafel; volle breedte behouden |
 
-De keuken is er het slechtst vanaf gekomen: van staand 1152×1536 naar 570×1089, dus fors
-bijgesneden én verkleind. De veranda is juist opgeschaald naar een resolutie die er niet
-was, wat hem zacht maakt.
-
-Deze map bestaat zodat het opruimen desgewenst opnieuw kan, op volle resolutie, zonder
-afhankelijk te zijn van de git-historie van een andere repository. Precies dat is namelijk
-al een keer misgegaan: de broncode van de site stond nergens gecommit en is verloren.
+Deze map bestaat zodat een bewerking altijd opnieuw kan, zonder afhankelijk te zijn van
+de git-historie van een andere repository. Precies dat is namelijk al een keer misgegaan:
+de broncode van de site stond nergens gecommit en is verloren.
 
 ## Herkomst
 

@@ -89,6 +89,33 @@ const PHOTOS = {
 };
 const photo = (key) => `/assets/photos/provisional/${PHOTOS[key]}`;
 
+/** Breedte en hoogte uit de JPEG-header, zonder afhankelijkheid. */
+function jpegSize(file) {
+  const b = fs.readFileSync(file);
+  let i = 2;
+  while (i < b.length) {
+    if (b[i] !== 0xff) { i++; continue; }
+    const marker = b[i + 1];
+    if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+      return { height: b.readUInt16BE(i + 5), width: b.readUInt16BE(i + 7) };
+    }
+    i += 2 + b.readUInt16BE(i + 2);
+  }
+  return null;
+}
+const PHOTO_SIZE = Object.fromEntries(
+  Object.entries(PHOTOS).map(([k, f]) => [
+    k,
+    jpegSize(path.join(ASSETS, "photos", "provisional", f)),
+  ])
+);
+// Een panorama krijgt in de galerij een volle rij op natuurlijke hoogte;
+// in een 280px hoge uitsnede zou er alleen een smalle strook van overblijven.
+const isPanorama = (key) => {
+  const s = PHOTO_SIZE[key];
+  return !!s && s.width / s.height > 2.4;
+};
+
 // De eerste vijf vullen de mozaiek op de homepage.
 const MOSAIC = ["exterior", "living", "livingKitchen", "kitchen", "doubleBedroom"];
 
@@ -349,8 +376,8 @@ function pageHome(ctx) {
     h.stay.button
   )} ${icon("arrowRight")}</a>
         </div>
-        <img class="rounded-image" src="${photo("veranda")}" alt="${esc(
-    t.stay.gallery.veranda.alt
+        <img class="rounded-image" src="${photo("living")}" alt="${esc(
+    t.stay.gallery.living.alt
   )}" loading="lazy">
       </div>
     </section>
@@ -434,8 +461,10 @@ function pageStay(ctx) {
         <div class="gallery-grid">
           ${galleryKeys
             .map(
-              (k) => `<figure>
-            <img src="${photo(k)}" alt="${esc(s.gallery[k].alt)}" loading="lazy">
+              (k) => `<figure${isPanorama(k) ? ' class="panorama"' : ""}>
+            <img src="${photo(k)}" alt="${esc(s.gallery[k].alt)}" loading="lazy"${
+                PHOTO_SIZE[k] ? ` width="${PHOTO_SIZE[k].width}" height="${PHOTO_SIZE[k].height}"` : ""
+              }>
             <figcaption>${esc(s.gallery[k].category)}</figcaption>
           </figure>`
             )

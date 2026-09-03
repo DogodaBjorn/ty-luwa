@@ -36,6 +36,7 @@ content/routes.json         domeinen, talen, slug per taal  ← bewerk hier
 assets/                     site.css, site.js, foto's, logo's
 photo-masters/              onbewerkte foto's, niet meegebouwd
 scripts/build-site.js       genereert public/
+scripts/retouch-photos.py   maakt assets/photos/ uit photo-masters/ (reproduceerbaar)
 Server.js                   host → taal, redirects, sitemap
 public/                     GEGENEREERD, gitignored — nooit met de hand bewerken
 docs/AZURE-SETUP.md         Azure, DNS bij Strato, TLS, deployment, boekingsadmin
@@ -83,19 +84,39 @@ verwijst is bij de herbouw verwijderd; hij staat nog in de git-historie
 
 ### Foto's
 
-Het zijn echte foto's van de stacaravan, met de persoonlijke rommel eruit geretoucheerd.
-Alleen heeft die retouche ze ook verkleind: de meeste staan nu op ~1184×864 terwijl het
-origineel 1536×1152 was, en de keuken is fors bijgesneden. Voor de hero, die schermbreed
-staat, is dat aan de krappe kant op een groot scherm.
+Echte foto's van de stacaravan, op de volle 1536px van het origineel, met de persoonlijke
+rommel eruit. De onbewerkte originelen staan in `photo-masters/` (niet meegebouwd), met
+per bestand wat er is gedaan.
 
-De originelen staan in `photo-masters/` (niet meegebouwd) zodat het opruimen op volle
-resolutie overgedaan kan worden. Zie de README daar voor de maten per bestand.
+**Hoe de bewerking is gemaakt, en waarom zo.** De eerste retouche (uit de DoGoDa-repo) was
+zware generatieve AI-bewerking: die genereerde in twee foto's de lucht opnieuw, verving in
+de woonkamer-keuken de tafel en legde er een vloerkleed bij dat er niet ligt, en haalde in
+de inloopkast alle kleren weg voor verzonnen witte handdoeken. Ze had de foto's ook een
+kwart verkleind. Klassieke inpainting (OpenCV FSR en SHIFTMAP) is hier geprobeerd en
+faalt zichtbaar: smeer, of stukken stoel op het terras geplakt.
+
+Wat wel werkt en eerlijk is: het 1536px-origineel als basis, en **uitsluitend binnen de
+contouren van de weggehaalde rommel** de pixels van de eerste retouche, daarop uitgelijnd
+(SIFT-homografie), 1,3× opgeschaald en licht verscherpt, met zachte randen ingeblend.
+Zo is 95% van elke foto onbewerkt origineel, inclusief de echte lucht. De verzinsels zijn
+niet overgenomen: waar de eerste retouche iets had verzonnen, is bijgesneden in plaats van
+bewerkt (keuken, woonkamer-keuken, inloopkast) of is het echte beeld gelaten
+(schoonmaakflessen in het toilet). Eén uitzondering bewust wel: de opgehangen tuinslang op
+de hero, waar in werkelijkheid een bezem en twee harken staan; de slang bestaat, hij ligt
+alleen op de grond.
 
 `shower.jpg` en `separate-toilet.jpg` worden nergens getoond: ze hebben geen alt-tekst en
-categorie in de content, dus ze stonden ook in de oude site al buiten de galerij.
+categorie in de content.
+
+De bewerking is reproduceerbaar: `scripts/retouch-photos.py` maakt `assets/photos/provisional/`
+uit `photo-masters/` (originelen) en `photo-masters/first-retouch/` (de eerste retouche, als
+bron voor de vlakken). Vereist `pip install opencv-contrib-python-headless numpy`. Per foto
+staat in `CFG` welke vlakken en welke crop.
 
 De bestandsnamen zijn de sleutel in `scripts/build-site.js` (`PHOTOS`), dus bij vervanging
-gelijk houden of die tabel aanpassen.
+gelijk houden of die tabel aanpassen. De build leest de afmetingen uit de JPEG-header;
+een foto breder dan 2,4× zijn hoogte krijgt in de galerij een volle rij op natuurlijke
+hoogte, zodat een panorama een panorama blijft.
 
 ### Het aanvraagformulier verstuurt nog niets
 

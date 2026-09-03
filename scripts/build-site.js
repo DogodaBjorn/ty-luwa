@@ -61,10 +61,12 @@ const ICONS = {
   tent: '<path d="M3.5 21 14 3"/><path d="M20.5 21 10 3"/><path d="M15.5 21 12 15l-3.5 6"/><path d="M2 21h20"/>',
 };
 
-function icon(name, extra = "") {
+// Altijd met width/height: een inline SVG zonder maat vult zijn container, en dat
+// is precies hoe de vinkjes en pijlen in de eerste herbouw reusachtig werden.
+function icon(name, size = 24) {
   return (
-    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ` +
-    `stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"${extra}>${ICONS[name]}</svg>`
+    `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" ` +
+    `stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name]}</svg>`
   );
 }
 
@@ -117,7 +119,8 @@ const isPanorama = (key) => {
 };
 
 // De eerste vijf vullen de mozaiek op de homepage.
-const MOSAIC = ["exterior", "living", "livingKitchen", "kitchen", "doubleBedroom"];
+// Niet exterior: die is al de hero, direct erboven.
+const MOSAIC = ["garden", "living", "livingKitchen", "kitchen", "doubleBedroom"];
 
 const FACT_ICONS = ["users", "bed", "home", "waves"];
 const CARD_ICONS = ["tent", "sun", "waves"];
@@ -235,7 +238,7 @@ function layout(ctx, main) {
 <head>
   ${head(ctx)}
 </head>
-<body>
+<body class="page-${ctx.pageId}">
   <a class="skip-link" href="#main">${esc(t.layout.skipLink)}</a>
 
   <header class="site-header">
@@ -247,19 +250,22 @@ function layout(ctx, main) {
     </nav>
     <div class="header-actions">
       ${langSwitch(ctx)}
-      <a class="btn btn-primary desktop-only" href="${availability}">${esc(t.layout.cta)}</a>
+      <a class="btn btn-secondary desktop-only" href="${availability}"><span class="cta-long">${esc(
+    t.layout.cta
+  )}</span><span class="cta-short">${esc(t.layout.ctaShort)}</span></a>
       <button class="icon-button mobile-only" type="button"
               aria-label="${esc(t.layout.menuAria)}" aria-expanded="false"
               aria-controls="mobile-menu" data-menu-toggle>
-        ${icon("menu")}
+        <span data-icon-open>${icon("menu", 22)}</span><span data-icon-close hidden>${icon("x", 22)}</span>
       </button>
     </div>
-    <div class="mobile-menu" id="mobile-menu" hidden>
+    <nav class="mobile-menu" id="mobile-menu" aria-label="${esc(t.layout.navAria)}" hidden>
         ${navLinks(ctx)}
-        <a class="btn btn-primary" href="${availability}">${esc(t.layout.cta)}</a>
-        ${langSwitch(ctx)}
-    </div>
+    </nav>
   </header>
+  <!-- Buiten de header: die heeft een transform, en daarbinnen zou een
+       position:fixed scrim aan de header hangen in plaats van aan het viewport. -->
+  <div class="menu-scrim" data-menu-scrim hidden></div>
 
   <main id="main">
 ${main}
@@ -321,7 +327,7 @@ function pageHome(ctx) {
         <div class="hero-actions">
           <a class="btn btn-primary" href="${pagePath("availability", lang)}">${esc(
     t.layout.cta
-  )} ${icon("arrowRight")}</a>
+  )} ${icon("arrowRight", 18)}</a>
           <a class="btn btn-ghost" href="${pagePath("stay", lang)}">${esc(
     h.heroCtaSecondary
   )}</a>
@@ -369,12 +375,12 @@ function pageHome(ctx) {
           <p>${esc(h.stay.body)}</p>
           <ul class="feature-list">
             ${h.stay.features
-              .map((f) => `<li>${icon("check")}<span>${esc(f)}</span></li>`)
+              .map((f) => `<li>${icon("check", 20)}<span>${esc(f)}</span></li>`)
               .join("\n            ")}
           </ul>
           <a class="btn btn-secondary" href="${pagePath("stay", lang)}">${esc(
     h.stay.button
-  )} ${icon("arrowRight")}</a>
+  )} ${icon("arrowRight", 18)}</a>
         </div>
         <img class="rounded-image" src="${photo("living")}" alt="${esc(
     t.stay.gallery.living.alt
@@ -390,9 +396,9 @@ function pageHome(ctx) {
           <p>${esc(h.conguel.body)}</p>
           <p><a class="btn btn-light" href="${pagePath("conguel", lang)}">${esc(
     h.conguel.button
-  )} ${icon("arrowRight")}</a></p>
+  )} ${icon("arrowRight", 18)}</a></p>
         </div>
-        <div class="context-icon">${icon("waves")}</div>
+        <div class="context-icon">${icon("waves", 160)}</div>
       </div>
     </section>
 
@@ -404,7 +410,7 @@ function pageHome(ctx) {
           <p>${esc(h.quiberon.body)}</p>
           <a class="btn btn-secondary" href="${pagePath("quiberon", lang)}">${esc(
     h.quiberon.button
-  )} ${icon("arrowRight")}</a>
+  )} ${icon("arrowRight", 18)}</a>
         </div>
         <img class="rounded-image illustration" src="/assets/brand/ty-luwa-hero-illustration.png" alt="" loading="lazy">
       </div>
@@ -419,7 +425,7 @@ function pageHome(ctx) {
         </div>
         <a class="btn btn-light" href="${pagePath("availability", lang)}">${esc(
     t.layout.cta
-  )} ${icon("arrowRight")}</a>
+  )} ${icon("arrowRight", 18)}</a>
       </div>
     </section>`;
 }
@@ -433,9 +439,10 @@ function pageStay(ctx) {
         ${sectionHeading(s.eyebrow, s.title, s.text)}
       </div>
 
-      <div class="container content-grid">
+      <div class="container stay-facts">
         <div>
           <h3>${esc(s.sleepTitle)}</h3>
+          <div class="sleeping-grid">
           ${s.sleeping
             .map(
               (b) => `<div class="info-card">
@@ -444,12 +451,13 @@ function pageStay(ctx) {
           </div>`
             )
             .join("\n          ")}
+          </div>
         </div>
         <div>
           <h3>${esc(s.amenitiesTitle)}</h3>
-          <div class="amenity-list">
+          <div class="amenity-list amenity-list--wide">
             ${s.amenities
-              .map((a) => `<div>${icon("check")}<span>${esc(a)}</span></div>`)
+              .map((a) => `<div>${icon("check", 20)}<span>${esc(a)}</span></div>`)
               .join("\n            ")}
           </div>
         </div>
@@ -536,7 +544,7 @@ function pageAvailability(ctx) {
           </label>
           <p class="form-status" data-form-status hidden>${esc(a.status)}</p>
           <button class="btn btn-primary" type="submit">${esc(a.submit)}</button>
-          <p class="form-note">${icon("info")}<span>${esc(a.note)}</span></p>
+          <p class="form-note">${icon("info", 18)}<span>${esc(a.note)}</span></p>
         </form>
       </div>
     </section>`;
@@ -567,7 +575,7 @@ function pageContact(ctx) {
         ${sectionHeading(c.eyebrow, c.title, c.text)}
         <p><a class="btn btn-primary" href="${pagePath("availability", lang)}">${esc(
     t.layout.cta
-  )} ${icon("arrowRight")}</a></p>
+  )} ${icon("arrowRight", 18)}</a></p>
       </div>
     </section>`;
 }

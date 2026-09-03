@@ -123,6 +123,16 @@ hoogte, zodat een panorama een panorama blijft.
 `assets/site.js` vangt de submit af en toont de melding die in de content staat. Echt
 versturen wacht op de boekingsadmin.
 
+### Beslisinformatie die de site nog niet geeft
+
+Uit de UI/UX-beoordeling (september 2026): het overtuigingstraject is dun op precies het
+beslispunt. Nergens een prijsindicatie, minimumverblijf, wisseldag of afstand tot zee en
+strand, en de FAQ heeft drie vragen op een verder lege pagina. Dat is content die alleen
+Luuk en Wanda kunnen aanleveren; het hoort in `content/site-content.json` (FAQ-items en
+de introtekst van beschikbaarheid) en niet in de layout. Ook de datumvelden tonen de
+volgorde van de browser van de bezoeker (`mm/dd/yyyy` in een Engelstalige browser); dat is
+browsergedrag en niet vanuit de pagina te sturen.
+
 ### Boekingsadmin
 
 Eén gedeelde planningsdatabase, één Nederlandstalige beheertool voor Luuk en Wanda.

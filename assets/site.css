@@ -12,3 +12,107 @@
    de echte afmetingen van het bestand. */
 .gallery-grid figure.panorama{grid-column:1/-1}
 .gallery-grid figure.panorama img{height:auto;aspect-ratio:auto}
+
+/* ---- UI/UX-pass september 2026 -------------------------------------------
+   Herstelt wat in de herbouw naar statische HTML brak en wat de eerste versie
+   al niet goed had. Bewust als aanvulling onderaan, zodat het incumbent
+   ontwerp hierboven leesbaar en intact blijft. */
+
+/* Iconen: vaste maat, nooit de container vullen. */
+.btn svg{width:18px;height:18px;flex-shrink:0}
+.feature-list svg,.amenity-list svg{width:20px;height:20px;flex-shrink:0}
+.form-note svg{width:18px;height:18px;flex-shrink:0;margin-top:2px}
+.form-note{align-items:flex-start}
+
+/* Header: niets mag breken. Navigatielabels op één regel, CTA op één regel;
+   onder 1200px de korte CTA-tekst. */
+.desktop-nav{gap:18px}
+.desktop-nav a,.site-header .btn{white-space:nowrap}
+.site-header .cta-short{display:none}
+@media (width<=1200px){
+  .site-header .cta-long{display:none}
+  .site-header .cta-short{display:inline}
+}
+
+/* Hero: de content is onderaan uitgelijnd; zonder ruimte bovenin schuift de
+   kicker onder de vaste header. Kop iets kleiner zodat drie regels passen. */
+h1{font-size:clamp(2.6rem,5.2vw,5rem)}
+.hero{min-height:min(780px,100svh)}
+.hero-content{padding-top:150px}
+@media (width<=600px){.hero-content{padding-top:120px}}
+
+/* Taalwisselaar: aanraakbaar. */
+.lang-switch a{min-height:32px;display:inline-flex;align-items:center;justify-content:center;min-width:32px}
+@media (width<=900px){
+  .lang-switch a{min-width:40px;min-height:40px;font-size:.8rem}
+  .mobile-menu{max-height:calc(100dvh - 110px);overflow:auto}
+  .mobile-menu a{min-height:44px;display:flex;align-items:center}
+  .footer-nav a{padding:10px 2px}
+}
+
+/* Eén primaire actie per scherm. De hero bezit de vouw; de header-CTA is
+   secundair (omlijnd) en de vaste mobiele balk verdwijnt op de pagina waar het
+   formulier zelf de actie is. */
+.page-availability .mobile-cta{display:none}
+@media (width<=900px){.page-availability .site-footer{padding-bottom:64px}}
+
+/* Mobiele hero: donkerder onderin, want daar staan tekst en knoppen op het
+   lichtste deel van de foto. */
+@media (width<=600px){
+  .hero-overlay{background:linear-gradient(#041c2a33 0%,#041c2a80 40%,#041c2ae6 100%)}
+}
+
+/* Open menu: scrim erachter, en de hamburger wordt een kruis (site.js). */
+.menu-scrim{position:fixed;inset:0;background:#0d2f4559;z-index:45;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.menu-scrim[hidden]{display:none}
+.mobile-menu{z-index:50}
+.icon-button{width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:12px}
+.icon-button [hidden]{display:none}
+
+/* Verblijf: slaapplekken als rij van drie, voorzieningen als vier kolommen. */
+.stay-facts{display:grid;gap:56px;margin-top:56px}
+.stay-facts h3{margin-bottom:16px}
+.sleeping-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.sleeping-grid .info-card{margin:0}
+.amenity-list--wide{grid-template-columns:repeat(4,1fr)}
+.amenity-list div{padding:11px 13px;font-size:.95rem}
+@media (width<=900px){
+  .sleeping-grid{grid-template-columns:1fr}
+  .amenity-list--wide{grid-template-columns:repeat(2,1fr)}
+}
+@media (width<=600px){.amenity-list--wide{grid-template-columns:1fr}}
+
+/* Ritme: niet elke sectie even zwaar. Het intro-blok sluit dichter aan op de
+   quick-facts, het beslismoment krijgt juist lucht; boven een kop meer ruimte
+   dan eronder; een stap tussen h2 en de kaarttitels. */
+.section-heading{margin-bottom:28px}
+.section-heading h2,.split-copy h2{margin-top:14px;margin-bottom:14px}
+.page-home .quick-facts + * ,.page-home .section:first-of-type{padding-top:72px}
+.booking-banner{padding:96px 0}
+.booking-banner p{font-size:1.05rem;color:#f4f7f0}
+.context-band p{color:#dfe8ec}
+h3{font-size:clamp(1.25rem,1.5vw,1.45rem)}
+.info-card strong{font-size:1.1rem;display:block;margin-bottom:4px}
+.info-card p{margin:0;color:#4f585b}
+
+/* Header-correctie: de hamburger is alleen mobiel (de generieke .icon-button-
+   regel hierboven overschreef .mobile-only), het logo mag nooit krimpen, en de
+   lange CTA-tekst past pas comfortabel vanaf 1320px naast vijf nav-items en
+   vier talen. */
+.icon-button.mobile-only{display:none}
+@media (width<=900px){.icon-button.mobile-only{display:inline-flex}}
+.brand{flex-shrink:0}
+.brand img{max-width:none}
+@media (width<=1320px){
+  .site-header .cta-long{display:none}
+  .site-header .cta-short{display:inline}
+}
+/* Tussen 901 en 1100px past de header-CTA niet naast vijf nav-items en vier
+   talen; de hero en de boekingsband dragen daar de actie. Logo en nav iets
+   compacter. */
+@media (width<=1100px){
+  .site-header .btn{display:none}
+  .brand img{height:56px}
+  .desktop-nav{gap:14px}
+  .desktop-nav a{font-size:.86rem}
+}

@@ -7,12 +7,19 @@
   // --- mobiel menu -------------------------------------------------------
   var toggle = document.querySelector("[data-menu-toggle]");
   var menu = document.getElementById("mobile-menu");
+  var scrim = document.querySelector("[data-menu-scrim]");
+  var iconOpen = toggle && toggle.querySelector("[data-icon-open]");
+  var iconClose = toggle && toggle.querySelector("[data-icon-close]");
 
   if (toggle && menu) {
     var setOpen = function (open) {
       menu.hidden = !open;
+      if (scrim) scrim.hidden = !open;
+      if (iconOpen) iconOpen.hidden = open;
+      if (iconClose) iconClose.hidden = !open;
       toggle.setAttribute("aria-expanded", String(open));
     };
+    if (scrim) scrim.addEventListener("click", function () { setOpen(false); });
 
     toggle.addEventListener("click", function () {
       setOpen(menu.hidden);

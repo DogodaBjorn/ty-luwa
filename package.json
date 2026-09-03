@@ -1,0 +1,16 @@
+{
+  "name": "ty-luwa",
+  "version": "1.0.0",
+  "description": "Ty LuWa — vakantiehuis op Le Conguel, Quiberon (Bretagne)",
+  "main": "Server.js",
+  "private": true,
+  "scripts": {
+    "start": "node Server.js"
+  },
+  "engines": {
+    "node": "24.x"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

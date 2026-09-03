@@ -1,0 +1,10 @@
+node_modules/
+npm-debug.log*
+.env
+.env.local
+.DS_Store
+
+# Vite source tree for the SPA. Move it in here from your machine (see README);
+# until then the built output in public/ is committed as-is.
+/app/node_modules/
+/app/dist/

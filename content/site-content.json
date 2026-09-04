@@ -39,7 +39,14 @@
       "navAria": "Hoofdnavigatie",
       "footerNavAria": "Footernavigatie",
       "skipLink": "Direct naar inhoud",
-      "fineprint": "Ty LuWa is een particulier vakantieverblijf op Camping Le Conguel. De camping wordt niet door Ty LuWa beheerd."
+      "fineprint": "Ty LuWa is een particulier vakantieverblijf op Camping Le Conguel. De camping wordt niet door Ty LuWa beheerd.",
+      "lightbox": {
+        "aria": "Foto op groot formaat",
+        "close": "Sluiten",
+        "prev": "Vorige foto",
+        "next": "Volgende foto",
+        "counter": "Foto {n} van {total}"
+      }
     },
     "home": {
       "heroTitlePre": "Een comfortabel vakantieplekje aan de ",
@@ -136,43 +143,69 @@
       "gallery": {
         "exterior": {
           "alt": "Buitenzijde van Ty LuWa met terras en veranda",
-          "category": "Buiten"
+          "category": "Buiten",
+          "title": "Ty LuWa van buiten",
+          "caption": "Eigen terras, overdekte veranda en een trapje naar je eigen stukje groen. De vakantie begint zodra je de deur uitstapt."
         },
         "living": {
           "alt": "Open woonruimte van Ty LuWa",
-          "category": "Wonen"
+          "category": "Wonen",
+          "title": "De woonkamer",
+          "caption": "Licht, open en met plek voor iedereen. Een hoekbank voor de avonden, die ook omgebouwd kan worden tot slaapplek voor twee."
         },
         "livingKitchen": {
           "alt": "Woonkamer en keuken in één overzicht",
-          "category": "Wonen"
+          "category": "Wonen",
+          "title": "Wonen en koken in één ruimte",
+          "caption": "Geen aparte hokjes: wie kookt, praat gewoon mee. Zo voelt zes personen nog steeds als samen."
         },
         "kitchen": {
           "alt": "Complete keuken met oven, magnetron, koelkast en vaatwasser",
-          "category": "Keuken"
+          "category": "Keuken",
+          "title": "De keuken",
+          "caption": "Gasfornuis, oven, magnetron, koelkast met vriesvak en vaatwasser. Een keuken waar je echt in kookt, niet alleen in opwarmt."
         },
         "doubleBedroom": {
           "alt": "Hoofdslaapkamer met tweepersoonsbed",
-          "category": "Slapen"
+          "category": "Slapen",
+          "title": "De hoofdslaapkamer",
+          "caption": "Een tweepersoonsbed en een eigen inloopkast. Koffers uitpakken, kleren ophangen, en dan pas naar het strand."
         },
         "twinBedroom": {
           "alt": "Tweede slaapkamer met twee eenpersoonsbedden",
-          "category": "Slapen"
+          "category": "Slapen",
+          "title": "De tweede slaapkamer",
+          "caption": "Twee eenpersoonsbedden, fijn voor kinderen of vrienden. Samen met de slaapbank in de woonkamer slaap je hier met zes."
         },
         "bathroom": {
           "alt": "Badkamer met ruime douche",
-          "category": "Badkamer"
+          "category": "Badkamer",
+          "title": "De badkamer",
+          "caption": "Een ruime douche voor het zand van de dag, en een wasmachine voor de handdoeken. Het toilet is apart, wel zo praktisch met zes."
         },
         "closet": {
           "alt": "Inloopkast bij de hoofdslaapkamer",
-          "category": "Slapen"
+          "category": "Slapen",
+          "title": "De inloopkast",
+          "caption": "Meer opbergruimte dan je van een mobil-home verwacht. Handig voor een week, een zegen voor twee."
         },
         "garden": {
           "alt": "Privé-tuintje en terras",
-          "category": "Buiten"
+          "category": "Buiten",
+          "title": "Tuin en terras",
+          "caption": "Een eigen omheind tuintje met terras en ligbedden. Koffie in de ochtendzon, een glas wijn als de dag afkoelt."
         },
-        "veranda": {
-          "alt": "Overdekte veranda",
-          "category": "Buiten"
+        "verandaLeft": {
+          "alt": "Overdekte veranda met eettafel",
+          "category": "Buiten",
+          "title": "De veranda, eetkant",
+          "caption": "Overdekt en beschut, met een grote tafel. Hier ontbijt en dineer je buiten, ook als de Bretonse wind even aantrekt."
+        },
+        "verandaRight": {
+          "alt": "Overdekte veranda met zitjes aan de tuinkant",
+          "category": "Buiten",
+          "title": "De veranda, tuinkant",
+          "caption": "Aan de tuinkant staan de stoelen klaar met uitzicht op het groen. Voeten omhoog, boek erbij, en de rest van de camping is ver weg."
         }
       }
     },
@@ -297,7 +330,14 @@
       "navAria": "Main navigation",
       "footerNavAria": "Footer navigation",
       "skipLink": "Skip to content",
-      "fineprint": "Ty LuWa is a privately owned holiday home at Camping Le Conguel. The campsite is not operated by Ty LuWa."
+      "fineprint": "Ty LuWa is a privately owned holiday home at Camping Le Conguel. The campsite is not operated by Ty LuWa.",
+      "lightbox": {
+        "aria": "Photo enlarged",
+        "close": "Close",
+        "prev": "Previous photo",
+        "next": "Next photo",
+        "counter": "Photo {n} of {total}"
+      }
     },
     "home": {
       "heroTitlePre": "A comfortable holiday spot on the ",
@@ -394,43 +434,69 @@
       "gallery": {
         "exterior": {
           "alt": "Exterior of Ty LuWa with terrace and veranda",
-          "category": "Outside"
+          "category": "Outside",
+          "title": "Ty LuWa from the outside",
+          "caption": "Your own terrace, a covered veranda and a few steps down to your own patch of green. The holiday starts the moment you step out of the door."
         },
         "living": {
           "alt": "Open living space of Ty LuWa",
-          "category": "Living"
+          "category": "Living",
+          "title": "The living room",
+          "caption": "Bright, open and with room for everyone. A corner sofa for the evenings, which also converts into a bed for two."
         },
         "livingKitchen": {
           "alt": "Living room and kitchen in one view",
-          "category": "Living"
+          "category": "Living",
+          "title": "Living and cooking in one space",
+          "caption": "No separate boxes: whoever cooks stays part of the conversation. That is how six people still feel like company."
         },
         "kitchen": {
           "alt": "Complete kitchen with oven, microwave, fridge and dishwasher",
-          "category": "Kitchen"
+          "category": "Kitchen",
+          "title": "The kitchen",
+          "caption": "Gas hob, oven, microwave, fridge with freezer compartment and dishwasher. A kitchen you actually cook in, not just reheat in."
         },
         "doubleBedroom": {
           "alt": "Main bedroom with double bed",
-          "category": "Sleeping"
+          "category": "Sleeping",
+          "title": "The main bedroom",
+          "caption": "A double bed and a walk-in wardrobe of its own. Unpack the suitcases, hang up the clothes, and only then head for the beach."
         },
         "twinBedroom": {
           "alt": "Second bedroom with two single beds",
-          "category": "Sleeping"
+          "category": "Sleeping",
+          "title": "The second bedroom",
+          "caption": "Two single beds, ideal for children or friends. Together with the sofa bed in the living room, the house sleeps six."
         },
         "bathroom": {
           "alt": "Bathroom with spacious shower",
-          "category": "Bathroom"
+          "category": "Bathroom",
+          "title": "The bathroom",
+          "caption": "A spacious shower for the sand of the day, and a washing machine for the towels. The toilet is separate, which matters with six."
         },
         "closet": {
           "alt": "Walk-in wardrobe by the main bedroom",
-          "category": "Sleeping"
+          "category": "Sleeping",
+          "title": "The walk-in wardrobe",
+          "caption": "More storage than you expect from a mobile home. Handy for a week, a blessing for two."
         },
         "garden": {
           "alt": "Private garden and terrace",
-          "category": "Outside"
+          "category": "Outside",
+          "title": "Garden and terrace",
+          "caption": "Your own fenced garden with a terrace and sun loungers. Coffee in the morning sun, a glass of wine as the day cools down."
         },
-        "veranda": {
-          "alt": "Covered veranda",
-          "category": "Outside"
+        "verandaLeft": {
+          "alt": "Covered veranda with dining table",
+          "category": "Outside",
+          "title": "The veranda, dining side",
+          "caption": "Covered and sheltered, with a big table. Breakfast and dinner outside, even when the Breton wind picks up."
+        },
+        "verandaRight": {
+          "alt": "Covered veranda with chairs on the garden side",
+          "category": "Outside",
+          "title": "The veranda, garden side",
+          "caption": "On the garden side the chairs are waiting, looking out over the green. Feet up, book open, and the rest of the campsite is far away."
         }
       }
     },
@@ -555,7 +621,14 @@
       "navAria": "Hauptnavigation",
       "footerNavAria": "Footer-Navigation",
       "skipLink": "Direkt zum Inhalt",
-      "fineprint": "Ty LuWa ist eine private Ferienunterkunft auf dem Campingplatz Le Conguel. Der Campingplatz wird nicht von Ty LuWa betrieben."
+      "fineprint": "Ty LuWa ist eine private Ferienunterkunft auf dem Campingplatz Le Conguel. Der Campingplatz wird nicht von Ty LuWa betrieben.",
+      "lightbox": {
+        "aria": "Foto vergrößert",
+        "close": "Schließen",
+        "prev": "Vorheriges Foto",
+        "next": "Nächstes Foto",
+        "counter": "Foto {n} von {total}"
+      }
     },
     "home": {
       "heroTitlePre": "Ein gemütliches Urlaubsplätzchen an der ",
@@ -652,43 +725,69 @@
       "gallery": {
         "exterior": {
           "alt": "Außenansicht von Ty LuWa mit Terrasse und Veranda",
-          "category": "Draußen"
+          "category": "Draußen",
+          "title": "Ty LuWa von außen",
+          "caption": "Eigene Terrasse, überdachte Veranda und ein paar Stufen hinunter ins eigene Grün. Der Urlaub beginnt, sobald man aus der Tür tritt."
         },
         "living": {
           "alt": "Offener Wohnraum von Ty LuWa",
-          "category": "Wohnen"
+          "category": "Wohnen",
+          "title": "Das Wohnzimmer",
+          "caption": "Hell, offen und mit Platz für alle. Ein Ecksofa für die Abende, das sich auch in ein Bett für zwei verwandeln lässt."
         },
         "livingKitchen": {
           "alt": "Wohnzimmer und Küche in einem Blick",
-          "category": "Wohnen"
+          "category": "Wohnen",
+          "title": "Wohnen und Kochen in einem Raum",
+          "caption": "Keine getrennten Kammern: Wer kocht, redet einfach mit. So fühlen sich sechs Personen immer noch wie Gesellschaft an."
         },
         "kitchen": {
           "alt": "Komplette Küche mit Backofen, Mikrowelle, Kühlschrank und Spülmaschine",
-          "category": "Küche"
+          "category": "Küche",
+          "title": "Die Küche",
+          "caption": "Gasherd, Backofen, Mikrowelle, Kühlschrank mit Gefrierfach und Spülmaschine. Eine Küche, in der man wirklich kocht und nicht nur aufwärmt."
         },
         "doubleBedroom": {
           "alt": "Hauptschlafzimmer mit Doppelbett",
-          "category": "Schlafen"
+          "category": "Schlafen",
+          "title": "Das Hauptschlafzimmer",
+          "caption": "Ein Doppelbett und ein eigener begehbarer Kleiderschrank. Koffer auspacken, Kleider aufhängen, und erst dann an den Strand."
         },
         "twinBedroom": {
           "alt": "Zweites Schlafzimmer mit zwei Einzelbetten",
-          "category": "Schlafen"
+          "category": "Schlafen",
+          "title": "Das zweite Schlafzimmer",
+          "caption": "Zwei Einzelbetten, ideal für Kinder oder Freunde. Zusammen mit dem Schlafsofa im Wohnzimmer schlafen hier sechs."
         },
         "bathroom": {
           "alt": "Badezimmer mit großer Dusche",
-          "category": "Bad"
+          "category": "Bad",
+          "title": "Das Badezimmer",
+          "caption": "Eine große Dusche für den Sand des Tages und eine Waschmaschine für die Handtücher. Die Toilette ist separat, was zu sechst zählt."
         },
         "closet": {
           "alt": "Begehbarer Kleiderschrank am Hauptschlafzimmer",
-          "category": "Schlafen"
+          "category": "Schlafen",
+          "title": "Der begehbare Kleiderschrank",
+          "caption": "Mehr Stauraum, als man von einem Mobilheim erwartet. Praktisch für eine Woche, ein Segen für zwei."
         },
         "garden": {
           "alt": "Eigenes Gärtchen und Terrasse",
-          "category": "Draußen"
+          "category": "Draußen",
+          "title": "Garten und Terrasse",
+          "caption": "Ein eigenes, eingezäuntes Gärtchen mit Terrasse und Liegen. Kaffee in der Morgensonne, ein Glas Wein, wenn der Tag abkühlt."
         },
-        "veranda": {
-          "alt": "Überdachte Veranda",
-          "category": "Draußen"
+        "verandaLeft": {
+          "alt": "Überdachte Veranda mit Esstisch",
+          "category": "Draußen",
+          "title": "Die Veranda, Essseite",
+          "caption": "Überdacht und geschützt, mit einem großen Tisch. Hier wird draußen gefrühstückt und zu Abend gegessen, auch wenn der bretonische Wind auffrischt."
+        },
+        "verandaRight": {
+          "alt": "Überdachte Veranda mit Stühlen zur Gartenseite",
+          "category": "Draußen",
+          "title": "Die Veranda, Gartenseite",
+          "caption": "Zur Gartenseite hin stehen die Stühle bereit, mit Blick ins Grüne. Füße hoch, Buch auf, und der Rest des Campingplatzes ist weit weg."
         }
       }
     },
@@ -813,7 +912,14 @@
       "navAria": "Navigation principale",
       "footerNavAria": "Navigation du pied de page",
       "skipLink": "Aller au contenu",
-      "fineprint": "Ty LuWa est un hébergement de vacances privé situé au Camping Le Conguel. Le camping n’est pas exploité par Ty LuWa."
+      "fineprint": "Ty LuWa est un hébergement de vacances privé situé au Camping Le Conguel. Le camping n’est pas exploité par Ty LuWa.",
+      "lightbox": {
+        "aria": "Photo agrandie",
+        "close": "Fermer",
+        "prev": "Photo précédente",
+        "next": "Photo suivante",
+        "counter": "Photo {n} sur {total}"
+      }
     },
     "home": {
       "heroTitlePre": "Un coin de vacances confortable sur la ",
@@ -910,43 +1016,69 @@
       "gallery": {
         "exterior": {
           "alt": "Extérieur de Ty LuWa avec terrasse et véranda",
-          "category": "Extérieur"
+          "category": "Extérieur",
+          "title": "Ty LuWa vu de l’extérieur",
+          "caption": "Une terrasse à soi, une véranda couverte et quelques marches vers votre coin de verdure. Les vacances commencent dès que l’on passe la porte."
         },
         "living": {
           "alt": "Espace de vie ouvert de Ty LuWa",
-          "category": "Séjour"
+          "category": "Séjour",
+          "title": "Le salon",
+          "caption": "Lumineux, ouvert, avec de la place pour tout le monde. Un canapé d’angle pour les soirées, qui se transforme aussi en couchage pour deux."
         },
         "livingKitchen": {
           "alt": "Salon et cuisine en un seul coup d’œil",
-          "category": "Séjour"
+          "category": "Séjour",
+          "title": "Vivre et cuisiner dans un même espace",
+          "caption": "Pas de pièces cloisonnées : celui qui cuisine reste dans la conversation. C’est ainsi qu’à six, on se sent encore ensemble."
         },
         "kitchen": {
           "alt": "Cuisine complète avec four, micro-ondes, réfrigérateur et lave-vaisselle",
-          "category": "Cuisine"
+          "category": "Cuisine",
+          "title": "La cuisine",
+          "caption": "Plaque de cuisson au gaz, four, micro-ondes, réfrigérateur avec compartiment congélateur et lave-vaisselle. Une cuisine où l’on cuisine vraiment, pas seulement pour réchauffer."
         },
         "doubleBedroom": {
           "alt": "Chambre principale avec lit double",
-          "category": "Chambres"
+          "category": "Chambres",
+          "title": "La chambre principale",
+          "caption": "Un lit double et un dressing rien qu’à vous. On défait les valises, on suspend les vêtements, et seulement ensuite, direction la plage."
         },
         "twinBedroom": {
           "alt": "Seconde chambre avec deux lits simples",
-          "category": "Chambres"
+          "category": "Chambres",
+          "title": "La seconde chambre",
+          "caption": "Deux lits simples, parfaits pour les enfants ou des amis. Avec le canapé-lit du salon, la maison accueille six personnes."
         },
         "bathroom": {
           "alt": "Salle de bain avec grande douche",
-          "category": "Salle de bain"
+          "category": "Salle de bain",
+          "title": "La salle de bain",
+          "caption": "Une grande douche pour le sable de la journée, et un lave-linge pour les serviettes. Les toilettes sont séparées, ce qui compte à six."
         },
         "closet": {
           "alt": "Dressing attenant à la chambre principale",
-          "category": "Chambres"
+          "category": "Chambres",
+          "title": "Le dressing",
+          "caption": "Plus de rangement qu’on n’en attend d’un mobil-home. Pratique pour une semaine, une bénédiction pour deux."
         },
         "garden": {
           "alt": "Jardin privé et terrasse",
-          "category": "Extérieur"
+          "category": "Extérieur",
+          "title": "Jardin et terrasse",
+          "caption": "Un jardin privé et clôturé, avec terrasse et bains de soleil. Le café au soleil du matin, un verre de vin quand la journée se rafraîchit."
         },
-        "veranda": {
-          "alt": "Véranda couverte",
-          "category": "Extérieur"
+        "verandaLeft": {
+          "alt": "Véranda couverte avec table à manger",
+          "category": "Extérieur",
+          "title": "La véranda, côté repas",
+          "caption": "Couverte et abritée, avec une grande table. Petit-déjeuner et dîner dehors, même quand le vent breton se lève."
+        },
+        "verandaRight": {
+          "alt": "Véranda couverte avec fauteuils côté jardin",
+          "category": "Extérieur",
+          "title": "La véranda, côté jardin",
+          "caption": "Côté jardin, les fauteuils vous attendent, tournés vers la verdure. Les pieds en l’air, un livre ouvert, et le reste du camping est loin."
         }
       }
     },

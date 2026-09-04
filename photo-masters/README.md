@@ -14,7 +14,9 @@ verkleind, de keuken fors had bijgesneden en de veranda had opgeschaald.
 Hoe de huidige versie is gemaakt staat in de README van de repo onder "Foto's". Kort: het
 1536px-origineel is de basis; alleen binnen de contouren van weggehaalde rommel zijn de
 pixels van de eerste retouche gebruikt, uitgelijnd en licht verscherpt. Drie foto's zijn
-bijgesneden in plaats van bewerkt.
+bijgesneden in plaats van bewerkt. Het veranda-panorama is als strook van 4,7:1 nergens
+bruikbaar; de site toont er twee frames van, uit het bewerkte panorama gesneden
+(`DERIVED` in `scripts/retouch-photos.py`).
 
 | Bestand | Origineel | Op de site | Wat er gebeurd is |
 |---|---|---|---|
@@ -29,7 +31,9 @@ bijgesneden in plaats van bewerkt.
 | shower.jpg | 1152×1536 | 1152×1536 | flessen uit het mandje |
 | twin-bedroom.jpg | 1152×1536 | 1152×1536 | schoenen, tas, plankspullen, kleding |
 | walkin-closet.jpg | 1152×1536 | 1152×1010 | alleen bijgesneden: stapel op de vloer eruit; kleren hangen er nog |
-| veranda-panorama.jpg | 1536×329 | 1536×329 | tas onder de tafel; volle breedte behouden |
+| veranda-panorama.jpg | 1536×329 | 1536×329 | tas onder de tafel; volle breedte behouden, maar wordt zelf niet getoond |
+| ↳ veranda-left.jpg | uit panorama | 670×329 | uitsnede x 120–790: de eetkant met de grote tafel |
+| ↳ veranda-right.jpg | uit panorama | 510×329 | uitsnede x 600–1110: de tuinkant met de stoelen; de donkere deuropening rechts valt weg |
 
 Deze map bestaat zodat een bewerking altijd opnieuw kan, zonder afhankelijk te zijn van
 de git-historie van een andere repository. Precies dat is namelijk al een keer misgegaan:

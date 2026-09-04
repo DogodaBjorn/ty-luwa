@@ -1,7 +1,7 @@
 {
   "_comment": "Domeinen, talen en de slug per pagina per taal. Dit is de enige plek waar een URL wordt vastgelegd: de build, de taalwisselaar, de hreflang-verwijzingen, de sitemaps en de server lezen hier allemaal uit. Een slug wijzigen is dus een regel hier, maar wel eentje die de URL verandert die al geindexeerd is - voeg dan een oude-naar-nieuwe regel toe aan Server.js.",
 
-  "languages": ["nl", "en", "de", "fr"],
+  "languages": ["nl", "fr", "en", "de"],
   "defaultLanguage": "en",
 
   "domains": {

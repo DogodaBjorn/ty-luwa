@@ -33,7 +33,9 @@ curl -H "Host: ty-luwa.fr" localhost:8080/le-logement
 ```
 content/site-content.json   alle teksten, vier talen        ← bewerk hier
 content/routes.json         domeinen, talen, slug per taal  ← bewerk hier
-assets/                     site.css, site.js, foto's, logo's
+assets/                     site.css, site.js, foto's, logo's (brand/: het volledige
+                            merk, het gestapelde headerlogo en de deelkaart zijn
+                            daarvan afgeleid, zie scripts/brand-assets.js)
 photo-masters/              onbewerkte foto's, niet meegebouwd
 scripts/build-site.js       genereert public/
 scripts/retouch-photos.py   maakt assets/photos/ uit photo-masters/ (reproduceerbaar)
@@ -55,7 +57,8 @@ allemaal uit.
 
 - een self-canonical
 - `hreflang` naar alle vier de taalversies plus `x-default`
-- Open Graph en Twitter-tags
+- Open Graph en Twitter-tags, met `assets/brand/ty-luwa-share.jpg` (1200×630, de
+  hero-tekening) als deelkaart voor WhatsApp, LinkedIn en Facebook
 - JSON-LD (`LodgingBusiness`, op de FAQ-pagina ook `FAQPage`)
 - een eigen meta description, afgeleid van de introtekst van die pagina
 

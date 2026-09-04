@@ -164,7 +164,11 @@ function head(ctx) {
   const title = t.titles[ctx.legacyPath];
   const desc = description(t, pageId);
   const url = pageUrl(pageId, lang);
-  const ogImage = `https://${domains[lang].host}${photo("exterior")}`;
+  // Deelkaart voor WhatsApp, LinkedIn en Facebook: de hero-tekening op 1200x630,
+  // ruim onder de 300 kB die WhatsApp nog als voorbeeld toont. Het JSON-LD
+  // houdt de echte foto van het verblijf.
+  const ogImage = `https://${domains[lang].host}/assets/brand/ty-luwa-share.jpg`;
+  const ldImage = `https://${domains[lang].host}${photo("exterior")}`;
 
   const alternates = languages
     .map(
@@ -179,7 +183,7 @@ function head(ctx) {
     name: "Ty LuWa",
     description: desc,
     url,
-    image: ogImage,
+    image: ldImage,
     inLanguage: lang,
     address: {
       "@type": "PostalAddress",
@@ -216,7 +220,12 @@ ${alternates}
   <meta property="og:description" content="${esc(desc)}">
   <meta property="og:url" content="${url}">
   <meta property="og:image" content="${ogImage}">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Ty LuWa · Le Conguel, Quiberon">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="${ogImage}">
   <link rel="icon" href="/assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -262,7 +271,7 @@ function layout(ctx, main) {
 
   <header class="site-header">
     <a class="brand" href="${pagePath("home", lang)}" aria-label="Ty LuWa">
-      <img src="/assets/brand/ty-luwa-logo-header.png" alt="Ty LuWa" width="240" height="68">
+      <img src="/assets/brand/ty-luwa-logo-stacked.png" alt="Ty LuWa" width="320" height="236">
     </a>
     <nav class="desktop-nav" aria-label="${esc(t.layout.navAria)}">
         ${navLinks(ctx)}

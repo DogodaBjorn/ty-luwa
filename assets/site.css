@@ -6,12 +6,6 @@
    volgordes, zonder !important. */
 .mobile-menu[hidden]{display:none}
 
-/* Panorama's (breedte/hoogte > 2,4) krijgen in de galerij een volle rij op
-   natuurlijke hoogte, anders blijft van een 4,7:1-beeld in een 280px hoge
-   uitsnede alleen een smalle strook over. De build zet de klasse op basis van
-   de echte afmetingen van het bestand. */
-.gallery-grid figure.panorama{grid-column:1/-1}
-.gallery-grid figure.panorama img{height:auto;aspect-ratio:auto}
 
 /* ---- UI/UX-pass september 2026 -------------------------------------------
    Herstelt wat in de herbouw naar statische HTML brak en wat de eerste versie
@@ -115,4 +109,101 @@ h3{font-size:clamp(1.25rem,1.5vw,1.45rem)}
   .brand img{height:56px}
   .desktop-nav{gap:14px}
   .desktop-nav a{font-size:.86rem}
+}
+
+
+/* ---- Mobiel en foto's, september 2026 ----------------------------------- */
+
+/* Header op een telefoon. Hierboven mocht het logo niet krimpen en had elke
+   taal 40px; samen was dat breder dan het scherm, en de vierde taal en de
+   hamburger vielen eraf. Nu hebben talen en hamburger een vaste maat en neemt
+   het logo wat overblijft: op 360px zo'n 40px hoog, vanaf ~410px de volle
+   maat. Altijd helemaal in beeld, met lucht boven en onder. */
+@media (width<=900px){
+  .site-header{gap:10px;padding:8px 8px 8px 14px}
+  .brand{flex:1 1 auto;min-width:0}
+  .brand img{width:auto;height:auto;max-width:100%;max-height:54px}
+  .header-actions{flex-shrink:0;gap:6px}
+  .lang-switch{gap:0}
+  .lang-switch a{min-width:31px;min-height:40px;padding:6px 3px;font-size:.72rem;letter-spacing:.04em}
+}
+@media (width<=600px){
+  .brand img{max-height:50px}
+}
+
+/* Galerij op de verblijfpagina: zes kolommen, zodat de twee veranda-frames
+   samen een rij delen (elk drie kolommen) en de andere foto's met drie per rij
+   staan. Alle rijen even hoog. Op een tablet krijgt elk veranda-frame een
+   eigen volle rij op natuurlijke hoogte; op een telefoon staat alles onder
+   elkaar. */
+.gallery-grid{grid-template-columns:repeat(6,1fr)}
+.gallery-grid figure{grid-column:span 2}
+.gallery-grid figure.wide{grid-column:span 3}
+.gallery-grid figure.wide img{height:280px}
+.gallery-grid a{display:block}
+@media (width<=900px){
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .gallery-grid figure{grid-column:span 1}
+  .gallery-grid figure.wide{grid-column:span 2}
+  .gallery-grid figure.wide img{height:auto;max-height:380px}
+}
+@media (width<=600px){
+  .gallery-grid{grid-template-columns:1fr}
+  .gallery-grid figure,.gallery-grid figure.wide{grid-column:auto}
+  .gallery-grid figure.wide img{height:auto;max-height:none}
+}
+
+/* Mozaiek op de homepage: de foto's zijn nu links (naar de lightbox), dus de
+   grid- en scrollregels die op de img stonden horen op de link. */
+.photo-mosaic a{display:block;min-width:0;overflow:hidden}
+.photo-mosaic a img{width:100%;height:100%}
+@media (width<=600px){
+  .photo-mosaic a{flex:0 0 88%;scroll-snap-align:start}
+  .photo-mosaic a img{min-width:0;height:310px}
+}
+.photo-mosaic a:focus-visible,.gallery-grid a:focus-visible{outline-offset:-4px}
+
+/* Lightbox: een foto op groot formaat met titel en tekst eronder, en pijlen
+   om door de reeks te bladeren. De <dialog> ligt in de top layer, dus boven
+   de vaste header en de mobiele balk. De kaart krijgt van site.js een
+   breedte die bij de verhouding van de foto en de hoogte van het scherm past;
+   zonder JavaScript bestaat de lightbox niet en opent de link de foto zelf. */
+.lightbox{position:fixed;inset:0;width:100%;height:100vh;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:transparent;color:var(--ink);overflow:hidden}
+.lightbox::backdrop{background:#041c2af2}
+.lightbox-inner{width:100%;height:100%;padding:16px;display:flex;align-items:center;justify-content:center}
+.lightbox-figure{margin:0;width:min(100%,1100px);max-height:100%;display:grid;grid-template-rows:minmax(0,1fr) auto;background:var(--cream);border-radius:22px;overflow:hidden;box-shadow:0 30px 80px #00000066}
+.lightbox-stage{position:relative;min-height:120px;background:#0d2f45;display:flex;align-items:center;justify-content:center;touch-action:pan-y}
+.lightbox-stage img{display:block;max-width:100%;width:auto;height:auto;opacity:0;transition:opacity .25s}
+.lightbox-stage img.is-loaded{opacity:1}
+.lightbox-caption{padding:18px 22px 16px;display:grid;grid-template-columns:1fr auto;column-gap:16px;align-items:start}
+.lightbox-caption .eyebrow{margin:0 0 6px;grid-column:1}
+.lightbox-caption h3{margin:0 0 6px;font-size:clamp(1.15rem,1.6vw,1.5rem);grid-column:1}
+.lightbox-caption p:not(.eyebrow){margin:0;color:#4f585b;font-size:1rem;grid-column:1;max-width:70ch}
+.lightbox-counter{grid-column:2;grid-row:1/4;color:#8a9397;font-size:.8rem;font-weight:700;letter-spacing:.06em;white-space:nowrap;padding-top:2px}
+.lightbox-close,.lightbox-nav{cursor:pointer;width:44px;height:44px;border:0;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;transition:background-color .15s,transform .15s}
+.lightbox-close{position:absolute;top:14px;right:14px;z-index:2;background:#ffffff26;color:#fff;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.lightbox-close:hover{background:#ffffff40}
+.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);background:#faf7f1e6;color:var(--navy);box-shadow:0 6px 20px #00000040}
+.lightbox-nav:hover{background:#fff;transform:translateY(-50%) scale(1.05)}
+.lightbox-prev{left:12px}
+.lightbox-next{right:12px}
+.lightbox.is-single .lightbox-nav{display:none}
+.lightbox .lightbox-close:focus-visible,.lightbox .lightbox-nav:focus-visible{outline:3px solid var(--sea);outline-offset:2px}
+html.lightbox-open{overflow:hidden}
+@media (width<=600px){
+  .lightbox-inner{padding:10px}
+  .lightbox-figure{border-radius:16px}
+  .lightbox-caption{padding:14px 16px 12px;grid-template-columns:1fr;row-gap:0}
+  .lightbox-caption p:not(.eyebrow){font-size:.95rem}
+  .lightbox-counter{grid-column:1;grid-row:auto;padding-top:8px}
+  .lightbox-close{top:8px;right:8px}
+  .lightbox-nav{width:40px;height:40px}
+  .lightbox-prev{left:8px}
+  .lightbox-next{right:8px}
+}
+/* Een liggende telefoon: te weinig hoogte voor foto en tekst samen; dan
+   alleen de titel. */
+@media (height<=480px){
+  .lightbox-caption p:not(.eyebrow){display:none}
+  .lightbox-caption{padding-top:10px;padding-bottom:10px}
 }

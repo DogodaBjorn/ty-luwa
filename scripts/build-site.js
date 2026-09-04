@@ -54,6 +54,7 @@ const ICONS = {
     '<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/>',
   check: '<path d="M20 6 9 17l-5-5"/>',
   arrowRight: '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+  arrowLeft: '<path d="M19 12H5"/><path d="m12 19-7-7 7-7"/>',
   menu: '<path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>',
   x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
   info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
@@ -87,7 +88,11 @@ const PHOTOS = {
   bathroom: "bathroom-wide.jpg",
   closet: "walkin-closet.jpg",
   garden: "garden-terrace.jpg",
-  veranda: "veranda-panorama.jpg",
+  // De veranda is gefotografeerd als panorama van 1536x329. Als een strook
+  // werkt dat nergens; scripts/retouch-photos.py snijdt er twee frames uit,
+  // de eetkant en de tuinkant.
+  verandaLeft: "veranda-left.jpg",
+  verandaRight: "veranda-right.jpg",
 };
 const photo = (key) => `/assets/photos/provisional/${PHOTOS[key]}`;
 
@@ -111,12 +116,26 @@ const PHOTO_SIZE = Object.fromEntries(
     jpegSize(path.join(ASSETS, "photos", "provisional", f)),
   ])
 );
-// Een panorama krijgt in de galerij een volle rij op natuurlijke hoogte;
-// in een 280px hoge uitsnede zou er alleen een smalle strook van overblijven.
-const isPanorama = (key) => {
-  const s = PHOTO_SIZE[key];
-  return !!s && s.width / s.height > 2.4;
-};
+// De twee veranda-frames zijn breder dan de andere foto's (ruim 2:1 tegenover
+// 4:3). Ze staan samen op een eigen rij, elk een halve breedte; de CSS
+// (.gallery-grid figure.wide) regelt de uitsnede.
+const WIDE = new Set(["verandaLeft", "verandaRight"]);
+
+/**
+ * Een foto die de lightbox kan openen. Zonder JavaScript is het een gewone
+ * link naar het bestand; site.js vangt de klik af en toont de foto vergroot
+ * met titel en tekst uit de content. Alle items met dezelfde group vormen
+ * samen een reeks om doorheen te bladeren.
+ */
+function photoLink(ctx, key, group, inner, className = "") {
+  const g = ctx.t.stay.gallery[key];
+  return (
+    `<a${className ? ` class="${className}"` : ""} href="${photo(key)}" ` +
+    `data-lightbox-item data-lightbox-group="${group}" ` +
+    `data-title="${esc(g.title)}" data-caption="${esc(g.caption)}" ` +
+    `data-category="${esc(g.category)}">${inner}</a>`
+  );
+}
 
 // De eerste vijf vullen de mozaiek op de homepage.
 // Niet exterior: die is al de hero, direct erboven.
@@ -270,7 +289,7 @@ function layout(ctx, main) {
   <main id="main">
 ${main}
   </main>
-
+${main.includes("data-lightbox-item") ? lightbox(ctx) : ""}
   <footer class="site-footer">
     <div class="footer-brand">
       <strong>Ty LuWa</strong>
@@ -296,6 +315,43 @@ ${main}
   <script src="/assets/site.${ctx.assetHash}.js" defer></script>
 </body>
 </html>
+`;
+}
+
+/**
+ * De lightbox: een <dialog> die site.js vult vanuit de data-attributen van de
+ * aangeklikte foto. Staat alleen op pagina's met foto's. showModal() geeft
+ * gratis de focus-val, Escape en de achtergrond; de teksten komen uit de
+ * content zodat ze in alle vier de talen kloppen.
+ */
+function lightbox(ctx) {
+  const lb = ctx.t.layout.lightbox;
+  return `
+  <dialog class="lightbox" data-lightbox aria-label="${esc(lb.aria)}"
+          data-counter-template="${esc(lb.counter)}">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" type="button" data-lb-close aria-label="${esc(
+        lb.close
+      )}">${icon("x", 22)}</button>
+      <figure class="lightbox-figure">
+        <div class="lightbox-stage">
+          <button class="lightbox-nav lightbox-prev" type="button" data-lb-prev aria-label="${esc(
+            lb.prev
+          )}">${icon("arrowLeft", 22)}</button>
+          <img data-lb-img alt="" decoding="async">
+          <button class="lightbox-nav lightbox-next" type="button" data-lb-next aria-label="${esc(
+            lb.next
+          )}">${icon("arrowRight", 22)}</button>
+        </div>
+        <figcaption class="lightbox-caption">
+          <p class="eyebrow" data-lb-category></p>
+          <h3 data-lb-title></h3>
+          <p data-lb-caption></p>
+          <span class="lightbox-counter" data-lb-counter aria-live="polite"></span>
+        </figcaption>
+      </figure>
+    </div>
+  </dialog>
 `;
 }
 
@@ -353,11 +409,14 @@ function pageHome(ctx) {
       <div class="container">
         ${sectionHeading(null, h.intro.title, h.intro.text)}
         <div class="photo-mosaic" role="group" aria-label="${esc(t.mosaicAria)}">
-          ${MOSAIC.map(
-            (k, i) =>
-              `<img${i === 0 ? ' class="mosaic-main"' : ""} src="${photo(
-                k
-              )}" alt="${esc(t.stay.gallery[k].alt)}" loading="lazy">`
+          ${MOSAIC.map((k, i) =>
+            photoLink(
+              ctx,
+              k,
+              "mosaic",
+              `<img src="${photo(k)}" alt="${esc(t.stay.gallery[k].alt)}" loading="lazy">`,
+              i === 0 ? "mosaic-main" : ""
+            )
           ).join("\n          ")}
         </div>
         <p class="center"><a class="text-link" href="${pagePath(
@@ -469,10 +528,15 @@ function pageStay(ctx) {
         <div class="gallery-grid">
           ${galleryKeys
             .map(
-              (k) => `<figure${isPanorama(k) ? ' class="panorama"' : ""}>
-            <img src="${photo(k)}" alt="${esc(s.gallery[k].alt)}" loading="lazy"${
+              (k) => `<figure${WIDE.has(k) ? ' class="wide"' : ""}>
+            ${photoLink(
+              ctx,
+              k,
+              "gallery",
+              `<img src="${photo(k)}" alt="${esc(s.gallery[k].alt)}" loading="lazy"${
                 PHOTO_SIZE[k] ? ` width="${PHOTO_SIZE[k].width}" height="${PHOTO_SIZE[k].height}"` : ""
-              }>
+              }>`
+            )}
             <figcaption>${esc(s.gallery[k].category)}</figcaption>
           </figure>`
             )

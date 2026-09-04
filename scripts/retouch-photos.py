@@ -15,6 +15,7 @@ foto's; vandaar deze hybride.
     pip install opencv-contrib-python-headless numpy
     python3 scripts/retouch-photos.py            # alle foto's
     python3 scripts/retouch-photos.py shower.jpg # een enkele
+    python3 scripts/retouch-photos.py veranda-left.jpg veranda-right.jpg  # alleen de uitsnedes
 """
 import os, sys
 import cv2, numpy as np
@@ -41,6 +42,16 @@ CFG = {
     "separate-toilet.jpg": dict(comp_at=[(933, 659), (481, 1084), (538, 642), (889, 246)]),
     "shower.jpg": dict(comp_at=[(901, 498), (849, 528), (888, 694)], rect=[(800, 405, 955, 585)]),
     "veranda-panorama.jpg": dict(comp_at=[(269, 268), (730, 212)]),
+}
+
+# Afgeleide uitsnedes uit een bewerkte foto: naam -> (bron in OUT, (x0, y0, x1, y1)).
+# Het veranda-panorama (1536x329) werkt nergens als strook; de site toont er twee
+# frames van, de eetkant en de tuinkant. De donkere deuropening helemaal rechts
+# valt weg. Zelfde kwaliteit als de bron; de coordinaten staan ook in
+# photo-masters/README.md.
+DERIVED = {
+    "veranda-left.jpg": ("veranda-panorama.jpg", (120, 0, 790, 329)),
+    "veranda-right.jpg": ("veranda-panorama.jpg", (600, 0, 1110, 329)),
 }
 
 sift = cv2.SIFT_create(nfeatures=6000)
@@ -127,6 +138,14 @@ def retouch(name):
     return f"{name:26s} {result.shape[1]}x{result.shape[0]}  bewerkt {int((mask > 0).sum()):6d}px"
 
 
+def derive(name):
+    src, (x0, y0, x1, y1) = DERIVED[name]
+    im = cv2.imread(os.path.join(OUT, src))[y0:y1, x0:x1]
+    cv2.imwrite(os.path.join(OUT, name), im, [cv2.IMWRITE_JPEG_QUALITY, 92])
+    return f"{name:26s} {im.shape[1]}x{im.shape[0]}  uitsnede uit {src}"
+
+
 if __name__ == "__main__":
-    for name in (sys.argv[1:] or CFG):
-        print(retouch(name), flush=True)
+    # De afgeleide uitsnedes na hun bron, zodat ze uit de verse bewerking komen.
+    for name in (sys.argv[1:] or list(CFG) + list(DERIVED)):
+        print(derive(name) if name in DERIVED else retouch(name), flush=True)

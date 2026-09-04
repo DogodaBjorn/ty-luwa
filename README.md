@@ -106,7 +106,10 @@ de hero, waar in werkelijkheid een bezem en twee harken staan; de slang bestaat,
 alleen op de grond.
 
 `shower.jpg` en `separate-toilet.jpg` worden nergens getoond: ze hebben geen alt-tekst en
-categorie in de content.
+categorie in de content. `veranda-panorama.jpg` ook niet: als strook van 4,7:1 werkte hij
+nergens, dus de site toont er twee frames van (`veranda-left.jpg`, de eetkant, en
+`veranda-right.jpg`, de tuinkant), uit het bewerkte panorama gesneden. De coordinaten
+staan in `DERIVED` in `scripts/retouch-photos.py` en in `photo-masters/README.md`.
 
 De bewerking is reproduceerbaar: `scripts/retouch-photos.py` maakt `assets/photos/provisional/`
 uit `photo-masters/` (originelen) en `photo-masters/first-retouch/` (de eerste retouche, als
@@ -114,9 +117,17 @@ bron voor de vlakken). Vereist `pip install opencv-contrib-python-headless numpy
 staat in `CFG` welke vlakken en welke crop.
 
 De bestandsnamen zijn de sleutel in `scripts/build-site.js` (`PHOTOS`), dus bij vervanging
-gelijk houden of die tabel aanpassen. De build leest de afmetingen uit de JPEG-header;
-een foto breder dan 2,4× zijn hoogte krijgt in de galerij een volle rij op natuurlijke
-hoogte, zodat een panorama een panorama blijft.
+gelijk houden of die tabel aanpassen. De build leest de afmetingen uit de JPEG-header en
+zet ze als `width`/`height` op de afbeelding. De twee veranda-frames staan samen op een
+eigen rij in de galerij (`WIDE` in de build, `.gallery-grid figure.wide` in de CSS).
+
+Elke foto in de galerij en in de mozaiek op de homepage is een link naar het bestand.
+Met JavaScript opent die link de lightbox (`site.js`): de foto vergroot, met eronder een
+titel en een korte tekst, en pijlen, pijltjestoetsen of swipen om door de reeks te
+bladeren. Titel en tekst staan per foto en per taal in `content/site-content.json` onder
+`stay.gallery.<sleutel>.title` en `.caption`; de knopteksten van de lightbox onder
+`layout.lightbox`. Een nieuwe foto heeft dus alt, categorie, titel en tekst nodig in alle
+vier de talen, anders breekt de build.
 
 ### Het aanvraagformulier verstuurt nog niets
 

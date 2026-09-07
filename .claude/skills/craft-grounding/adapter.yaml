@@ -1,0 +1,56 @@
+adapter: craft-grounding
+target_repo: ty-luwa (E:\Websites\ty-luwa, remote DogodaBjorn/ty-luwa - live site, drie domeinen, vier talen; Luuk & Wanda's mobil-home op Camping Le Conguel, Quiberon; aanvraag-model, geen boekingsmachine)
+producer: BookCompiler (E:\bookcompiler)
+bundle: bundle_v1_full-corpus
+contract: E:\bookcompiler\docs\INTEGRATION_CONTRACT.md (v1.0.0)
+generated_at: "2026-09-08"
+principle_refs:
+  - { canonical_id: CP-021, role: core }
+  - { canonical_id: CP-035, role: core }
+  - { canonical_id: CP-012, role: core }
+  - { canonical_id: CP-026, role: core }
+  - { canonical_id: CP-015, role: core }
+  - { canonical_id: CP-019, role: core }
+  - { canonical_id: CP-036, role: core }
+  - { canonical_id: CP-027, role: core }
+  - { canonical_id: CP-023, role: core }
+  - { canonical_id: CP-029, role: core }
+  - { canonical_id: CP-030, role: core }
+  - { canonical_id: CP-033, role: core }
+  - { canonical_id: CP-038, role: core }
+  - { canonical_id: CP-040, role: core }
+  - { canonical_id: CP-041, role: core }
+  - { canonical_id: CP-009, role: core }
+  - { canonical_id: CP-013, role: core }
+  - { canonical_id: CP-001, role: supporting }
+  - { canonical_id: CP-002, role: supporting }
+  - { canonical_id: CP-016, role: supporting }
+  - { canonical_id: CP-017, role: supporting }
+  - { canonical_id: CP-025, role: supporting }
+  - { canonical_id: CP-028, role: supporting }
+  - { canonical_id: CP-031, role: supporting }
+  - { canonical_id: CP-032, role: supporting }
+  - { canonical_id: CP-043, role: supporting }
+  - { canonical_id: CP-047, role: supporting }
+  - { canonical_id: CP-037, role: guardrail }
+  - { canonical_id: CP-022, role: guardrail }
+overrides:
+  - context: boekingsmodel
+    note: >-
+      Ty LuWa is beschikbaar op aanvraag; succes is een aanvraag plus persoonlijk
+      contact, geen conversie. CP-013 (een vervolgstap) vertaalt naar de
+      beschikbaarheidsaanvraag; conversieadvies dat richting boekingsmachine of
+      urgentie duwt verliest altijd van de productwet "eerlijkheid boven conversie".
+  - context: bewijsdiscipline
+    note: >-
+      Er zijn geen reviews, testimonials of persdekking en die worden nooit verzonnen
+      (CP-015/CP-019 verscherpt door repowet). Bewijs is het verblijf zelf: echte
+      foto's, het feitenblad, en de 4-sterrenattributie die altijd bij Camping Le
+      Conguel ligt, nooit bij Ty LuWa.
+  - context: merkbasis
+    note: >-
+      De merkwetten in CLAUDE.md (feitenblad, attributie, aanvraag-model, geen dark
+      patterns), content/site-content.json als inhoudsbron in vier talen,
+      content/routes.json, docs/MEERTALIGHEID.md en assets/brand/ zijn de basislaag
+      en winnen op concrete waarden en stem; de canon is de oordeelslaag eronder.
+      Afwijkingen worden doctrine, geen conflicten.

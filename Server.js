@@ -254,6 +254,9 @@ app.use((req, res) => {
 module.exports = app;
 
 if (require.main === module) {
+  // Onderhoud (opruimen, dagelijkse snapshot, wekelijkse back-upmail) draait
+  // alleen in het echte proces, niet in tests.
+  require("./lib/jobs").createJobs({ store, db, mailer, config }).start();
   app.listen(port, () => {
     console.log(`Ty LuWa website running on port ${port}`);
   });

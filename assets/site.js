@@ -127,6 +127,83 @@
     });
   }
 
+  // --- beschikbaarheidskalender --------------------------------------------
+  // De kalender staat al in de pagina (server-side). Dit maakt hem tikbaar:
+  // eerste tik is de aankomstdag, tweede tik de vertrekdag, en de datums
+  // komen in het formulier. Op een telefoon één maand tegelijk met pijlen.
+  if (calBlock && form) {
+    var months = [].slice.call(calBlock.querySelectorAll(".cal"));
+    var hint = calBlock.querySelector("[data-cal-hint]");
+    if (hint) hint.hidden = false;
+    var busy = {};
+    [].slice.call(calBlock.querySelectorAll(".cal-day.is-busy")).forEach(function (td) {
+      busy[td.getAttribute("data-date")] = true;
+    });
+    var addDay = function (iso, n) {
+      return new Date(Date.parse(iso) + n * 86400000).toISOString().slice(0, 10);
+    };
+    var freeNights = function (a, b) {
+      for (var d = a; d < b; d = addDay(d, 1)) if (busy[d]) return false;
+      return true;
+    };
+    var paint = function () {
+      var a = arrival.value, b = departure.value;
+      [].slice.call(calBlock.querySelectorAll(".cal-day")).forEach(function (td) {
+        var d = td.getAttribute("data-date");
+        td.classList.toggle("is-selected", d === a || d === b);
+        td.classList.toggle("in-range", Boolean(a && b && d > a && d < b));
+      });
+    };
+    calBlock.addEventListener("click", function (e) {
+      var td = e.target.closest(".cal-day");
+      if (!td || td.classList.contains("is-past")) return;
+      var d = td.getAttribute("data-date");
+      var a = arrival.value;
+      if (a && !departure.value && d > a && freeNights(a, d)) {
+        departure.value = d;
+      } else if (!busy[d]) {
+        arrival.value = d;
+        departure.value = "";
+      } else {
+        return;
+      }
+      updateNights();
+      paint();
+      if (departure.value) {
+        var nameField = form.querySelector('[name="name"]');
+        if (nameField && window.innerWidth <= 900) form.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+    arrival.addEventListener("change", paint);
+    departure.addEventListener("change", paint);
+    form.addEventListener("tl:sent", paint);
+
+    // Eén maand tegelijk op een smal scherm.
+    var nav = document.createElement("div");
+    nav.className = "cal-nav";
+    nav.innerHTML =
+      '<button type="button" class="btn btn-secondary" data-cal-prev>\u2039 ' + calBlock.getAttribute("data-prev") + "</button>" +
+      '<button type="button" class="btn btn-secondary" data-cal-next>' + calBlock.getAttribute("data-next") + " \u203a</button>";
+    calBlock.insertBefore(nav, calBlock.firstChild);
+    var current = 0;
+    var showMonth = function (i) {
+      current = Math.max(0, Math.min(months.length - 1, i));
+      months.forEach(function (m, j) { m.classList.toggle("is-shown", j === current); });
+      nav.querySelector("[data-cal-prev]").disabled = current === 0;
+      nav.querySelector("[data-cal-next]").disabled = current === months.length - 1;
+    };
+    nav.querySelector("[data-cal-prev]").addEventListener("click", function () { showMonth(current - 1); });
+    nav.querySelector("[data-cal-next]").addEventListener("click", function () { showMonth(current + 1); });
+    var mq = window.matchMedia("(max-width: 900px)");
+    var applyPaging = function () {
+      calBlock.classList.toggle("is-paged", mq.matches);
+      if (mq.matches) showMonth(current);
+    };
+    if (mq.addEventListener) mq.addEventListener("change", applyPaging);
+    applyPaging();
+    paint();
+  }
+
   // --- lightbox ------------------------------------------------------------
   // Foto's in de galerij en de mozaiek zijn links naar het bestand. Met
   // JavaScript opent zo'n link de <dialog> die de build op de pagina zet, met

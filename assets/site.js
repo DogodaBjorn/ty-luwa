@@ -48,20 +48,82 @@
   }
 
   // --- aanvraagformulier -------------------------------------------------
-  // Verzenden is nog niet ingericht; dat wacht op de boekingsadmin. Tot die er
-  // is vangt dit de submit af en toont het de melding die in de content staat,
-  // in plaats van de pagina te herladen naar niets.
+  // Zonder JavaScript post het formulier gewoon naar /api/aanvraag en komt de
+  // melding via de server terug in de pagina. Met JavaScript blijft de pagina
+  // staan: de aanvraag gaat via fetch en de melding verschijnt onder het
+  // formulier, in de taal van de pagina (de server stuurt de tekst mee).
   var form = document.querySelector("[data-request-form]");
   if (form) {
     var status = form.querySelector("[data-form-status]");
+    var submit = form.querySelector("[data-form-submit]");
+    var arrival = form.querySelector('[name="arrival"]');
+    var departure = form.querySelector('[name="departure"]');
+    var nightsOut = form.querySelector("[data-form-nights]");
+    var calBlock = document.querySelector("[data-calendar]");
+
+    var showStatus = function (text, kind) {
+      if (!status) return;
+      status.textContent = text;
+      status.className = "form-status is-" + kind;
+      status.hidden = false;
+      status.setAttribute("role", "status");
+      status.scrollIntoView({ behavior: "smooth", block: "center" });
+    };
+
+    // Niet in het verleden: de datumvelden krijgen vandaag als ondergrens.
+    var todayIso = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 10);
+    if (arrival) arrival.min = todayIso;
+    if (departure) departure.min = todayIso;
+
+    var nightsBetween = function (a, b) {
+      return Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
+    };
+    var updateNights = function () {
+      if (!nightsOut || !calBlock) return;
+      var a = arrival.value, b = departure.value;
+      if (a && b && b > a) {
+        var n = nightsBetween(a, b);
+        nightsOut.textContent = n === 1
+          ? calBlock.getAttribute("data-night")
+          : calBlock.getAttribute("data-nights").replace("{n}", n);
+      } else {
+        nightsOut.textContent = "";
+      }
+      if (a && departure) departure.min = a > todayIso ? a : todayIso;
+    };
+    if (arrival) arrival.addEventListener("change", updateNights);
+    if (departure) departure.addEventListener("change", updateNights);
+
     form.addEventListener("submit", function (e) {
+      if (!window.fetch || !window.URLSearchParams) return; // gewone post
       e.preventDefault();
       if (!form.reportValidity()) return;
-      if (status) {
-        status.hidden = false;
-        status.setAttribute("role", "status");
-        status.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
+      if (submit) submit.disabled = true;
+      fetch(form.getAttribute("action"), {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams(new FormData(form)).toString(),
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          showStatus(data.message, data.ok ? "sent" : "error");
+          if (data.ok) {
+            form.reset();
+            updateNights();
+            form.dispatchEvent(new CustomEvent("tl:sent"));
+          }
+        })
+        .catch(function () {
+          showStatus(form.getAttribute("data-error-server") || "Error", "error");
+        })
+        .then(function () {
+          if (submit) submit.disabled = false;
+        });
     });
   }
 

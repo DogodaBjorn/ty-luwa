@@ -586,13 +586,17 @@ function cardsPage(ctx, key, iconSet) {
 }
 
 function pageAvailability(ctx) {
-  const { t } = ctx;
+  const { t, lang } = ctx;
   const a = t.availability;
-  const field = (name, label, type = "text", ph = "") =>
+  const field = (name, label, type = "text", ph = "", attrs = {}) =>
     `<label>${esc(label)}
             <input type="${type}" name="${name}" ${
       ph ? `placeholder="${esc(ph)}"` : ""
-    } ${type === "date" || name === "name" || name === "email" ? "required" : ""}>
+    } ${Object.entries(attrs)
+      .map(([k, v]) => `${k}="${v}"`)
+      .join(" ")} ${
+      type === "date" || name === "name" || name === "email" ? "required" : ""
+    }${name === "email" ? ' autocomplete="email"' : name === "name" ? ' autocomplete="name"' : ""}>
           </label>`;
 
   const c = a.calendar;
@@ -611,24 +615,32 @@ function pageAvailability(ctx) {
 
         ${sectionHeading(null, a.title, a.text)}
 
-        <form class="request-form" data-request-form novalidate>
+        <form class="request-form" data-request-form method="post" action="/api/aanvraag" novalidate
+              data-error-server="${esc(a.errors.server)}">
+          <input type="hidden" name="lang" value="${lang}">
+          <!-- Honeypot: onzichtbaar voor mensen, bots vullen hem in. -->
+          <label class="hp" aria-hidden="true">Website
+            <input type="text" name="website" tabindex="-1" autocomplete="off">
+          </label>
           <div class="form-row">
             ${field("arrival", a.arrival, "date")}
             ${field("departure", a.departure, "date")}
           </div>
+          <p class="form-nights" data-form-nights aria-live="polite"></p>
           <div class="form-row">
-            ${field("adults", a.adults, "number")}
-            ${field("children", a.children, "number")}
+            ${field("adults", a.adults, "number", "", { min: 1, max: 6, value: 2 })}
+            ${field("children", a.children, "number", "", { min: 0, max: 5, value: 0 })}
           </div>
           ${field("name", a.name, "text", a.phName)}
           ${field("email", a.email, "email", a.phEmail)}
           <label>${esc(a.message)}
-            <textarea name="message" rows="5" placeholder="${esc(
+            <textarea name="message" rows="5" maxlength="2000" placeholder="${esc(
               a.phMessage
             )}"></textarea>
           </label>
-          <p class="form-status" data-form-status hidden>${esc(a.status)}</p>
-          <button class="btn btn-primary" type="submit">${esc(a.submit)}</button>
+<!--tl:form-status-->
+          <p class="form-status" data-form-status hidden></p>
+          <button class="btn btn-primary" type="submit" data-form-submit>${esc(a.submit)}</button>
           <p class="form-note">${icon("info", 18)}<span>${esc(a.note)}</span></p>
         </form>
       </div>

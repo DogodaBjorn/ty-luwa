@@ -33,6 +33,10 @@ const pages = require("./lib/page").createPageRenderer({
   store,
   timeZone: config.timeZone,
 });
+const mailer = require("./lib/mail").createMailer(config.mail);
+if (mailer.provider === "console") {
+  console.log("MAIL_PROVIDER=console: mails worden gelogd, niet verstuurd");
+}
 
 // Elke taal heeft een eigen domein en een eigen map met gegenereerde HTML.
 // Duits deelt ty-luwa.com met Engels en is daar de enige taal met een prefix,
@@ -136,6 +140,21 @@ app.use(
   })
 );
 
+// --- aanvraagformulier ----------------------------------------------------
+// Vóór de paginahandler en de 404: die vangen anders elke route af.
+app.use(
+  require("./routes/api").createApiRouter({
+    store,
+    mailer,
+    config,
+    content,
+    routes,
+    pages,
+    clientIp,
+    knownHost: (host) => Boolean(HOSTS[host]) || isLocalHost(host),
+  })
+);
+
 // --- oude SPA-URL's -------------------------------------------------------
 // De vorige opzet had de taal in het pad (/en/verblijf) en overal de
 // Nederlandse slug. Die links bestaan al, dus ze krijgen een 301 naar de
@@ -196,8 +215,12 @@ app.use((req, res, next) => {
 
   // De beschikbaarheidspagina krijgt bij elk verzoek de actuele kalender.
   if (name === slugs.availability[lang]) {
+    // ?verzonden=1 is de no-JS-route na een aanvraag (redirect na de post).
+    const status = req.query.verzonden
+      ? { kind: "sent", text: content[lang].availability.sent }
+      : null;
     res.type("html");
-    return res.send(pages.renderAvailabilityPage(lang));
+    return res.send(pages.renderAvailabilityPage(lang, status));
   }
   return res.sendFile(file);
 });

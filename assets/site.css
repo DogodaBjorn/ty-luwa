@@ -262,3 +262,11 @@ html.lightbox-open{overflow:hidden}
 .cal-block.is-paged .cal.is-shown{display:table}
 @media (width<=900px){.cal-months{grid-template-columns:1fr}.cal td{height:46px}}
 @media (width<=600px){.cal{border-spacing:2px;padding:8px 6px 6px}.cal td{height:44px;font-size:.95rem}}
+
+/* Aanvraagformulier: honeypot buiten beeld, melding in twee smaken, nachtenteller. */
+.request-form .hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.request-form{position:relative}
+.form-status.is-sent{border-color:#b9cbaa;color:#3f5230;background:#eef4e8}
+.form-status.is-error{border-color:#e2b8a8;color:#7a3b26;background:#fbeee9}
+.form-nights{margin:-8px 0 0;color:var(--sea-ink);font-weight:600;font-size:.95rem;min-height:1.2em}
+.form-nights:empty{display:none}

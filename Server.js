@@ -140,6 +140,20 @@ app.use(
   })
 );
 
+// --- beheer ---------------------------------------------------------------
+// Alleen op ty-luwa.nl (BEHEER_HOST) en lokaal; andere bekende hosts sturen
+// door, onbekende krijgen 404. Vóór de paginahandler, die vangt anders alles.
+app.use(
+  "/beheer",
+  require("./routes/beheer").createBeheerRouter({
+    store,
+    mailer,
+    config,
+    isLocalHost,
+    knownHost: (host) => Boolean(HOSTS[host]),
+  })
+);
+
 // --- aanvraagformulier ----------------------------------------------------
 // Vóór de paginahandler en de 404: die vangen anders elke route af.
 app.use(

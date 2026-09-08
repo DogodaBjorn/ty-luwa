@@ -1,0 +1,123 @@
+/* Beheer van Ty LuWa. Voor een telefoon, voor ogen van 67 en 70: grote tekst,
+   hoge knoppen, rustige kleuren uit de huisstijl, één actie per scherm. */
+:root{--navy:#123f5d;--sea:#82b7c5;--sea-ink:#3e7086;--sand:#dec9a3;--sand-tint:#f4ede1;--sage:#7c906d;--sage-ink:#5a6c4d;--cream:#faf7f1;--ink:#2e3436;--line:#e7e1d7;--warn:#7a3b26;--warn-bg:#fbeee9;--ok:#3f5230;--ok-bg:#eef4e8;--radius:18px}
+*{box-sizing:border-box}
+html{font-size:18px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+a{color:inherit}
+h1,h2{color:var(--navy);line-height:1.15;margin:0 0 12px}
+h1{font-size:1.6rem}h2{font-size:1.2rem;margin-top:24px}
+p{margin:0 0 14px}
+.muted{color:#6a7477}.center{text-align:center}
+.big{font-size:1.25rem;font-weight:700;color:var(--navy)}
+.eyebrow{letter-spacing:.06em;text-transform:uppercase;color:var(--sage-ink);font-size:.8rem;font-weight:700;margin-bottom:6px}
+.ok{color:var(--ok);font-weight:600}.warn{color:var(--warn);font-weight:600}
+
+/* Bovenbalk met tabs */
+.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+.top-row{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;min-height:56px}
+.brand{font-family:Georgia,"Lora",serif;font-weight:700;color:var(--navy);font-size:1.25rem}
+.brand small{font-family:system-ui,sans-serif;font-weight:500;color:#6a7477;font-size:.85rem;margin-left:6px}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--navy);font-weight:700;text-decoration:none;min-height:44px;padding:0 6px 0 0}
+.logout button{background:none;border:0;color:#6a7477;font:inherit;font-size:.9rem;min-height:44px;padding:0 6px;cursor:pointer;text-decoration:underline}
+.tabs{display:flex}
+.tabs a{flex:1;text-align:center;padding:12px 6px;min-height:52px;text-decoration:none;font-weight:700;color:#5a6a70;border-bottom:4px solid transparent;display:flex;align-items:center;justify-content:center;gap:8px}
+.tabs a[aria-current]{color:var(--navy);border-bottom-color:var(--sea)}
+.badge{background:var(--navy);color:#fff;border-radius:999px;padding:1px 9px;font-size:.85rem}
+
+main{padding:16px;max-width:760px;margin:0 auto;padding-bottom:120px}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.narrow{max-width:520px;margin:0 auto}
+.card form{display:grid;gap:8px}
+label{font-weight:700;color:var(--navy);margin-top:8px}
+input,textarea{font:inherit;color:var(--ink);background:#fff;border:1.5px solid #c5ced2;border-radius:12px;padding:14px;min-height:56px;width:100%}
+textarea{min-height:90px}
+input:focus,textarea:focus{outline:3px solid var(--sea);outline-offset:1px;border-color:var(--sea)}
+input.code{font-size:1.8rem;letter-spacing:.3em;text-align:center}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row>div{display:grid;gap:8px}
+@media (max-width:420px){.row{grid-template-columns:1fr}}
+
+/* Knoppen: 56px hoog, volle breedte op een telefoon */
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:12px 20px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--navy);font:inherit;font-weight:700;text-decoration:none;cursor:pointer;width:100%;margin-top:10px}
+.btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn.ghost{width:auto;min-height:48px;padding:8px 14px;border-color:transparent;background:transparent;margin:0}
+.btn.danger-outline{border-color:#e2b8a8;color:var(--warn);background:#fff}
+.btn:active{transform:translateY(1px)}
+.btn svg{flex-shrink:0}
+button.link,a.link{background:none;border:0;padding:10px 4px;min-height:44px;color:var(--sea-ink);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer}
+.minor{display:flex;flex-wrap:wrap;gap:4px 18px;margin-top:10px;justify-content:center}
+.actions{margin-top:20px}
+
+/* Meldingen */
+.flash{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 14px;border-radius:14px;padding:14px 16px;margin:0 0 14px;border:1px solid}
+.flash-ok{background:var(--ok-bg);color:var(--ok);border-color:#c8d8bb}
+.flash-warn{background:var(--warn-bg);color:var(--warn);border-color:#e9c8bc}
+.flash form{margin:0}
+.flash.overlap{display:block}
+.flash.overlap ul{margin:6px 0 8px;padding-left:20px}
+.flash.overlap a{color:inherit}
+.check{display:flex;align-items:center;gap:12px;font-weight:700;margin-top:4px}
+.check input{width:28px;height:28px;min-height:0;accent-color:var(--navy)}
+.notice{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--sand-tint);border:1px solid #e6dcc9;border-radius:14px;padding:14px 16px;margin:0 0 14px;text-decoration:none;color:var(--navy);min-height:56px}
+.notice.static{display:grid;gap:2px}
+
+/* Kalender */
+.month-nav{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:8px}
+.month-nav h1{margin:0;font-size:1.35rem;text-transform:capitalize;text-align:center}
+.cal{width:100%;border-collapse:separate;border-spacing:3px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:8px 6px;table-layout:fixed}
+.cal caption{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.cal th{color:#6a7477;font-size:.75rem;font-weight:700;text-transform:uppercase;padding:4px 0 6px}
+.cal td{height:52px;text-align:center;vertical-align:middle;border-radius:10px;font-weight:600;color:var(--navy)}
+.cal td a{display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:10px;text-decoration:none;color:inherit;position:relative}
+.cal-day{background:#f4f9fa}
+.cal-day.is-past{background:transparent;color:#b6bec1;font-weight:500}
+.cal-day.is-today .cal-num{box-shadow:inset 0 0 0 2px var(--sea);border-radius:8px;padding:2px 6px}
+.cal-day.is-busy{background:repeating-linear-gradient(135deg,#e6d8bd 0 4px,var(--sand-tint) 4px 9px);color:#6b5b33}
+.cal-day.is-busy a::after{content:"";position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:8px;height:8px;border-radius:50%;background:var(--dot,#6b5b33)}
+.kind-rented{--dot:#123f5d}.kind-option{--dot:#c9a24a}.kind-own{--dot:#7c906d}.kind-blocked{--dot:#8a949a}
+.cal-day.kind-rented{background:repeating-linear-gradient(135deg,#cfe0e7 0 4px,#e8f1f4 4px 9px);color:var(--navy)}
+.cal-day.kind-own{background:repeating-linear-gradient(135deg,#d4ddc9 0 4px,#eef2e8 4px 9px);color:var(--sage-ink)}
+.cal-day.kind-blocked{background:repeating-linear-gradient(135deg,#d9dde0 0 4px,#eef0f2 4px 9px);color:#55606a}
+.visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;list-style:none;padding:0;margin:12px 4px 0;font-size:.9rem;color:#535b5f}
+.legend li{display:flex;align-items:center;gap:8px}
+.dot{width:14px;height:14px;border-radius:50%;background:var(--dot,#999);flex-shrink:0;display:inline-block}
+
+/* Lijsten met kaarten (periodes, aanvragen) — dit zijn de echte tikdoelen */
+.list h1,.list h2{margin:20px 0 10px}
+.periods,.requests{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.period,.request{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-height:64px;text-decoration:none;color:var(--ink)}
+.period-main,.request-main{display:grid;gap:2px}
+.period-main strong,.request-main strong{color:var(--navy)}
+.request-main span{font-size:.95rem}
+.empty{color:#6a7477;padding:14px 4px}
+.subtabs{display:flex;gap:8px;margin:0 0 14px}
+.subtabs a{flex:1;text-align:center;padding:12px;min-height:52px;border-radius:999px;border:1.5px solid var(--line);background:#fff;text-decoration:none;font-weight:700;color:#5a6a70;display:flex;align-items:center;justify-content:center}
+.subtabs a[aria-current]{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* Periodeformulier */
+fieldset{border:0;padding:0;margin:8px 0 0}
+legend{font-weight:700;color:var(--navy);padding:0;margin-bottom:8px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:420px){.tiles{grid-template-columns:1fr}}
+.tile{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;min-height:64px;margin:0;cursor:pointer;background:#fff}
+.tile input{width:22px;height:22px;min-height:0;margin:0;accent-color:var(--navy);flex-shrink:0}
+.tile-text{display:grid;line-height:1.25}
+.tile-text span{font-weight:400;color:#6a7477;font-size:.9rem}
+.tile:has(input:checked){border-color:var(--navy);box-shadow:inset 0 0 0 1.5px var(--navy);background:#f4f9fa}
+.nights{color:var(--sea-ink);font-weight:600;min-height:1.4em;margin:0}
+.guest{display:grid;gap:8px}
+.guest[hidden]{display:none}
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0 0 14px}
+dl.facts dt{color:#6a7477;font-weight:600}dl.facts dd{margin:0}
+blockquote{margin:0 0 14px;padding:12px 16px;border-left:4px solid var(--sand);background:var(--sand-tint);border-radius:0 12px 12px 0}
+
+.bottom-action{position:fixed;left:0;right:0;bottom:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(#faf7f100,#faf7f1 40%)}
+.bottom-action .btn{max-width:728px;margin:0 auto;box-shadow:0 10px 30px #1c354133}
+
+.prose h2{margin-top:26px}.prose ol,.prose ul{padding-left:22px}.prose li{margin-bottom:6px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Smal scherm: de maandnaam past niet naast twee tekstknoppen; dan alleen de pijlen. */
+@media (max-width:460px){.month-nav .btn.ghost span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.month-nav .btn.ghost{min-width:48px}.month-nav h1{font-size:1.25rem}}

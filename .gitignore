@@ -8,3 +8,6 @@ npm-debug.log*
 # bij npm start, dus de gebouwde site hoort niet in git. Bewerk assets/ en
 # content/, nooit public/.
 /public/
+
+# Planning en aanvragen (SQLite + snapshots). Lokaal ./data, op Azure /home/data.
+/data/

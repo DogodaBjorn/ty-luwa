@@ -2,6 +2,12 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 
+// Lokaal staan de instellingen in .env (gitignored); op Azure zijn het
+// Application settings. Node 24 leest .env zonder dependency.
+if (fs.existsSync(path.join(__dirname, ".env"))) {
+  process.loadEnvFile(path.join(__dirname, ".env"));
+}
+
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -33,13 +39,34 @@ for (const host of Object.keys(HOSTS)) {
 
 const DEFAULT_LANG = routes.defaultLanguage;
 
+/**
+ * Het IP van de bezoeker. Met trust proxy aan is req.ip het eerste adres in
+ * X-Forwarded-For, en dat vult de client zelf in; het laatste adres is wat
+ * Azure's front-end erachter zet. Azure plakt daar een poort aan vast.
+ */
+function clientIp(req) {
+  const xff = String(req.headers["x-forwarded-for"] || "");
+  const last = xff.split(",").pop().trim();
+  const raw = last || req.socket.remoteAddress || "";
+  return raw.replace(/^::ffff:/, "").replace(/:\d+$/, "");
+}
+
 /** Host zonder poort en zonder www. */
 function normalizeHost(req) {
   return (req.headers.host || "").toLowerCase().split(":")[0].replace(/^www\./, "");
 }
 
+// Lokaal geeft geen domein de taal aan; daar doet een prefix dat: /nl/..., /fr/...
+// (de README beloofde dat al). In productie komen deze hosts nooit binnen.
+const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
+const LOCAL = languages.map((lang) => ({ lang, prefix: `/${lang}` }));
+
+function isLocalHost(host) {
+  return LOCAL_HOSTS.has(host);
+}
+
 function resolveLang(host, pathname) {
-  const candidates = HOSTS[host];
+  const candidates = HOSTS[host] || (isLocalHost(host) ? LOCAL : null);
   if (!candidates) return null;
   for (const c of candidates) {
     if (!c.prefix) return c;
@@ -166,6 +193,10 @@ app.use((req, res) => {
   return res.type("text/plain").send("Not found");
 });
 
-app.listen(port, () => {
-  console.log(`Ty LuWa website running on port ${port}`);
-});
+module.exports = app;
+
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Ty LuWa website running on port ${port}`);
+  });
+}

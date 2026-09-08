@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build-site.js",
-    "start": "node scripts/build-site.js && node Server.js"
+    "start": "node scripts/build-site.js && node --disable-warning=ExperimentalWarning Server.js",
+    "test": "node --test 'test/*.test.js'"
   },
   "engines": {
     "node": "24.x"

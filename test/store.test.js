@@ -117,3 +117,30 @@ test("validatie van een periode", () => {
   assert.throws(() => store.createPeriod({ arrival: "2026-07-12", departure: "2026-07-19", kind: "party" }));
   assert.throws(() => store.createPeriod({ arrival: "12-07-2026", departure: "2026-07-19", kind: "rented" }));
 });
+
+test("migratie 2: siblu, vertaald bericht, antwoorden, en een oude database migreert mee", () => {
+  const { DatabaseSync } = require("node:sqlite");
+  const { MIGRATIONS, migrate } = require("../lib/db");
+  const db = new DatabaseSync(":memory:");
+  db.exec("PRAGMA foreign_keys = ON");
+  db.exec("BEGIN"); db.exec(MIGRATIONS[0]); db.exec("PRAGMA user_version = 1"); db.exec("COMMIT");
+  db.prepare("INSERT INTO requests (arrival, departure, adults, name, email, lang, created_at) VALUES ('2026-07-01','2026-07-08',2,'A','a@x','fr','t')").run();
+  db.prepare("INSERT INTO periods (arrival, departure, kind, request_id, created_at, updated_at) VALUES ('2026-07-01','2026-07-08','rented',1,'t','t')").run();
+  migrate(db);
+  assert.equal(db.prepare("PRAGMA user_version").get().user_version, 2);
+  const store = createStore(db);
+  assert.equal(store.getPeriod(1).request_id, 1, "data en koppeling bewaard");
+  const s = store.createPeriod({ arrival: "2027-07-01", departure: "2027-08-01", kind: "siblu" });
+  assert.equal(s.kind, "siblu");
+  assert.equal(store.hasKindInRange("siblu", "2027-07-01", "2027-08-01"), true);
+  assert.equal(store.hasKindInRange("siblu", "2028-07-01", "2028-08-01"), false);
+  store.setRequestMessageNl(1, "Hallo");
+  assert.equal(store.getRequest(1).message_nl, "Hallo");
+  store.addMessage({ requestId: 1, bodyNl: "Ja hoor", bodySent: "Oui", lang: "fr", mailStatus: "ok" });
+  assert.equal(store.listMessages(1)[0].body_sent, "Oui");
+  const snap = store.exportSnapshot();
+  assert.equal(snap.messages.length, 1);
+  const other = createStore(require("../lib/db").open(":memory:"));
+  other.importSnapshot(snap);
+  assert.equal(other.listMessages(1).length, 1);
+});

@@ -58,7 +58,11 @@ function createApiRouter({ store, mailer, config, content, routes, pages, knownH
     }
     const r = v.data;
 
-    const occupied = store.occupiedNights(r.arrival, r.departure);
+    const occupiedKinds = store.occupiedNightKinds(r.arrival, r.departure);
+    if ([...occupiedKinds.values()].some((k) => k.kind === "siblu")) {
+      return reply(409, "error", "siblu", c.errors.siblu);
+    }
+    const occupied = new Set(occupiedKinds.keys());
     if (occupied.size) {
       const first = dates.formatLong([...occupied].sort()[0], lang);
       return reply(409, "error", "occupied", texts.fill(c.errors.occupied, { first }));

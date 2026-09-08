@@ -47,3 +47,22 @@ test("snapshot per dag, oude weg, back-upmail per week", async () => {
   assert.equal(store.getPeriod(p.id), null);
   await jobs.tick();
 });
+
+test("juli van Siblu: drie jaar vooruit, één keer per jaar, weghalen blijft weg", () => {
+  const db = open(":memory:");
+  let t = new Date("2026-09-08T03:00:00Z");
+  const store = createStore(db, { now: () => t.toISOString() });
+  const jobs = createJobs({ store, db, mailer: { send: async () => ({}) }, config: { dataDir: os.tmpdir(), mail: { backup: [] } }, log: { error() {} }, now: () => t });
+  assert.deepEqual(jobs.runSibluSeed(), [2026, 2027, 2028]);
+  assert.deepEqual(jobs.runSibluSeed(), [], "niet nog eens");
+  const july = store.listPeriods("2027-07-01", "2027-08-01");
+  assert.equal(july.length, 1);
+  assert.equal(july[0].kind, "siblu");
+  assert.equal(july[0].departure, "2027-08-01");
+  assert.equal(store.occupiedNights("2027-07-30", "2027-08-02").size, 2);
+
+  store.softDeletePeriod(july[0].id);
+  assert.deepEqual(jobs.runSibluSeed(), [], "door de ouders weggehaald: komt niet terug");
+  t = new Date("2027-01-05T03:00:00Z");
+  assert.deepEqual(jobs.runSibluSeed(), [2029], "nieuw jaar erbij");
+});

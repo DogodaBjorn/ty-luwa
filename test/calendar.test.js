@@ -46,3 +46,19 @@ test("reeks maanden en legenda", () => {
   const legend = renderLegend({ free: "Vrij", busy: "Bezet", departureNote: "Op een vertrekdag <kun> je aankomen." });
   assert.match(legend, /Op een vertrekdag &lt;kun&gt; je aankomen\./);
 });
+
+test("Siblu: eigen klasse, eigen woord, legenda met link", () => {
+  const html = renderMonth({
+    ym: "2027-07",
+    occupied: new Set(["2027-07-01", "2027-07-02"]),
+    kinds: new Map([["2027-07-01", { kind: "siblu" }]]),
+    today: "2026-09-08",
+    lang: "nl",
+    labels: { ...labels, siblu: "via Siblu" },
+  });
+  assert.match(html, /class="cal-day is-busy kind-siblu" data-date="2027-07-01">.*?visually-hidden">via Siblu</);
+  assert.match(html, /class="cal-day is-busy" data-date="2027-07-02">.*?visually-hidden">bezet</);
+  const legend = renderLegend({ free: "Vrij", busy: "Bezet", siblu: "Mogelijk boekbaar via Siblu", sibluUrl: "https://leconguel.fr/", departureNote: "x" });
+  assert.match(legend, /<span class="cal-swatch kind-siblu"[^>]*><\/span><a href="https:\/\/leconguel.fr\/" target="_blank" rel="noopener">Mogelijk boekbaar via Siblu<\/a>/);
+  assert.doesNotMatch(renderLegend({ free: "Vrij", busy: "Bezet", departureNote: "x" }), /kind-siblu/);
+});

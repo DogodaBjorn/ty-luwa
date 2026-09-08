@@ -240,7 +240,10 @@
         "nights": "{n} nachten",
         "srFree": "vrij",
         "srBusy": "bezet",
-        "srPast": "voorbij"
+        "srPast": "voorbij",
+        "legendSiblu": "Mogelijk boekbaar via Siblu",
+        "srSiblu": "mogelijk boekbaar via Siblu",
+        "sibluUrl": "https://leconguel.fr/"
       },
       "sent": "Je aanvraag is verstuurd. Luuk en Wanda bekijken de beschikbaarheid en nemen persoonlijk contact met je op.",
       "errors": {
@@ -254,7 +257,8 @@
         "email": "Vul een geldig e-mailadres in, dan kunnen Luuk en Wanda antwoorden.",
         "occupied": "Deze periode overlapt met nachten die al bezet zijn (vanaf {first}). Kies een andere periode.",
         "rate": "Er kwamen te veel aanvragen achter elkaar vanaf dit adres. Probeer het over een uur nog eens.",
-        "server": "Het versturen is even niet gelukt. Probeer het zo nog eens."
+        "server": "Het versturen is even niet gelukt. Probeer het zo nog eens.",
+        "siblu": "In deze periode verhuurt Siblu Ty LuWa. Kijk voor juli op leconguel.fr."
       },
       "receipt": {
         "subject": "Je aanvraag bij Ty LuWa is ontvangen",
@@ -573,7 +577,10 @@
         "nights": "{n} nights",
         "srFree": "free",
         "srBusy": "taken",
-        "srPast": "past"
+        "srPast": "past",
+        "legendSiblu": "Possibly bookable through Siblu",
+        "srSiblu": "possibly bookable through Siblu",
+        "sibluUrl": "https://leconguel.fr/"
       },
       "sent": "Your request has been sent. Luuk and Wanda will check availability and get in touch with you personally.",
       "errors": {
@@ -587,7 +594,8 @@
         "email": "Please enter a valid e-mail address so Luuk and Wanda can reply.",
         "occupied": "This period overlaps nights that are already taken (from {first}). Please choose another period.",
         "rate": "Too many requests came in from this address in a row. Please try again in an hour.",
-        "server": "Sending didn’t work just now. Please try again in a moment."
+        "server": "Sending didn’t work just now. Please try again in a moment.",
+        "siblu": "In this period Ty LuWa is let through Siblu. For July, see leconguel.fr."
       },
       "receipt": {
         "subject": "Your request to Ty LuWa has been received",
@@ -906,7 +914,10 @@
         "nights": "{n} Nächte",
         "srFree": "frei",
         "srBusy": "belegt",
-        "srPast": "vorbei"
+        "srPast": "vorbei",
+        "legendSiblu": "Eventuell buchbar über Siblu",
+        "srSiblu": "eventuell buchbar über Siblu",
+        "sibluUrl": "https://leconguel.fr/"
       },
       "sent": "Eure Anfrage ist abgeschickt. Luuk und Wanda prüfen die Verfügbarkeit und melden sich persönlich bei euch.",
       "errors": {
@@ -920,7 +931,8 @@
         "email": "Bitte gebt eine gültige E-Mail-Adresse an, damit Luuk und Wanda antworten können.",
         "occupied": "Dieser Zeitraum überschneidet sich mit Nächten, die schon vergeben sind (ab {first}). Bitte wählt einen anderen Zeitraum.",
         "rate": "Von dieser Adresse kamen zu viele Anfragen hintereinander. Versucht es in einer Stunde noch einmal.",
-        "server": "Das Senden hat gerade nicht geklappt. Bitte versucht es gleich noch einmal."
+        "server": "Das Senden hat gerade nicht geklappt. Bitte versucht es gleich noch einmal.",
+        "siblu": "In diesem Zeitraum vermietet Siblu Ty LuWa. Für Juli schaut auf leconguel.fr."
       },
       "receipt": {
         "subject": "Eure Anfrage bei Ty LuWa ist angekommen",
@@ -1239,7 +1251,10 @@
         "nights": "{n} nuits",
         "srFree": "libre",
         "srBusy": "occupé",
-        "srPast": "passé"
+        "srPast": "passé",
+        "legendSiblu": "Peut-être réservable via Siblu",
+        "srSiblu": "peut-être réservable via Siblu",
+        "sibluUrl": "https://leconguel.fr/"
       },
       "sent": "Votre demande est envoyée. Luuk et Wanda vérifient les disponibilités et vous contactent personnellement.",
       "errors": {
@@ -1253,7 +1268,8 @@
         "email": "Indiquez une adresse e-mail valide, pour que Luuk et Wanda puissent répondre.",
         "occupied": "Cette période chevauche des nuits déjà prises (à partir du {first}). Choisissez une autre période.",
         "rate": "Trop de demandes se sont suivies depuis cette adresse. Réessayez dans une heure.",
-        "server": "L’envoi n’a pas abouti. Réessayez dans un instant."
+        "server": "L’envoi n’a pas abouti. Réessayez dans un instant.",
+        "siblu": "Sur cette période, Ty LuWa est loué par Siblu. Pour juillet, voyez leconguel.fr."
       },
       "receipt": {
         "subject": "Votre demande auprès de Ty LuWa est bien reçue",

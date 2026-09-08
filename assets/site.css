@@ -270,3 +270,8 @@ html.lightbox-open{overflow:hidden}
 .form-status.is-error{border-color:#e2b8a8;color:#7a3b26;background:#fbeee9}
 .form-nights{margin:-8px 0 0;color:var(--sea-ink);font-weight:600;font-size:.95rem;min-height:1.2em}
 .form-nights:empty{display:none}
+
+/* Juli is van Siblu: eigen kleur, en in de legenda een link naar hun site. */
+.cal-day.is-busy.kind-siblu{background:repeating-linear-gradient(135deg,#f6cfdd 0 4px,#fbe9f0 4px 9px);color:#8c2f55;text-decoration-color:#c98aa5}
+.cal-swatch.kind-siblu{background:repeating-linear-gradient(135deg,#f6cfdd 0 4px,#fbe9f0 4px 9px);border-color:#ecc3d3}
+.cal-legend a{color:#8c2f55;text-decoration:underline;text-underline-offset:3px}

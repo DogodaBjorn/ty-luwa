@@ -121,6 +121,23 @@ test("bezette nachten worden geweigerd", { skip: !built && "site niet gebouwd" }
   assert.equal(ok.status, 200);
 });
 
+test("juli van Siblu wordt geweigerd met verwijzing, en staat roze in de kalender", { skip: !built && "site niet gebouwd" }, async () => {
+  const { open } = require("../lib/db");
+  const { createStore } = require("../lib/store");
+  const store = createStore(open(path.join(dir, "ty-luwa.sqlite")));
+  const y = Number(today.slice(0, 4)) + 1;
+  store.createPeriod({ arrival: `${y}-07-01`, departure: `${y}-08-01`, kind: "siblu" });
+  const res = await post({ ...good, lang: "fr", arrival: `${y}-07-10`, departure: `${y}-07-17`, email: "s@example.fr", name: "Sophie Martin" });
+  assert.equal(res.status, 409);
+  const data = await res.json();
+  assert.equal(data.code, "siblu");
+  assert.match(data.message, /leconguel\.fr/);
+  const page = await request("GET", "/disponibilites", { headers: { Host: "ty-luwa.fr" } });
+  const html = await page.text();
+  assert.match(html, new RegExp(`class="cal-day is-busy kind-siblu" data-date="${y}-07-15"`));
+  assert.match(html, /<a href="https:\/\/leconguel.fr\/" target="_blank" rel="noopener">Peut-être réservable via Siblu<\/a>/);
+});
+
 test("zonder JavaScript: redirect na versturen, pagina met melding bij fout", { skip: !built && "site niet gebouwd" }, async () => {
   const res = await post({ ...good, lang: "nl", email: "q@example.nl", arrival: dates.addDays(today, 90), departure: dates.addDays(today, 92) }, { Accept: "text/html", Host: "ty-luwa.nl" });
   assert.equal(res.status, 303);

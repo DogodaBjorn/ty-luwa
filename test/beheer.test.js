@@ -103,6 +103,9 @@ test("periode opslaan, overlap, bewerken, verwijderen, terugzetten", async () =>
   assert.equal(res.location, "/beheer?m=2026-10&melding=opgeslagen");
   res = await request("GET", "/beheer?m=2026-10");
   assert.match(res.text, /Familie Jansen/);
+  const formPage = await request("GET", "/beheer/periode/nieuw");
+  assert.match(formPage.text, /value="siblu"/);
+  assert.match(formPage.text, /Via Siblu/);
   assert.match(res.text, /class="cal-day is-busy kind-rented" data-date="2026-10-17"/);
 
   // dubbele post met hetzelfde form_id maakt geen tweede periode

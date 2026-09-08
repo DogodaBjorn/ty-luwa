@@ -37,7 +37,7 @@ test("acs-provider bouwt het verzoek en bewaakt de status", async () => {
     return { ok: true, json: async () => ({ id: "abc" }) };
   };
   const mailer = createMailer(
-    { provider: "acs", endpoint: "https://x.europe.communication.azure.com", key: Buffer.from("k").toString("base64"), from: "DoNotReply@ty-luwa.nl", replyTo: "luuk@example.nl" },
+    { provider: "acs", endpoint: "https://x.europe.communication.azure.com", key: Buffer.from("k").toString("base64"), from: "DoNotReply@ty-luwa.nl", replyTo: ["luuk@example.nl", "wanda@example.nl"] },
     { fetchFn }
   );
   const r = await mailer.send({ to: ["a@b.nl", "c@d.nl"], subject: "S", text: "T", attachments: [{ name: "b.json", contentType: "application/json", content: "{}" }] });
@@ -46,7 +46,7 @@ test("acs-provider bouwt het verzoek en bewaakt de status", async () => {
   const payload = JSON.parse(calls[0].init.body);
   assert.equal(payload.senderAddress, "DoNotReply@ty-luwa.nl");
   assert.deepEqual(payload.recipients.to, [{ address: "a@b.nl" }, { address: "c@d.nl" }]);
-  assert.deepEqual(payload.replyTo, [{ address: "luuk@example.nl" }]);
+  assert.deepEqual(payload.replyTo, [{ address: "luuk@example.nl" }, { address: "wanda@example.nl" }]);
   assert.equal(payload.attachments[0].contentInBase64, Buffer.from("{}").toString("base64"));
   assert.match(calls[0].init.headers.Authorization, /^HMAC-SHA256 /);
 

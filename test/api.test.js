@@ -150,6 +150,18 @@ test("zonder JavaScript: redirect na versturen, pagina met melding bij fout", { 
   assert.match(await bad.text(), /form-status is-error[^>]*>Minstens één volwassene\./);
 });
 
+test("bericht van de gast wordt naar het Nederlands vertaald voor de ouders", { skip: !built && "site niet gebouwd" }, async () => {
+  const { open } = require("../lib/db");
+  const { createStore } = require("../lib/store");
+  // vertaler niet ingesteld in deze test-app: geen vertaling, wel opgeslagen
+  const res = await post({ ...good, lang: "fr", arrival: dates.addDays(today, 120), departure: dates.addDays(today, 123), email: "v@example.fr", name: "Vincent Leroy", message: "Bonjour" });
+  assert.equal(res.status, 200);
+  const store = createStore(open(path.join(dir, "ty-luwa.sqlite")));
+  const r = store.listRequests("new").find((x) => x.name === "Vincent Leroy");
+  assert.equal(r.message, "Bonjour");
+  assert.equal(r.message_nl, null);
+});
+
 test("honeypot en onbekende host", async () => {
   const bot = await post({ ...good, website: "http://spam", email: "bot@example.com" });
   assert.equal((await bot.json()).ok, true);

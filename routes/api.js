@@ -12,7 +12,7 @@ const RATE_WINDOW_MS = 60 * 60 * 1000;
 const RATE_MAX = 5;
 const DUPLICATE_WINDOW_MS = 10 * 60 * 1000;
 
-function createApiRouter({ store, mailer, config, content, routes, pages, knownHost, clientIp, log = console }) {
+function createApiRouter({ store, mailer, translator, config, content, routes, pages, knownHost, clientIp, log = console }) {
   const router = express.Router();
   const hits = new Map(); // ip -> [timestamps]
 
@@ -76,11 +76,19 @@ function createApiRouter({ store, mailer, config, content, routes, pages, knownH
     const saved = store.createRequest({ ...r, host });
     const beheerUrl = `https://${config.beheerHost}/beheer`;
 
+    // Het bericht van de gast alvast in het Nederlands, voor de ouders. Best
+    // effort: lukt het niet, dan vertaalt de detailpagina het later alsnog.
+    let messageNl = null;
+    if (r.message && r.lang !== "nl" && translator && translator.enabled) {
+      messageNl = await translator.tryTranslate(r.message, r.lang, "nl");
+      if (messageNl) store.setRequestMessageNl(saved.id, messageNl);
+    }
+
     const results = [];
     try {
       if (config.mail.notify.length) {
         const overlap = store.overlappingPeriods(r.arrival, r.departure);
-        const m = texts.notify(saved, { beheerUrl, overlap });
+        const m = texts.notify(saved, { beheerUrl, overlap, messageNl });
         await mailer.send({ to: config.mail.notify, subject: m.subject, text: m.text, replyTo: r.email });
         results.push("notify:ok");
       } else {

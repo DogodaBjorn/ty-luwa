@@ -34,6 +34,10 @@ const pages = require("./lib/page").createPageRenderer({
   timeZone: config.timeZone,
 });
 const mailer = require("./lib/mail").createMailer(config.mail);
+const translator = require("./lib/translate").createTranslator(config.translate);
+if (!translator.enabled) {
+  console.log("Geen TRANSLATOR_KEY: berichten worden niet vertaald");
+}
 if (mailer.provider === "console") {
   console.log("MAIL_PROVIDER=console: mails worden gelogd, niet verstuurd");
 }
@@ -148,6 +152,7 @@ app.use(
   require("./routes/beheer").createBeheerRouter({
     store,
     mailer,
+    translator,
     config,
     isLocalHost,
     knownHost: (host) => Boolean(HOSTS[host]),
@@ -160,6 +165,7 @@ app.use(
   require("./routes/api").createApiRouter({
     store,
     mailer,
+    translator,
     config,
     content,
     routes,

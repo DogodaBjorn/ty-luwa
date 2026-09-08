@@ -104,8 +104,11 @@ staat bij hen in de inbox. Details en de Azure-inrichting: `docs/AZURE-SETUP.md`
   aanvraag", de gast een ontvangstbevestiging in zijn taal. Niets daarvan is een boeking.
 - **Beheer** (`routes/beheer.js`): inloggen met een code per mail (geen wachtwoord, een
   jaar ingelogd), kalender per maand met lijst eronder, periodes toevoegen en bewerken met
-  overlapwaarschuwing, verwijderen met Terugzetten, aanvragen in de kalender zetten of de
-  gast mailen vanuit de eigen mail-app. Ontworpen voor een telefoon en voor ogen van 67 en
+  overlapwaarschuwing, verwijderen met Terugzetten, aanvragen in de kalender zetten, en
+  **antwoorden in het Nederlands** die de site vertaalt (Azure AI Translator, `lib/translate.js`)
+  en vanaf Ty LuWa verstuurt in de taal van de gast; of de gast mailen vanuit de eigen mail-app.
+- **Juli is van Siblu**: staat elk jaar automatisch in de kalender als eigen soort (roze),
+  publiek "mogelijk boekbaar via Siblu" met link naar leconguel.fr. Ontworpen voor een telefoon en voor ogen van 67 en
   70: grote tekst, hoge knoppen, één actie per scherm, geen modals.
 - **Onderhoud** (`lib/jobs.js`): dagelijkse snapshot in `data/backups/`, wekelijkse
   back-upmail, opruimen van verlopen codes en sessies.

@@ -93,8 +93,10 @@ nodig. Zet ze onder **Configuration → Application settings**:
 | `ACS_ENDPOINT` | `https://<naam>.europe.communication.azure.com` | De Communication Services-resource. |
 | `ACS_KEY` | *(sleutel)* | Een van de twee toegangssleutels van die resource. Liever als Key Vault reference. |
 | `MAIL_FROM` | `DoNotReply@ty-luwa.nl` | Afzender; moet een gekoppeld adres van het geverifieerde domein zijn. |
-| `MAIL_REPLY_TO` | *(adres van Luuk en Wanda)* | Reply-To op de ontvangstbevestiging aan de gast. Staat in mailheaders, niet op de site. |
-| `MAIL_NOTIFY` | *(adres van Luuk en Wanda)* | Waar "nieuwe aanvraag" heen gaat. Leeg = `BEHEER_EMAILS`. |
+| `MAIL_REPLY_TO` | *(adressen van Luuk en Wanda, komma's ertussen)* | Reply-To op elke mail aan een gast (ontvangstbevestiging en antwoorden): antwoordt de gast, dan landt dat in hun eigen mailbox. Staat in mailheaders, niet op de site. |
+| `MAIL_NOTIFY` | *(adressen, komma's ertussen)* | Waar "nieuwe aanvraag" heen gaat. Leeg = `BEHEER_EMAILS`. |
+| `TRANSLATOR_KEY` | *(sleutel)* | Azure AI Translator, voor antwoorden in de taal van de gast en gastberichten in het Nederlands (§7). Leeg = niet vertalen. |
+| `TRANSLATOR_REGION` | `westeurope` | De regio van de Translator-resource; verplicht bij de sleutel. |
 | `BACKUP_EMAIL` | *(adres van Björn)* | Krijgt elke week de planning als JSON-bijlage. |
 | `WEBSITE_RUN_FROM_PACKAGE` | `1` | Alleen als je zonder GitHub Actions deployt. Bij de workflow hieronder niet nodig. |
 
@@ -250,14 +252,36 @@ Kosten: ACS Email rekent per mail (fracties van een cent); bij een handvol aanvr
 maand is dat afgerond nul. Zonder `MAIL_PROVIDER=acs` logt de server elke mail alleen
 (handig lokaal) en werkt de rest gewoon door.
 
+**Vertalen: Azure AI Translator.** Luuk en Wanda typen hun antwoord in het Nederlands in
+het beheer; de site vertaalt het naar de taal van de gast, laat het eerst zien en verstuurt
+het dan vanaf `MAIL_FROM` met Reply-To naar `MAIL_REPLY_TO`. Binnenkomende berichten in
+fr/en/de krijgen een Nederlandse vertaling in het beheer en in de meldingsmail. Eenmalig:
+
+1. **Create a resource → Translator** (Azure AI services), naam bv. `tr-tyluwa`, regio
+   **West Europe**, pricing tier **F0** (gratis, 2 miljoen tekens per maand; ruim genoeg).
+2. **Keys and Endpoint**: kopieer een sleutel naar `TRANSLATOR_KEY` en de regio
+   (`westeurope`) naar `TRANSLATOR_REGION`. Het eindpunt is het wereldwijde
+   `api.cognitive.microsofttranslator.com`; `TRANSLATOR_ENDPOINT` alleen zetten als je een
+   ander eindpunt gebruikt.
+
+Zonder sleutel gaat een antwoord in het Nederlands, met een melding in het beheer; er wordt
+nooit iets verstuurd als het vertalen mislukt.
+
 **Structuur in de code.** `routes/beheer.js` en `routes/api.js` zijn in `Server.js`
 gemonteerd **vóór** de paginahandler, die anders elke route afvangt. Het beheer staat op één
 taal en één domein (`BEHEER_HOST`), buiten de `hreflang`-set; `robots.txt` sluit `/beheer`
 en `/api` uit. Andere bekende domeinen sturen `/beheer` door naar `ty-luwa.nl`.
 
+**Juli en Siblu.** Siblu verhuurt de caravan in juli. De server zet juli van dit jaar en de
+twee volgende automatisch in de kalender als soort "Via Siblu" (roze); publiek staat er
+"mogelijk boekbaar via Siblu" met een link naar leconguel.fr, en een aanvraag voor die
+nachten krijgt die verwijzing. Halen Luuk en Wanda de periode weg of passen ze hem aan, dan
+blijft dat zo voor dat jaar.
+
 **Testen na de inrichting.** Log in met een echt adres, zet een testperiode, kijk op
-`ty-luwa.fr/disponibilites` of hij bezet toont, stuur vanaf `ty-luwa.com` een testaanvraag
-en controleer de twee mails. Verwijder daarna de testperiode weer (of zet hem terug).
+`ty-luwa.fr/disponibilites` of hij bezet toont, stuur vanaf `ty-luwa.com` een testaanvraag,
+controleer de twee mails, en stuur vanuit het beheer een antwoord (het voorbeeld toont de
+vertaling). Verwijder daarna de testperiode weer (of zet hem terug).
 
 ---
 

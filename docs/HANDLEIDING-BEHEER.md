@@ -16,10 +16,15 @@ Overlapt de periode met iets dat er al staat, dan zegt het scherm dat. Op een wi
 
 Als iemand op de site een aanvraag doet, krijg je een mail en staat de aanvraag hier onder **Aanvragen**. De gast heeft al automatisch een ontvangstbevestiging gekregen; hij wacht nu op jullie antwoord.
 
-1. Tik op de aanvraag. Je ziet de periode, met wie ze komen, het bericht en of de dagen vrij zijn.
-2. Tik op **Mail ...** om de gast te mailen vanuit je eigen mail-app. Het onderwerp en de aanhef staan al klaar, in de taal van de gast.
-3. Is het rond of bijna rond? Tik op **Zet in kalender als optie** of **als verhuurd**. De datums en de naam staan dan al ingevuld; tik op Opslaan.
-4. Gaat het niet door? Tik op **Afwijzen**. De aanvraag verhuist naar "Afgehandeld" en je kunt hem daar altijd terugzetten.
+1. Tik op de aanvraag. Je ziet de periode, met wie ze komen, het bericht (bij een buitenlandse gast ook in het Nederlands) en of de dagen vrij zijn.
+2. Scrol naar **Antwoord sturen** en typ gewoon Nederlands. Tik op **Vertaal en bekijk**: je ziet je tekst in de taal van de gast, met het Nederlands ernaast. Tik op **Verstuur**. De mail gaat vanaf Ty LuWa; als de gast antwoordt, komt dat in jullie eigen mailbox.
+3. Liever zelf mailen? Tik op **Mail ...**; dan opent je eigen mail-app met onderwerp en aanhef in de taal van de gast.
+4. Is het rond of bijna rond? Tik op **Zet in kalender als optie** of **als verhuurd**. De datums en de naam staan dan al ingevuld; tik op Opslaan.
+5. Gaat het niet door? Tik op **Afwijzen**. De aanvraag verhuist naar "Afgehandeld" en je kunt hem daar altijd terugzetten.
+
+## Juli en Siblu
+
+In juli verhuurt Siblu de caravan. Juli staat daarom elk jaar vanzelf in de kalender als **Via Siblu** (roze). Bezoekers van de site zien dan "mogelijk boekbaar via Siblu" met een link naar de camping. Klopt het een jaar niet, pas de periode dan gewoon aan of haal hem weg; hij komt niet vanzelf terug.
 
 ## Iets veranderen of verwijderen
 

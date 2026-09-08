@@ -15,7 +15,8 @@ const { PERIOD_KINDS } = require("../lib/store");
 
 const CAL_LABELS = { free: "vrij", busy: "bezet", past: "voorbij", today: "vandaag" };
 
-function createBeheerRouter({ store, mailer, config, isLocalHost, knownHost, log = console, now = () => new Date().toISOString() }) {
+function createBeheerRouter({ store, mailer, translator, config, isLocalHost, knownHost, log = console, now = () => new Date().toISOString() }) {
+  const tr = translator || { enabled: false, translate: async () => null, tryTranslate: async () => null };
   const router = express.Router();
   const helpMd = fs.readFileSync(path.join(__dirname, "..", "docs", "HANDLEIDING-BEHEER.md"), "utf8");
   const helpHtml = views.markdownToHtml(helpMd);
@@ -58,6 +59,7 @@ function createBeheerRouter({ store, mailer, config, isLocalHost, knownHost, log
       case "afgewezen": return { kind: "ok", text: "Aanvraag afgewezen.", undo: id ? { href: `/beheer/aanvraag/${id}/status?status=new`, label: "Terug naar nieuw" } : null };
       case "afgehandeld": return { kind: "ok", text: "Aanvraag afgehandeld.", undo: id ? { href: `/beheer/aanvraag/${id}/status?status=new`, label: "Terug naar nieuw" } : null };
       case "nieuw": return { kind: "ok", text: "Aanvraag staat weer bij nieuw." };
+      case "verstuurd": return { kind: "ok", text: "Antwoord verstuurd." };
       default: return null;
     }
   };
@@ -248,9 +250,74 @@ function createBeheerRouter({ store, mailer, config, isLocalHost, knownHost, log
     next();
   }
 
-  router.get("/aanvraag/:id", loadRequest, (req, res) => {
+  async function renderDetail(req, res, extra = {}) {
     const r = req.request;
-    res.send(views.requestDetailView({ ...ctx(req), request: r, overlap: overlapOf(r), mailto: texts.mailto(r), periods: store.periodsOfRequest(r.id), flash: flashFrom(req) }));
+    // Oude aanvraag zonder Nederlandse vertaling: alsnog proberen, en bewaren.
+    if (r.message && r.lang !== "nl" && !r.message_nl && tr.enabled) {
+      const nl = await tr.tryTranslate(r.message, r.lang, "nl");
+      if (nl) {
+        store.setRequestMessageNl(r.id, nl);
+        r.message_nl = nl;
+      }
+    }
+    res.send(
+      views.requestDetailView({
+        ...ctx(req),
+        request: r,
+        overlap: overlapOf(r),
+        mailto: texts.mailto(r),
+        periods: store.periodsOfRequest(r.id),
+        messages: store.listMessages(r.id),
+        translatorEnabled: tr.enabled,
+        flash: flashFrom(req),
+        ...extra,
+      })
+    );
+  }
+
+  router.get("/aanvraag/:id", loadRequest, (req, res) => renderDetail(req, res));
+
+  // --- antwoord aan de gast: typen → voorbeeld met vertaling → versturen ----
+  const cleanBody = (b) => String(b || "").replace(/\r\n/g, "\n").trim().slice(0, 4000);
+
+  router.post("/aanvraag/:id/antwoord", loadRequest, async (req, res) => {
+    const r = req.request;
+    const bodyNl = cleanBody(req.body.body);
+    if (!bodyNl) return renderDetail(req, res, { flash: { kind: "warn", text: "Typ eerst een antwoord." } });
+    let translated = bodyNl;
+    if (r.lang !== "nl") {
+      try {
+        translated = await tr.translate(bodyNl, "nl", r.lang);
+      } catch (e) {
+        log.error("Vertalen van antwoord mislukt:", e.message);
+        return renderDetail(req, res, { draft: bodyNl, flash: { kind: "warn", text: "Het vertalen lukte even niet. Er is niets verstuurd; probeer het zo nog eens." } });
+      }
+    }
+    res.send(views.replyPreviewView({ ...ctx(req), request: r, bodyNl, translated }));
+  });
+
+  router.post("/aanvraag/:id/antwoord/bewerk", loadRequest, (req, res) => {
+    renderDetail(req, res, { draft: cleanBody(req.body.body) });
+  });
+
+  router.post("/aanvraag/:id/antwoord/verstuur", loadRequest, async (req, res) => {
+    const r = req.request;
+    const bodyNl = cleanBody(req.body.body);
+    const translated = cleanBody(req.body.translated) || null;
+    if (!bodyNl) return res.redirect(`/beheer/aanvraag/${r.id}`);
+    const m = texts.reply(r, { nl: bodyNl, translated: r.lang === "nl" ? null : translated });
+    let status = "ok";
+    try {
+      await mailer.send({ to: r.email, subject: m.subject, text: m.text });
+    } catch (e) {
+      status = e.message;
+      log.error("Antwoord aan gast mislukt:", e.message);
+    }
+    store.addMessage({ requestId: r.id, bodyNl, bodySent: translated || bodyNl, lang: r.lang, mailStatus: status });
+    if (status !== "ok") {
+      return renderDetail(req, res, { draft: bodyNl, flash: { kind: "warn", text: "Het versturen lukte niet. Het antwoord staat bewaard onder 'Al verstuurd' met de fout; probeer het zo nog eens." } });
+    }
+    res.redirect(`/beheer/aanvraag/${r.id}?melding=verstuurd`);
   });
 
   router.post("/aanvraag/:id/status", loadRequest, (req, res) => {

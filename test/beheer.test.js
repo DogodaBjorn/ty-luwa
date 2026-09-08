@@ -12,6 +12,19 @@ process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "tyluwa-beheer-"));
 process.env.MAIL_PROVIDER = "console";
 process.env.BEHEER_EMAILS = "wanda@example.nl, luuk@example.nl";
 process.env.RATE_MAX = "100";
+process.env.TRANSLATOR_KEY = "test-sleutel";
+process.env.TRANSLATOR_REGION = "westeurope";
+
+// Nep-vertaler: [xx] ervoor, zodat je ziet welke kant op vertaald is.
+const realFetch = global.fetch;
+let translatorDown = false;
+global.fetch = async (url, init) => {
+  if (!String(url).includes("microsofttranslator.com")) return realFetch(url, init);
+  if (translatorDown) return { ok: false, status: 503, text: async () => "down" };
+  const to = new URL(url).searchParams.get("to");
+  const text = JSON.parse(init.body)[0].Text;
+  return { ok: true, json: async () => [{ translations: [{ text: `[${to}] ${text}`, to }] }] };
+};
 
 const logged = [];
 const origLog = console.log;
@@ -189,6 +202,46 @@ test("aanvraag: in de kalender zetten, afwijzen, terug naar nieuw", async () => 
   assert.match(res.text, /class="cal-day is-busy" data-date="2027-03-08"/);
 });
 
+test("antwoord aan de gast: vertaald voorbeeld, versturen, bewaard", async () => {
+  logged.length = 0;
+  let res = await request("GET", "/beheer/aanvraag/1");
+  assert.match(res.text, /In het Nederlands/);
+  assert.match(res.text, /\[nl\] Mit Hund/, "inkomend bericht vertaald bij binnenkomst");
+  assert.match(res.text, /Vertaal en bekijk/);
+
+  res = await request("POST", "/beheer/aanvraag/1/antwoord", { body: { body: "" } });
+  assert.match(res.text, /Typ eerst een antwoord/);
+
+  res = await request("POST", "/beheer/aanvraag/1/antwoord", { body: { body: "Ja hoor, die week is vrij!\r\nGroet, Wanda" } });
+  assert.equal(res.status, 200);
+  assert.match(res.text, /\[de\] Ja hoor, die week is vrij!/);
+  assert.match(res.text, /name="translated" value="\[de\] Ja hoor, die week is vrij!/);
+  assert.match(res.text, /Verstuur aan Hans/);
+  assert.equal(logged.filter((l) => l.includes("--- MAIL")).length, 0, "voorbeeld verstuurt niets");
+
+  res = await request("POST", "/beheer/aanvraag/1/antwoord/bewerk", { body: { body: "Ja hoor" } });
+  assert.match(res.text, /<textarea id="reply"[^>]*>Ja hoor<\/textarea>/);
+
+  res = await request("POST", "/beheer/aanvraag/1/antwoord/verstuur", { body: { body: "Ja hoor, die week is vrij!", translated: "[de] Ja hoor, die week is vrij!" } });
+  assert.equal(res.location, "/beheer/aanvraag/1?melding=verstuurd");
+  const mail = logged.find((l) => l.includes("--- MAIL"));
+  assert.match(mail, /Aan: hans@example.de/);
+  assert.match(mail, /Antwort von Luuk und Wanda/);
+  assert.match(mail, /Liebe\(r\) Hans Meier,\n\n\[de\] Ja hoor, die week is vrij!/);
+  assert.match(mail, /Ursprüngliche Nachricht auf Niederländisch/);
+  res = await request("GET", "/beheer/aanvraag/1?melding=verstuurd");
+  assert.match(res.text, /Antwoord verstuurd\./);
+  assert.match(res.text, /Al verstuurd/);
+  assert.match(res.text, /Ja hoor, die week is vrij!/);
+
+  // vertaler valt uit: niets verstuurd, tekst blijft staan
+  translatorDown = true;
+  res = await request("POST", "/beheer/aanvraag/1/antwoord", { body: { body: "Nog een vraag" } });
+  assert.match(res.text, /Het vertalen lukte even niet/);
+  assert.match(res.text, /<textarea id="reply"[^>]*>Nog een vraag<\/textarea>/);
+  translatorDown = false;
+});
+
 test("hulp, back-up en uitloggen", async () => {
   let res = await request("GET", "/beheer/hulp");
   assert.match(res.text, /Een aanvraag beantwoorden/);
@@ -197,6 +250,7 @@ test("hulp, back-up en uitloggen", async () => {
   const snap = JSON.parse(res.text);
   assert.equal(snap.periods.length, 3);
   assert.equal(snap.requests.length, 1);
+  assert.equal(snap.messages.length, 1);
 
   res = await request("POST", "/beheer/uitloggen");
   assert.equal(res.location, "/beheer/inloggen");

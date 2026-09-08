@@ -122,3 +122,12 @@ blockquote{margin:0 0 14px;padding:12px 16px;border-left:4px solid var(--sand);b
 
 /* Smal scherm: de maandnaam past niet naast twee tekstknoppen; dan alleen de pijlen. */
 @media (max-width:460px){.month-nav .btn.ghost span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.month-nav .btn.ghost{min-width:48px}.month-nav h1{font-size:1.25rem}}
+
+/* Antwoorden aan de gast: voorbeeld met vertaling naast het Nederlands. */
+.reply{margin-top:16px}
+.preview{display:grid;gap:12px;margin-bottom:8px}
+.preview blockquote{margin:0}
+blockquote.translated{border-left-color:var(--sea);background:#eef5f7}
+.sent{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:10px}
+.sent li{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.sent li p{margin:4px 0 0}

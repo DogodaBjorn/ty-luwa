@@ -225,7 +225,24 @@
       "phMessage": "Vertel kort met wie je komt en of je vragen hebt.",
       "submit": "Aanvraag versturen",
       "status": "Het online versturen wordt op dit moment nog ingericht — er is niets verzonden. Neem voorlopig rechtstreeks contact op met Luuk en Wanda; binnenkort werkt het formulier volledig.",
-      "note": "Beschikbaarheid wordt persoonlijk bevestigd. Geen automatische boeking, geen betaling vooraf."
+      "note": "Beschikbaarheid wordt persoonlijk bevestigd. Geen automatische boeking, geen betaling vooraf.",
+      "calendar": {
+        "title": "Wanneer is Ty LuWa vrij?",
+        "text": "De kalender laat zien welke nachten al bezet zijn. Vrij betekent: vraag gerust aan; Luuk en Wanda bevestigen persoonlijk.",
+        "aria": "Beschikbaarheid per maand",
+        "legendFree": "Vrij",
+        "legendBusy": "Bezet",
+        "departureNote": "Op een vertrekdag kun je aankomen: die dag telt als vrij.",
+        "prev": "Vorige maand",
+        "next": "Volgende maand",
+        "today": "Vandaag",
+        "tapHint": "Tik op je aankomstdag en daarna op je vertrekdag; de datums komen dan in het formulier.",
+        "night": "1 nacht",
+        "nights": "{n} nachten",
+        "srFree": "vrij",
+        "srBusy": "bezet",
+        "srPast": "voorbij"
+      }
     },
     "conguel": {
       "eyebrow": "De camping",
@@ -516,7 +533,24 @@
       "phMessage": "Tell us briefly who is coming and whether you have any questions.",
       "submit": "Send request",
       "status": "Online sending is still being set up — nothing has been sent. For now, please contact Luuk and Wanda directly; the form will be fully working soon.",
-      "note": "Availability is confirmed personally. No automatic booking, no upfront payment."
+      "note": "Availability is confirmed personally. No automatic booking, no upfront payment.",
+      "calendar": {
+        "title": "When is Ty LuWa free?",
+        "text": "The calendar shows which nights are already taken. Free means: do ask; Luuk and Wanda confirm personally.",
+        "aria": "Availability by month",
+        "legendFree": "Free",
+        "legendBusy": "Taken",
+        "departureNote": "On a departure day you can arrive: that day counts as free.",
+        "prev": "Previous month",
+        "next": "Next month",
+        "today": "Today",
+        "tapHint": "Tap your arrival day, then your departure day; the dates go into the form.",
+        "night": "1 night",
+        "nights": "{n} nights",
+        "srFree": "free",
+        "srBusy": "taken",
+        "srPast": "past"
+      }
     },
     "conguel": {
       "eyebrow": "The campsite",
@@ -807,7 +841,24 @@
       "phMessage": "Erzählt kurz, wer mitkommt und ob ihr Fragen habt.",
       "submit": "Anfrage senden",
       "status": "Der Online-Versand wird derzeit noch eingerichtet — es wurde nichts gesendet. Kontaktiert vorerst bitte Luuk und Wanda direkt; das Formular funktioniert bald vollständig.",
-      "note": "Die Verfügbarkeit wird persönlich bestätigt. Keine automatische Buchung, keine Vorauszahlung."
+      "note": "Die Verfügbarkeit wird persönlich bestätigt. Keine automatische Buchung, keine Vorauszahlung.",
+      "calendar": {
+        "title": "Wann ist Ty LuWa frei?",
+        "text": "Der Kalender zeigt, welche Nächte schon vergeben sind. Frei heißt: fragt gern an; Luuk und Wanda bestätigen persönlich.",
+        "aria": "Verfügbarkeit pro Monat",
+        "legendFree": "Frei",
+        "legendBusy": "Belegt",
+        "departureNote": "An einem Abreisetag ist eine Anreise möglich: dieser Tag zählt als frei.",
+        "prev": "Voriger Monat",
+        "next": "Nächster Monat",
+        "today": "Heute",
+        "tapHint": "Tippt auf euren Anreisetag und dann auf den Abreisetag; die Daten stehen dann im Formular.",
+        "night": "1 Nacht",
+        "nights": "{n} Nächte",
+        "srFree": "frei",
+        "srBusy": "belegt",
+        "srPast": "vorbei"
+      }
     },
     "conguel": {
       "eyebrow": "Der Campingplatz",
@@ -1098,7 +1149,24 @@
       "phMessage": "Dites-nous en quelques mots qui vient et si vous avez des questions.",
       "submit": "Envoyer la demande",
       "status": "L’envoi en ligne est encore en cours de mise en place — rien n’a été envoyé. Pour l’instant, contactez directement Luuk et Wanda ; le formulaire sera bientôt pleinement opérationnel.",
-      "note": "Les disponibilités sont confirmées personnellement. Pas de réservation automatique, pas de paiement à l’avance."
+      "note": "Les disponibilités sont confirmées personnellement. Pas de réservation automatique, pas de paiement à l’avance.",
+      "calendar": {
+        "title": "Quand Ty LuWa est-il libre ?",
+        "text": "Le calendrier indique les nuits déjà prises. Libre veut dire : demandez sans hésiter ; Luuk et Wanda confirment personnellement.",
+        "aria": "Disponibilités par mois",
+        "legendFree": "Libre",
+        "legendBusy": "Occupé",
+        "departureNote": "Le jour d’un départ, une arrivée est possible : ce jour compte comme libre.",
+        "prev": "Mois précédent",
+        "next": "Mois suivant",
+        "today": "Aujourd’hui",
+        "tapHint": "Touchez votre jour d’arrivée, puis votre jour de départ ; les dates se placent dans le formulaire.",
+        "night": "1 nuit",
+        "nights": "{n} nuits",
+        "srFree": "libre",
+        "srBusy": "occupé",
+        "srPast": "passé"
+      }
     },
     "conguel": {
       "eyebrow": "Le camping",

@@ -17,7 +17,22 @@ app.set("trust proxy", true);
 
 const PUBLIC_DIR = path.join(__dirname, "public");
 const routes = require(path.join(__dirname, "content", "routes.json"));
+const content = require(path.join(__dirname, "content", "site-content.json"));
 const { languages, domains, slugs, legacyPaths } = routes;
+
+// --- planning: database, opslag, kalender ---------------------------------
+// Eén SQLite-bestand in DATA_DIR (op Azure /home/data, buiten wwwroot).
+// Alles wat dynamisch is (kalender, aanvragen, beheer) leest en schrijft daar.
+const config = require("./lib/config").load();
+const db = require("./lib/db").open(path.join(config.dataDir, "ty-luwa.sqlite"));
+const store = require("./lib/store").createStore(db);
+const pages = require("./lib/page").createPageRenderer({
+  publicDir: PUBLIC_DIR,
+  content,
+  routes,
+  store,
+  timeZone: config.timeZone,
+});
 
 // Elke taal heeft een eigen domein en een eigen map met gegenereerde HTML.
 // Duits deelt ty-luwa.com met Engels en is daar de enige taal met een prefix,
@@ -178,6 +193,12 @@ app.use((req, res, next) => {
   // nieuwe assethash en die moet meteen doorkomen.
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Content-Language", lang);
+
+  // De beschikbaarheidspagina krijgt bij elk verzoek de actuele kalender.
+  if (name === slugs.availability[lang]) {
+    res.type("html");
+    return res.send(pages.renderAvailabilityPage(lang));
+  }
   return res.sendFile(file);
 });
 

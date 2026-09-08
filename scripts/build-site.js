@@ -595,9 +595,21 @@ function pageAvailability(ctx) {
     } ${type === "date" || name === "name" || name === "email" ? "required" : ""}>
           </label>`;
 
+  const c = a.calendar;
+  // De kalender zelf komt niet uit de build: Server.js vervangt de marker bij
+  // elk verzoek door het actuele raster (lib/page.js), zodat de pagina
+  // statisch blijft en de beschikbaarheid toch altijd klopt, ook zonder JS.
   return `    <section class="section page-top">
       <div class="container narrow">
-        ${sectionHeading(a.eyebrow, a.title, a.text)}
+        ${sectionHeading(a.eyebrow, c.title, c.text)}
+
+        <div class="cal-block" data-calendar aria-label="${esc(c.aria)}"
+             data-prev="${esc(c.prev)}" data-next="${esc(c.next)}" data-today="${esc(c.today)}"
+             data-night="${esc(c.night)}" data-nights="${esc(c.nights)}">
+<!--tl:calendar-->
+        </div>
+
+        ${sectionHeading(null, a.title, a.text)}
 
         <form class="request-form" data-request-form novalidate>
           <div class="form-row">
@@ -777,7 +789,7 @@ function build() {
     );
     fs.writeFileSync(
       path.join(meta, `robots.${host}.txt`),
-      `User-agent: *\nAllow: /\nDisallow: /beheer\n\nSitemap: https://${host}/sitemap.xml\n`
+      `User-agent: *\nAllow: /\nDisallow: /beheer\nDisallow: /api\n\nSitemap: https://${host}/sitemap.xml\n`
     );
   }
 

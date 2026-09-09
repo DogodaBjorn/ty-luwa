@@ -8,6 +8,7 @@ const express = require("express");
 const dates = require("../lib/dates");
 const auth = require("../lib/auth");
 const calendar = require("../lib/calendar");
+const season = require("../lib/season");
 const views = require("../lib/beheer-views");
 const texts = require("../lib/mail-texts");
 const { validatePeriod } = require("../lib/validate");
@@ -127,7 +128,9 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
 
   function monthParam(req) {
     const m = String(req.query.m || "");
-    return /^\d{4}-(0[1-9]|1[0-2])$/.test(m) ? m : dates.monthOf(today());
+    const raw = /^\d{4}-(0[1-9]|1[0-2])$/.test(m) ? m : dates.monthOf(today());
+    // De camping is 's winters dicht: die maanden bestaan niet in de kalender.
+    return season.isOpenMonth(raw) ? raw : season.nextOpenMonth(raw);
   }
 
   router.get("/", (req, res) => {

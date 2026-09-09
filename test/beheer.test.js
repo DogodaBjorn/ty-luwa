@@ -242,13 +242,33 @@ test("antwoord aan de gast: vertaald voorbeeld, versturen, bewaard", async () =>
   translatorDown = false;
 });
 
+test("wintersluiting: het beheer slaat november tot en met februari over", async () => {
+  // Een gesloten maand opvragen komt uit bij de eerstvolgende open maand.
+  let res = await request("GET", "/beheer?m=2026-12");
+  assert.match(res.text, /Maart 2027/i);
+  assert.match(res.text, /href="\/beheer\?m=2026-10"/, "vorige springt terug naar oktober");
+  assert.match(res.text, /href="\/beheer\?m=2027-04"/, "volgende gaat naar april");
+
+  res = await request("GET", "/beheer?m=2026-10");
+  assert.match(res.text, /href="\/beheer\?m=2027-03"/, "oktober springt door naar maart");
+
+  // Onderhoud in de winter mag; het formulier waarschuwt alleen.
+  res = await request("POST", "/beheer/periode/nieuw", { body: { form_id: "fw", kind: "blocked", arrival: "2026-12-01", departure: "2026-12-05" } });
+  assert.equal(res.location, "/beheer?m=2026-12&melding=opgeslagen");
+  res = await request("GET", "/beheer/periode/4");
+  assert.match(res.text, /wintersluiting/);
+  // maar de maand zelf blijft onbereikbaar in de kalender
+  res = await request("GET", "/beheer?m=2026-12");
+  assert.match(res.text, /Maart 2027/i);
+});
+
 test("hulp, back-up en uitloggen", async () => {
   let res = await request("GET", "/beheer/hulp");
   assert.match(res.text, /Een aanvraag beantwoorden/);
   res = await request("GET", "/beheer/backup.json");
   assert.equal(res.status, 200);
   const snap = JSON.parse(res.text);
-  assert.equal(snap.periods.length, 3);
+  assert.equal(snap.periods.length, 4);
   assert.equal(snap.requests.length, 1);
   assert.equal(snap.messages.length, 1);
 
@@ -257,3 +277,4 @@ test("hulp, back-up en uitloggen", async () => {
   assert.equal(jar.tl_sessie, undefined);
   assert.equal((await request("GET", "/beheer")).location, "/beheer/inloggen");
 });
+

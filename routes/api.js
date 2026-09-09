@@ -5,6 +5,7 @@
 
 const express = require("express");
 const dates = require("../lib/dates");
+const season = require("../lib/season");
 const { validateRequest } = require("../lib/validate");
 const texts = require("../lib/mail-texts");
 
@@ -57,6 +58,11 @@ function createApiRouter({ store, mailer, translator, config, content, routes, p
       return reply(400, "error", v.code, c.errors[v.code] || c.errors.dates);
     }
     const r = v.data;
+
+    // De camping is 's winters dicht; dan kan er niets geboekt worden.
+    if (season.closedNights(r.arrival, r.departure).length) {
+      return reply(409, "error", "closed", c.errors.closed);
+    }
 
     const occupiedKinds = store.occupiedNightKinds(r.arrival, r.departure);
     if ([...occupiedKinds.values()].some((k) => k.kind === "siblu")) {

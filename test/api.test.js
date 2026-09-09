@@ -22,8 +22,14 @@ console.log = origLog;
 
 const dates = require("../lib/dates");
 const today = dates.today("Europe/Paris");
-const arrival = dates.addDays(today, 30);
-const departure = dates.addDays(today, 37);
+// De camping is 's winters dicht, dus testdatums liggen in het komende seizoen:
+// juni van volgend jaar als vaste basis, met dagen erbij voor losse gevallen.
+const season = require("../lib/season");
+const seasonYear = Number(today.slice(0, 4)) + 1;
+const base = `${seasonYear}-06-01`;
+const day = (n) => dates.addDays(base, n);
+const arrival = day(0);
+const departure = day(7);
 
 // fetch (undici) negeert een eigen Host-header; http.request niet, en de
 // host bepaalt hier de taal.
@@ -101,7 +107,7 @@ test("fouten komen terug in de taal van de pagina", { skip: !built && "site niet
   assert.equal(res.status, 400);
   assert.deepEqual(await res.json(), { ok: false, code: "tooMany", message: "Ty LuWa hat Platz für höchstens 6 Gäste." });
 
-  res = await post({ ...good, lang: "nl", arrival: dates.addDays(today, 40), departure: dates.addDays(today, 41), email: "p@example.nl", name: "Piet" });
+  res = await post({ ...good, lang: "nl", arrival: day(40), departure: day(41), email: "p@example.nl", name: "Piet" });
   // overlapt met de aanvraag hierboven? Nee: die is nog geen periode. Wel als we er een periode van maken.
   assert.equal(res.status, 200);
 });
@@ -110,14 +116,14 @@ test("bezette nachten worden geweigerd", { skip: !built && "site niet gebouwd" }
   const { open } = require("../lib/db");
   const { createStore } = require("../lib/store");
   const store = createStore(open(path.join(dir, "ty-luwa.sqlite")));
-  store.createPeriod({ arrival: dates.addDays(today, 60), departure: dates.addDays(today, 63), kind: "own" });
-  const res = await post({ ...good, lang: "en", arrival: dates.addDays(today, 62), departure: dates.addDays(today, 65), email: "j@example.com", name: "John Doe" });
+  store.createPeriod({ arrival: day(60), departure: day(63), kind: "own" });
+  const res = await post({ ...good, lang: "en", arrival: day(62), departure: day(65), email: "j@example.com", name: "John Doe" });
   assert.equal(res.status, 409);
   const data = await res.json();
   assert.equal(data.code, "occupied");
   assert.match(data.message, /already taken \(from /);
   // de vertrekdag van de periode is een geldige aankomstdag
-  const ok = await post({ ...good, lang: "en", arrival: dates.addDays(today, 63), departure: dates.addDays(today, 65), email: "j2@example.com", name: "Jane Doe" });
+  const ok = await post({ ...good, lang: "en", arrival: day(63), departure: day(65), email: "j2@example.com", name: "Jane Doe" });
   assert.equal(ok.status, 200);
 });
 
@@ -125,7 +131,7 @@ test("juli van Siblu wordt geweigerd met verwijzing, en staat roze in de kalende
   const { open } = require("../lib/db");
   const { createStore } = require("../lib/store");
   const store = createStore(open(path.join(dir, "ty-luwa.sqlite")));
-  const y = Number(today.slice(0, 4)) + 1;
+  const y = seasonYear;
   store.createPeriod({ arrival: `${y}-07-01`, departure: `${y}-08-01`, kind: "siblu" });
   const res = await post({ ...good, lang: "fr", arrival: `${y}-07-10`, departure: `${y}-07-17`, email: "s@example.fr", name: "Sophie Martin" });
   assert.equal(res.status, 409);
@@ -139,7 +145,7 @@ test("juli van Siblu wordt geweigerd met verwijzing, en staat roze in de kalende
 });
 
 test("zonder JavaScript: redirect na versturen, pagina met melding bij fout", { skip: !built && "site niet gebouwd" }, async () => {
-  const res = await post({ ...good, lang: "nl", email: "q@example.nl", arrival: dates.addDays(today, 90), departure: dates.addDays(today, 92) }, { Accept: "text/html", Host: "ty-luwa.nl" });
+  const res = await post({ ...good, lang: "nl", email: "q@example.nl", arrival: day(90), departure: day(92) }, { Accept: "text/html", Host: "ty-luwa.nl" });
   assert.equal(res.status, 303);
   assert.equal(res.headers.get("location"), "/beschikbaarheid?verzonden=1#melding");
   const page = await request("GET", "/beschikbaarheid?verzonden=1", { headers: { Host: "ty-luwa.nl" } });
@@ -154,12 +160,28 @@ test("bericht van de gast wordt naar het Nederlands vertaald voor de ouders", { 
   const { open } = require("../lib/db");
   const { createStore } = require("../lib/store");
   // vertaler niet ingesteld in deze test-app: geen vertaling, wel opgeslagen
-  const res = await post({ ...good, lang: "fr", arrival: dates.addDays(today, 120), departure: dates.addDays(today, 123), email: "v@example.fr", name: "Vincent Leroy", message: "Bonjour" });
+  const res = await post({ ...good, lang: "fr", arrival: day(120), departure: day(123), email: "v@example.fr", name: "Vincent Leroy", message: "Bonjour" });
   assert.equal(res.status, 200);
   const store = createStore(open(path.join(dir, "ty-luwa.sqlite")));
   const r = store.listRequests("new").find((x) => x.name === "Vincent Leroy");
   assert.equal(r.message, "Bonjour");
   assert.equal(r.message_nl, null);
+});
+
+test("de wintersluiting wordt geweigerd en staat niet in de kalender", { skip: !built && "site niet gebouwd" }, async () => {
+  const res = await post({ ...good, lang: "nl", arrival: `${seasonYear}-12-20`, departure: `${seasonYear}-12-27`, email: "w@example.nl", name: "Winter Gast" });
+  assert.equal(res.status, 409);
+  const data = await res.json();
+  assert.equal(data.code, "closed");
+  assert.match(data.message, /camping gesloten/i);
+
+  const page = await request("GET", "/beschikbaarheid", { headers: { Host: "ty-luwa.nl" } });
+  const html = await page.text();
+  assert.doesNotMatch(html, new RegExp(`data-month="${seasonYear}-12"`), "december staat niet in de kalender");
+  assert.doesNotMatch(html, new RegExp(`data-month="${seasonYear + 1}-01"`));
+  assert.match(html, new RegExp(`data-month="${seasonYear}-07"`));
+  assert.match(html, /Camping Le Conguel gesloten/);
+  assert.equal(season.publicMonths(today).every((m) => html.includes(`data-month="${m}"`)), true);
 });
 
 test("honeypot en onbekende host", async () => {

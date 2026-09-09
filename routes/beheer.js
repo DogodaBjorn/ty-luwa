@@ -8,18 +8,41 @@ const express = require("express");
 const dates = require("../lib/dates");
 const auth = require("../lib/auth");
 const calendar = require("../lib/calendar");
+const season = require("../lib/season");
 const views = require("../lib/beheer-views");
 const texts = require("../lib/mail-texts");
 const { validatePeriod } = require("../lib/validate");
 const { PERIOD_KINDS } = require("../lib/store");
 
-const CAL_LABELS = { free: "vrij", busy: "bezet", past: "voorbij", today: "vandaag" };
+const { holidayMap } = require("../lib/holidays");
+const { loadContext, collectHighlights } = require("../lib/highlights");
+
+const CAL_LABELS = {
+  free: "vrij", busy: "bezet", past: "voorbij", today: "vandaag",
+  holiday: "feestdag", school: "schoolvakantie",
+};
 
 function createBeheerRouter({ store, mailer, translator, config, isLocalHost, knownHost, log = console, now = () => new Date().toISOString() }) {
   const tr = translator || { enabled: false, translate: async () => null, tryTranslate: async () => null };
   const router = express.Router();
   const helpMd = fs.readFileSync(path.join(__dirname, "..", "docs", "HANDLEIDING-BEHEER.md"), "utf8");
   const helpHtml = views.markdownToHtml(helpMd);
+
+  // De uitleg: één Markdown-bestand per hoofdstuk in docs/uitleg/, met de
+  // volgorde in de bestandsnaam. De titel is de eerste kop, de samenvatting
+  // de eerste alinea.
+  const uitlegDir = path.join(__dirname, "..", "docs", "uitleg");
+  const chapters = fs
+    .readdirSync(uitlegDir)
+    .filter((f) => f.endsWith(".md"))
+    .sort()
+    .map((file) => {
+      const md = fs.readFileSync(path.join(uitlegDir, file), "utf8");
+      const slug = file.replace(/^\d+-/, "").replace(/\.md$/, "");
+      const title = (/^#\s+(.*)$/m.exec(md) || [, slug])[1];
+      const summary = (/^(?!#|!|>)(\S.*)$/m.exec(md) || [, ""])[1].replace(/\*\*/g, "");
+      return { file, slug, title, summary, headings: views.headings(md), html: views.markdownToHtml(md) };
+    });
 
   const hostOf = (req) => String(req.headers.host || "").toLowerCase().split(":")[0].replace(/^www\./, "");
   const isBeheerHost = (host) => host === config.beheerHost || isLocalHost(host);
@@ -42,6 +65,7 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
     next();
   });
 
+  // css, js en de plaatjes van de uitleg; niet gehasht, dus geen lange cache.
   router.use("/static", express.static(path.join(__dirname, "..", "assets", "beheer"), { index: false }));
   router.use(express.urlencoded({ extended: false, limit: "50kb" }));
   router.use(auth.sameOriginGuard(isBeheerHost));
@@ -76,7 +100,7 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
       const link = `${req.protocol}://${req.headers.host}/beheer/inloglink/${login.token}`;
       const m = texts.login({ code: login.code, link });
       try {
-        await mailer.send({ to: login.email, subject: m.subject, text: m.text, replyTo: "" });
+        await mailer.send({ to: login.email, subject: m.subject, text: m.text, html: m.html, replyTo: "" });
       } catch (e) {
         log.error("Inlogmail mislukt:", e.message);
       }
@@ -127,7 +151,9 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
 
   function monthParam(req) {
     const m = String(req.query.m || "");
-    return /^\d{4}-(0[1-9]|1[0-2])$/.test(m) ? m : dates.monthOf(today());
+    const raw = /^\d{4}-(0[1-9]|1[0-2])$/.test(m) ? m : dates.monthOf(today());
+    // De camping is 's winters dicht: die maanden bestaan niet in de kalender.
+    return season.isOpenMonth(raw) ? raw : season.nextOpenMonth(raw);
   }
 
   router.get("/", (req, res) => {
@@ -135,10 +161,15 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
     const from = `${ym}-01`;
     const to = `${dates.addMonths(ym, 1)}-01`;
     const kinds = store.occupiedNightKinds(from, to);
+    // In het beheer de Nederlandse feestdagen en vakanties: dat is de taal
+    // van Luuk en Wanda, en het zegt iets over de drukte.
+    const holidayRows = store.holidaysBetween("NL", from, to);
     const gridHtml = calendar.renderMonth({
       ym,
       occupied: new Set(kinds.keys()),
       kinds,
+      holidays: holidayMap(holidayRows, dates),
+      holidayRows,
       today: today(),
       minDate: "0000-00-00", // in het beheer is het verleden gewoon bewerkbaar
       lang: "nl",
@@ -260,11 +291,18 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
         r.message_nl = nl;
       }
     }
+    // Dezelfde bijzonderheden als in de meldingsmail, uit dezelfde functie.
+    let highlights = [];
+    try {
+      highlights = collectHighlights(loadContext(store, r, today()));
+    } catch (e) {
+      log.error("Bijzonderheden verzamelen mislukt:", e.message);
+    }
     res.send(
       views.requestDetailView({
         ...ctx(req),
         request: r,
-        overlap: overlapOf(r),
+        highlights,
         mailto: texts.mailto(r),
         periods: store.periodsOfRequest(r.id),
         messages: store.listMessages(r.id),
@@ -308,7 +346,7 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
     const m = texts.reply(r, { nl: bodyNl, translated: r.lang === "nl" ? null : translated });
     let status = "ok";
     try {
-      await mailer.send({ to: r.email, subject: m.subject, text: m.text });
+      await mailer.send({ to: r.email, subject: m.subject, text: m.text, html: m.html });
     } catch (e) {
       status = e.message;
       log.error("Antwoord aan gast mislukt:", e.message);
@@ -330,6 +368,27 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
   });
 
   // --- hulp en back-up -----------------------------------------------------
+  router.get("/uitleg", (req, res) => {
+    res.send(views.uitlegIndexView({ ...ctx(req), chapters }));
+  });
+
+  router.get("/uitleg/alles", (req, res) => {
+    res.send(views.uitlegAllView({ ...ctx(req), chapters }));
+  });
+
+  router.get("/uitleg/:slug", (req, res) => {
+    const i = chapters.findIndex((c) => c.slug === req.params.slug);
+    if (i < 0) return res.redirect("/beheer/uitleg");
+    res.send(
+      views.uitlegChapterView({
+        ...ctx(req),
+        chapter: chapters[i],
+        prev: chapters[i - 1] || null,
+        next: chapters[i + 1] || null,
+      })
+    );
+  });
+
   router.get("/hulp", (req, res) => {
     res.send(views.helpView({ ...ctx(req), html: helpHtml, backupHref: "/beheer/backup.json" }));
   });

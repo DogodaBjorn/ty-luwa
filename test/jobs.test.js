@@ -66,3 +66,48 @@ test("juli van Siblu: drie jaar vooruit, één keer per jaar, weghalen blijft we
   t = new Date("2027-01-05T03:00:00Z");
   assert.deepEqual(jobs.runSibluSeed(), [2029], "nieuw jaar erbij");
 });
+
+test("feestdagen bijwerken: één keer per dag, een land dat uitvalt houdt zijn oude lijst", async () => {
+  const db = open(":memory:");
+  let t = new Date("2026-09-09T03:00:00Z");
+  const store = createStore(db, { now: () => t.toISOString() });
+  let frDown = false;
+  const holidaySource = {
+    async fetchYear(country, year) {
+      if (country === "FR" && frDown) throw new Error("bron plat");
+      return [
+        { kind: "public", startDate: `${year}-05-05`, endDate: `${year}-05-05`, name: `Feest ${country}`, nationwide: true, regions: [] },
+        { kind: "school", startDate: `${year}-07-06`, endDate: `${year}-07-10`, name: `Vakantie ${country}`, nationwide: false, regions: ["Noord"] },
+      ];
+    },
+  };
+  const lines = [];
+  const jobs = createJobs({
+    store, db, holidaySource,
+    mailer: { send: async () => ({}) },
+    config: { dataDir: os.tmpdir(), mail: { backup: [] } },
+    log: { log: (s) => lines.push(s), error: (s, m) => lines.push(`${s} ${m}`) },
+    now: () => t,
+  });
+
+  const done = await jobs.runHolidaySync();
+  assert.equal(done.length, 8, "vier landen, twee jaren");
+  assert.match(lines[0], /feestdagen NL 2026: 1 feestdagen, 1 vakanties/);
+  assert.deepEqual(await jobs.runHolidaySync(), [], "niet nog eens vandaag");
+
+  const rows = store.holidaysBetween("NL", "2026-07-01", "2026-08-01");
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].name, "Vakantie NL");
+  assert.equal(rows[0].regions, "Noord");
+  assert.equal(rows[0].nationwide, 0);
+  assert.equal(store.holidaysBetween("FR", "2026-05-01", "2026-06-01").length, 1);
+  assert.equal(store.holidaysBetween("NL", "2026-06-01", "2026-06-15").length, 0);
+
+  // Volgende dag: Frankrijk valt uit, de rest wordt ververst.
+  t = new Date("2026-09-10T03:00:00Z");
+  frDown = true;
+  const done2 = await jobs.runHolidaySync();
+  assert.equal(done2.length, 6);
+  assert.ok(lines.some((l) => /Feestdagen FR 2026 ophalen mislukt/.test(l)));
+  assert.equal(store.holidaysBetween("FR", "2026-05-01", "2026-06-01").length, 1, "oude lijst blijft staan");
+});

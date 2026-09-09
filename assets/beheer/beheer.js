@@ -54,3 +54,35 @@
     });
   }
 })();
+
+// --- uitleg: telefoon- of laptopplaatjes, en afdrukken ---------------------
+// Zonder dit bestand toont de CSS de opname die bij het scherm past; dit maakt
+// het een keuze, voor wie op de laptop leest en het op de telefoon nadoet.
+(function () {
+  "use strict";
+  var box = document.querySelector("[data-shot-switch]");
+  if (box) {
+    var buttons = box.querySelectorAll("button[data-shots]");
+    var apply = function (value) {
+      if (value) document.documentElement.setAttribute("data-shots", value);
+      else document.documentElement.removeAttribute("data-shots");
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].setAttribute("aria-pressed", String(buttons[i].getAttribute("data-shots") === value));
+      }
+    };
+    var stored = null;
+    try { stored = localStorage.getItem("tl-shots"); } catch (e) {}
+    apply(stored || (window.innerWidth >= 820 ? "lap" : "mob"));
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener("click", function (e) {
+        var value = e.currentTarget.getAttribute("data-shots");
+        apply(value);
+        try { localStorage.setItem("tl-shots", value); } catch (err) {}
+      });
+    }
+    box.hidden = false;
+  }
+
+  var print = document.querySelector("[data-print]");
+  if (print) print.addEventListener("click", function () { window.print(); });
+})();

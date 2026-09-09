@@ -79,7 +79,7 @@ test("inloggen met code, daarna met link (die is dan al verbruikt)", async () =>
   assert.ok(jar.tl_inloggen, "login-cookie gezet");
   const mail = logged.find((l) => l.includes("Je inlogcode"));
   const code = /^\s{4}(\d{6})$/m.exec(mail)[1];
-  const link = /Tik op deze link: \S+\/beheer\/inloglink\/(\S+)/.exec(mail)[1];
+  const link = /\/beheer\/inloglink\/(\S+)/.exec(mail)[1];
 
   res = await request("POST", "/beheer/inlogcode", { body: { code: "000000" } });
   assert.match(res.text, /Die code klopt niet/);
@@ -176,6 +176,10 @@ test("aanvraag: in de kalender zetten, afwijzen, terug naar nieuw", async () => 
   res = await request("GET", "/beheer/aanvraag/1");
   assert.match(res.text, /mailto:hans%40example.de\?subject=Eure%20Anfrage/);
   assert.match(res.text, /Mit Hund/);
+  // dezelfde bijzonderheden als in de meldingsmail
+  assert.match(res.text, /<h2>Bijzonderheden<\/h2>/);
+  assert.match(res.text, /class="tone-calm">\s*<strong>In de kalender is deze periode vrij/);
+  assert.match(res.text, /Feestdagen nog niet opgehaald|Feestdagen en schoolvakanties|Geen feestdag/);
 
   res = await request("GET", "/beheer/periode/nieuw?aanvraag=1&soort=rented");
   assert.match(res.text, /value="rented" checked/);
@@ -242,13 +246,74 @@ test("antwoord aan de gast: vertaald voorbeeld, versturen, bewaard", async () =>
   translatorDown = false;
 });
 
+test("wintersluiting: het beheer slaat november tot en met februari over", async () => {
+  // Een gesloten maand opvragen komt uit bij de eerstvolgende open maand.
+  let res = await request("GET", "/beheer?m=2026-12");
+  assert.match(res.text, /Maart 2027/i);
+  assert.match(res.text, /href="\/beheer\?m=2026-10"/, "vorige springt terug naar oktober");
+  assert.match(res.text, /href="\/beheer\?m=2027-04"/, "volgende gaat naar april");
+
+  res = await request("GET", "/beheer?m=2026-10");
+  assert.match(res.text, /href="\/beheer\?m=2027-03"/, "oktober springt door naar maart");
+
+  // Onderhoud in de winter mag; het formulier waarschuwt alleen.
+  res = await request("POST", "/beheer/periode/nieuw", { body: { form_id: "fw", kind: "blocked", arrival: "2026-12-01", departure: "2026-12-05" } });
+  assert.equal(res.location, "/beheer?m=2026-12&melding=opgeslagen");
+  res = await request("GET", "/beheer/periode/4");
+  assert.match(res.text, /wintersluiting/);
+  // maar de maand zelf blijft onbereikbaar in de kalender
+  res = await request("GET", "/beheer?m=2026-12");
+  assert.match(res.text, /Maart 2027/i);
+});
+
+test("uitleg: acht hoofdstukken, inhoudsopgave, twee sets plaatjes en alles op één pagina", async () => {
+  let res = await request("GET", "/beheer/uitleg");
+  assert.equal(res.status, 200);
+  assert.match(res.text, /Uitleg over de site/);
+  for (const t of ["In het kort", "De website", "De kalender lezen", "Inloggen", "Een aanvraag krijgen", "Antwoorden en vertalen", "De planning bijhouden", "Als iets niet lukt"]) {
+    assert.ok(res.text.includes(t), `hoofdstuk "${t}" staat in het overzicht`);
+  }
+  assert.match(res.text, /href="\/beheer\/uitleg\/in-het-kort"/);
+  assert.match(res.text, /href="\/beheer\/uitleg\/alles"/);
+
+  // een hoofdstuk: inhoudsopgave uit de tussenkoppen, plaatjes in twee maten
+  res = await request("GET", "/beheer/uitleg/de-planning-bijhouden");
+  assert.equal(res.status, 200);
+  assert.match(res.text, /<nav class="toc"/);
+  assert.match(res.text, /<a href="#een-periode-toevoegen">Een periode toevoegen<\/a>/);
+  assert.match(res.text, /<h2 id="een-periode-toevoegen">/);
+  assert.match(res.text, /<img class="shot-mob" src="\/beheer\/static\/uitleg\/periode.png"/);
+  assert.match(res.text, /<img class="shot-lap" src="\/beheer\/static\/uitleg\/periode-laptop.png"/);
+  assert.match(res.text, /data-shot-switch/);
+  assert.match(res.text, /href="\/beheer\/uitleg\/antwoorden-en-vertalen"/, "vorige hoofdstuk");
+  assert.match(res.text, /href="\/beheer\/uitleg\/als-iets-niet-lukt"/, "volgende hoofdstuk");
+
+  // tipblokken en de plaatjes worden echt geserveerd
+  res = await request("GET", "/beheer/uitleg/inloggen");
+  assert.match(res.text, /<p class="tip">/);
+  assert.equal((await request("GET", "/beheer/static/uitleg/inloggen.png")).status, 200);
+
+  // alles achter elkaar, met een afdrukknop
+  res = await request("GET", "/beheer/uitleg/alles");
+  assert.equal(res.status, 200);
+  assert.match(res.text, /data-print/);
+  assert.equal((res.text.match(/class="card prose chapter"/g) || []).length, 8);
+  assert.match(res.text, /id="h8"/);
+
+  // onbekend hoofdstuk gaat terug naar het overzicht
+  assert.equal((await request("GET", "/beheer/uitleg/bestaat-niet")).location, "/beheer/uitleg");
+
+  // en vanaf Hulp is de uitleg te vinden
+  assert.match((await request("GET", "/beheer/hulp")).text, /href="\/beheer\/uitleg"/);
+});
+
 test("hulp, back-up en uitloggen", async () => {
   let res = await request("GET", "/beheer/hulp");
   assert.match(res.text, /Een aanvraag beantwoorden/);
   res = await request("GET", "/beheer/backup.json");
   assert.equal(res.status, 200);
   const snap = JSON.parse(res.text);
-  assert.equal(snap.periods.length, 3);
+  assert.equal(snap.periods.length, 4);
   assert.equal(snap.requests.length, 1);
   assert.equal(snap.messages.length, 1);
 
@@ -257,3 +322,5 @@ test("hulp, back-up en uitloggen", async () => {
   assert.equal(jar.tl_sessie, undefined);
   assert.equal((await request("GET", "/beheer")).location, "/beheer/inloggen");
 });
+
+

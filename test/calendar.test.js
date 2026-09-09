@@ -20,7 +20,7 @@ test("maandraster: koppen, bezette en voorbije dagen, vandaag", () => {
   assert.match(html, /class="cal-day is-today" data-date="2026-07-10" aria-current="date"/);
   assert.match(html, /data-date="2026-07-20"[^>]*>.*?visually-hidden">vrij</);
   assert.equal((html.match(/data-date=/g) || []).length, 31);
-  assert.ok(html.startsWith('<table class="cal" data-month="2026-07">'));
+  assert.ok(html.startsWith('<div class="cal-month" data-month="2026-07">'));
   assert.doesNotMatch(html, /<a /, "publiek: geen links");
 });
 

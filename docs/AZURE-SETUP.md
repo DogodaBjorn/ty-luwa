@@ -15,7 +15,7 @@ later API-routes naast zetten zonder te migreren.
 
 | Resource | Keuze | Waarom |
 |---|---|---|
-| Resource group | `rg-tyluwa-prod` | Alles van Ty LuWa bij elkaar, apart van DoGoDa. Eén klik om alles te verwijderen als het ooit stopt. |
+| Resource group | `rg-tyluwa` | Alles van Ty LuWa bij elkaar, apart van DoGoDa. Eén klik om alles te verwijderen als het ooit stopt. |
 | Regio | **West Europe** | Dichtst bij de bezoekers (NL/FR/DE). Kies dezelfde regio voor alle resources, anders betaal je dataverkeer tussen regio's. |
 | App Service Plan | **B1, Linux** | Zie hieronder. |
 | Web App | `ty-luwa`, Node 24 LTS | Naam moet wereldwijd uniek zijn op `azurewebsites.net`; dit is de naam die daadwerkelijk is aangemaakt. |
@@ -49,7 +49,7 @@ eigenaar — neem dan een eigen plan. Dan is de hele resource group in één kee
 
 ## 2. Resources aanmaken (portal)
 
-1. **Resource group** → naam `rg-tyluwa-prod`, regio West Europe.
+1. **Resource group** → naam `rg-tyluwa`, regio West Europe.
 2. **Create a resource → Web App**:
    - Name: `ty-luwa`
    - Publish: **Code**
@@ -236,7 +236,7 @@ door de tabel `sessions` te legen (`scripts/restore.js` raakt die niet).
 **Mail: Azure Communication Services Email.** Eenmalig:
 
 1. **Create a resource → Communication Services**, naam bv. `acs-tyluwa`, data location
-   Europe, in `rg-tyluwa-prod`.
+   Europe, in `rg-tyluwa`.
 2. **Create a resource → Email Communication Service**, zelfde resource group.
    Daarin **Provision domains → Add domain → Custom domain**: `ty-luwa.nl`. Azure toont
    TXT-records voor domeinverificatie, SPF en twee DKIM-CNAME's. Zet die bij Strato in de
@@ -267,10 +267,36 @@ fr/en/de krijgen een Nederlandse vertaling in het beheer en in de meldingsmail. 
 Zonder sleutel gaat een antwoord in het Nederlands, met een melding in het beheer; er wordt
 nooit iets verstuurd als het vertalen mislukt.
 
+**De mails zien eruit als Ty LuWa.** Melding, ontvangstbevestiging, antwoord, inlogmail en
+back-up gaan als opgemaakte mail met een tekstversie ernaast (ACS stuurt beide mee). De
+opmaak is gebouwd op wat Outlook aankan; het logo komt van `https://ty-luwa.nl/assets/brand/`
+en de mail blijft leesbaar als een mailprogramma afbeeldingen blokkeert. Wil je een mail
+bekijken zonder er een te versturen: `node scripts/mail-preview.js` schrijft alle varianten
+als HTML weg (en maakt er plaatjes van als Playwright er is). Lokaal met
+`MAIL_PROVIDER=console` bewaart `MAIL_DEBUG_DIR` elke verstuurde mail als bestand.
+
 **Structuur in de code.** `routes/beheer.js` en `routes/api.js` zijn in `Server.js`
 gemonteerd **vóór** de paginahandler, die anders elke route afvangt. Het beheer staat op één
 taal en één domein (`BEHEER_HOST`), buiten de `hreflang`-set; `robots.txt` sluit `/beheer`
 en `/api` uit. Andere bekende domeinen sturen `/beheer` door naar `ty-luwa.nl`.
+
+**Feestdagen en schoolvakanties.** Elke taalsite toont de dagen van zijn eigen land, zodat
+een Franse gast Franse vakanties ziet. De server haalt ze dagelijks op bij twee open bronnen
+zonder sleutel: `openholidaysapi.org` (NL, FR, DE) en `gov.uk` (Engeland). Er is dus **geen
+Application setting** voor nodig. Valt een bron uit, dan blijft de vorige lijst staan; in de
+Log stream zie je per land een regel als `feestdagen NL 2026: 11 feestdagen, 5 vakanties`.
+Werkt het niet, draai dan `node scripts/holidays-check.js` via Kudu SSH om te zien wat de
+bronnen antwoorden. Beide domeinen moeten uitgaand bereikbaar zijn; App Service staat dat
+standaard toe.
+
+**Winter.** De camping is dicht van november tot en met februari. Die maanden staan niet in
+de publieke kalender, het beheer slaat ze over en een aanvraag ervoor wordt geweigerd. Zijn
+de openingsdata ooit anders, zet dan `SEASON_OPEN` en `SEASON_CLOSE` (vorm `MM-DD`, de
+sluiting is exclusief).
+
+**Uitleg voor de beheerders.** Achter het inloggen staat op `/beheer/uitleg` een uitleg in
+vier hoofdstukken met schermafbeeldingen. De teksten staan in `docs/uitleg/`; de plaatjes
+maak je opnieuw met `node scripts/screenshots.js` (zie README).
 
 **Juli en Siblu.** Siblu verhuurt de caravan in juli. De server zet juli van dit jaar en de
 twee volgende automatisch in de kalender als soort "Via Siblu" (roze); publiek staat er

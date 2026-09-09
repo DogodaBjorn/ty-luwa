@@ -243,7 +243,12 @@
         "srPast": "voorbij",
         "legendSiblu": "Mogelijk boekbaar via Siblu",
         "srSiblu": "mogelijk boekbaar via Siblu",
-        "sibluUrl": "https://leconguel.fr/"
+        "sibluUrl": "https://leconguel.fr/",
+        "closedNote": "Van november tot en met februari is Camping Le Conguel gesloten; die maanden staan niet in de kalender.",
+        "legendHoliday": "Feestdag",
+        "legendSchool": "Schoolvakantie (in een deel van het land)",
+        "srHoliday": "feestdag",
+        "srSchool": "schoolvakantie"
       },
       "sent": "Je aanvraag is verstuurd. Luuk en Wanda bekijken de beschikbaarheid en nemen persoonlijk contact met je op.",
       "errors": {
@@ -258,7 +263,8 @@
         "occupied": "Deze periode overlapt met nachten die al bezet zijn (vanaf {first}). Kies een andere periode.",
         "rate": "Er kwamen te veel aanvragen achter elkaar vanaf dit adres. Probeer het over een uur nog eens.",
         "server": "Het versturen is even niet gelukt. Probeer het zo nog eens.",
-        "siblu": "In deze periode verhuurt Siblu Ty LuWa. Kijk voor juli op leconguel.fr."
+        "siblu": "In deze periode verhuurt Siblu Ty LuWa. Kijk voor juli op leconguel.fr.",
+        "closed": "Van november tot en met februari is de camping gesloten. Kies een periode tussen 1 maart en 31 oktober."
       },
       "receipt": {
         "subject": "Je aanvraag bij Ty LuWa is ontvangen",
@@ -580,7 +586,12 @@
         "srPast": "past",
         "legendSiblu": "Possibly bookable through Siblu",
         "srSiblu": "possibly bookable through Siblu",
-        "sibluUrl": "https://leconguel.fr/"
+        "sibluUrl": "https://leconguel.fr/",
+        "closedNote": "From November through February, Camping Le Conguel is closed; those months are not in the calendar.",
+        "legendHoliday": "Bank holiday",
+        "legendSchool": "School holiday (in part of the country)",
+        "srHoliday": "bank holiday",
+        "srSchool": "school holiday"
       },
       "sent": "Your request has been sent. Luuk and Wanda will check availability and get in touch with you personally.",
       "errors": {
@@ -595,7 +606,8 @@
         "occupied": "This period overlaps nights that are already taken (from {first}). Please choose another period.",
         "rate": "Too many requests came in from this address in a row. Please try again in an hour.",
         "server": "Sending didn’t work just now. Please try again in a moment.",
-        "siblu": "In this period Ty LuWa is let through Siblu. For July, see leconguel.fr."
+        "siblu": "In this period Ty LuWa is let through Siblu. For July, see leconguel.fr.",
+        "closed": "From November through February the campsite is closed. Please choose a period between 1 March and 31 October."
       },
       "receipt": {
         "subject": "Your request to Ty LuWa has been received",
@@ -917,7 +929,12 @@
         "srPast": "vorbei",
         "legendSiblu": "Eventuell buchbar über Siblu",
         "srSiblu": "eventuell buchbar über Siblu",
-        "sibluUrl": "https://leconguel.fr/"
+        "sibluUrl": "https://leconguel.fr/",
+        "closedNote": "Von November bis Februar ist der Camping Le Conguel geschlossen; diese Monate stehen nicht im Kalender.",
+        "legendHoliday": "Feiertag",
+        "legendSchool": "Schulferien (in einem Teil des Landes)",
+        "srHoliday": "Feiertag",
+        "srSchool": "Schulferien"
       },
       "sent": "Eure Anfrage ist abgeschickt. Luuk und Wanda prüfen die Verfügbarkeit und melden sich persönlich bei euch.",
       "errors": {
@@ -932,7 +949,8 @@
         "occupied": "Dieser Zeitraum überschneidet sich mit Nächten, die schon vergeben sind (ab {first}). Bitte wählt einen anderen Zeitraum.",
         "rate": "Von dieser Adresse kamen zu viele Anfragen hintereinander. Versucht es in einer Stunde noch einmal.",
         "server": "Das Senden hat gerade nicht geklappt. Bitte versucht es gleich noch einmal.",
-        "siblu": "In diesem Zeitraum vermietet Siblu Ty LuWa. Für Juli schaut auf leconguel.fr."
+        "siblu": "In diesem Zeitraum vermietet Siblu Ty LuWa. Für Juli schaut auf leconguel.fr.",
+        "closed": "Von November bis Februar ist der Campingplatz geschlossen. Wählt einen Zeitraum zwischen dem 1. März und dem 31. Oktober."
       },
       "receipt": {
         "subject": "Eure Anfrage bei Ty LuWa ist angekommen",
@@ -1254,7 +1272,12 @@
         "srPast": "passé",
         "legendSiblu": "Peut-être réservable via Siblu",
         "srSiblu": "peut-être réservable via Siblu",
-        "sibluUrl": "https://leconguel.fr/"
+        "sibluUrl": "https://leconguel.fr/",
+        "closedNote": "De novembre à février, le Camping Le Conguel est fermé ; ces mois ne figurent pas dans le calendrier.",
+        "legendHoliday": "Jour férié",
+        "legendSchool": "Vacances scolaires (dans une partie du pays)",
+        "srHoliday": "jour férié",
+        "srSchool": "vacances scolaires"
       },
       "sent": "Votre demande est envoyée. Luuk et Wanda vérifient les disponibilités et vous contactent personnellement.",
       "errors": {
@@ -1269,7 +1292,8 @@
         "occupied": "Cette période chevauche des nuits déjà prises (à partir du {first}). Choisissez une autre période.",
         "rate": "Trop de demandes se sont suivies depuis cette adresse. Réessayez dans une heure.",
         "server": "L’envoi n’a pas abouti. Réessayez dans un instant.",
-        "siblu": "Sur cette période, Ty LuWa est loué par Siblu. Pour juillet, voyez leconguel.fr."
+        "siblu": "Sur cette période, Ty LuWa est loué par Siblu. Pour juillet, voyez leconguel.fr.",
+        "closed": "De novembre à février, le camping est fermé. Choisissez une période entre le 1er mars et le 31 octobre."
       },
       "receipt": {
         "subject": "Votre demande auprès de Ty LuWa est bien reçue",

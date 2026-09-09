@@ -51,7 +51,10 @@ Server.js                   host → taal, redirects, sitemap; kalender in de pa
                             monteert routes/
 routes/api.js               POST /api/aanvraag (het formulier)
 routes/beheer.js            ty-luwa.nl/beheer, de beheertool (schermen: lib/beheer-views.js)
-lib/                        dates, calendar (maandraster), db + store (SQLite), auth
+docs/uitleg/                de uitleg voor Luuk en Wanda (getoond op /beheer/uitleg)
+lib/                        dates, season (winter), calendar (maandraster), holidays,
+                            highlights (bijzonderheden), mail-doc/-html/-text,
+                            db + store (SQLite), auth
                             (inloggen per code), mail (Azure Communication Services),
                             mail-texts, validate, page (kalender-injectie), jobs (onderhoud)
 assets/beheer/              css en js van het beheer (niet gehasht, los geserveerd)
@@ -108,7 +111,33 @@ staat bij hen in de inbox. Details en de Azure-inrichting: `docs/AZURE-SETUP.md`
   **antwoorden in het Nederlands** die de site vertaalt (Azure AI Translator, `lib/translate.js`)
   en vanaf Ty LuWa verstuurt in de taal van de gast; of de gast mailen vanuit de eigen mail-app.
 - **Juli is van Siblu**: staat elk jaar automatisch in de kalender als eigen soort (roze),
-  publiek "mogelijk boekbaar via Siblu" met link naar leconguel.fr. Ontworpen voor een telefoon en voor ogen van 67 en
+  publiek "mogelijk boekbaar via Siblu" met link naar leconguel.fr.
+- **Winter**: de camping is dicht van november tot en met februari (`lib/season.js`). Die
+  maanden staan nergens in de kalender en een aanvraag ervoor wordt geweigerd.
+- **Feestdagen en schoolvakanties** per taalsite (`lib/holidays.js`): NL Nederlandse, FR
+  Franse, DE Duitse, .com Engelse. Open bronnen zonder sleutel (OpenHolidays, gov.uk),
+  dagelijks opgehaald en in de database bewaard. Controleren: `node scripts/holidays-check.js`.
+- **Uitleg voor Luuk en Wanda** op `/beheer/uitleg`: acht hoofdstukken met een
+  inhoudsopgave en schermafbeeldingen in twee maten (telefoon en laptop, met een
+  schakelaar), plus `/beheer/uitleg/alles` om af te drukken. Tekst in `docs/uitleg/`.
+- **Mails in de huisstijl** (`lib/mail-doc.js` + `mail-html.js` + `mail-text.js`): één
+  model, twee renderers, dus de tekstversie loopt nooit achter. De melding aan Luuk en
+  Wanda draagt de bijzonderheden uit `lib/highlights.js`: wat er in de kalender staat, een
+  tweede aanvraag voor dezelfde nachten, Siblu, de seizoensranden, de buren, en de
+  feestdagen en schoolvakanties van alle vier de landen. Bekijken zonder mailclient:
+  `node scripts/mail-preview.js`.
+
+### Schermafbeeldingen van de uitleg verversen
+
+```bash
+npm install --no-save playwright && npx playwright install chromium
+node scripts/screenshots.js      # schrijft assets/beheer/uitleg/*.png
+```
+
+Het script start de site met een tijdelijke database en verzonnen voorbeeldgegevens, dus er
+komen nooit echte gastgegevens in de plaatjes. Het maakt van elk scherm een telefoon- en een
+laptopversie (`naam.png` en `naam-laptop.png`) plus de meldingsmail zoals hij echt
+verstuurd wordt. Draai het opnieuw als het ontwerp verandert. Ontworpen voor een telefoon en voor ogen van 67 en
   70: grote tekst, hoge knoppen, één actie per scherm, geen modals.
 - **Onderhoud** (`lib/jobs.js`): dagelijkse snapshot in `data/backups/`, wekelijkse
   back-upmail, opruimen van verlopen codes en sessies.

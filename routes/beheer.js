@@ -27,6 +27,22 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
   const helpMd = fs.readFileSync(path.join(__dirname, "..", "docs", "HANDLEIDING-BEHEER.md"), "utf8");
   const helpHtml = views.markdownToHtml(helpMd);
 
+  // De uitleg: één Markdown-bestand per hoofdstuk in docs/uitleg/, met de
+  // volgorde in de bestandsnaam. De titel is de eerste kop, de samenvatting
+  // de eerste alinea.
+  const uitlegDir = path.join(__dirname, "..", "docs", "uitleg");
+  const chapters = fs
+    .readdirSync(uitlegDir)
+    .filter((f) => f.endsWith(".md"))
+    .sort()
+    .map((file) => {
+      const md = fs.readFileSync(path.join(uitlegDir, file), "utf8");
+      const slug = file.replace(/^\d+-/, "").replace(/\.md$/, "");
+      const title = (/^#\s+(.*)$/m.exec(md) || [, slug])[1];
+      const summary = (/^(?!#|!|>)(\S.*)$/m.exec(md) || [, ""])[1].replace(/\*\*/g, "");
+      return { file, slug, title, summary, html: views.markdownToHtml(md) };
+    });
+
   const hostOf = (req) => String(req.headers.host || "").toLowerCase().split(":")[0].replace(/^www\./, "");
   const isBeheerHost = (host) => host === config.beheerHost || isLocalHost(host);
   const secure = (req) => req.secure;
@@ -48,6 +64,7 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
     next();
   });
 
+  // css, js en de plaatjes van de uitleg; niet gehasht, dus geen lange cache.
   router.use("/static", express.static(path.join(__dirname, "..", "assets", "beheer"), { index: false }));
   router.use(express.urlencoded({ extended: false, limit: "50kb" }));
   router.use(auth.sameOriginGuard(isBeheerHost));
@@ -343,6 +360,23 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
   });
 
   // --- hulp en back-up -----------------------------------------------------
+  router.get("/uitleg", (req, res) => {
+    res.send(views.uitlegIndexView({ ...ctx(req), chapters }));
+  });
+
+  router.get("/uitleg/:slug", (req, res) => {
+    const i = chapters.findIndex((c) => c.slug === req.params.slug);
+    if (i < 0) return res.redirect("/beheer/uitleg");
+    res.send(
+      views.uitlegChapterView({
+        ...ctx(req),
+        chapter: chapters[i],
+        prev: chapters[i - 1] || null,
+        next: chapters[i + 1] || null,
+      })
+    );
+  });
+
   router.get("/hulp", (req, res) => {
     res.send(views.helpView({ ...ctx(req), html: helpHtml, backupHref: "/beheer/backup.json" }));
   });

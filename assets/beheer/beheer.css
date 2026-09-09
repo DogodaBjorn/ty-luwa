@@ -140,3 +140,14 @@ blockquote.translated{border-left-color:var(--sea);background:#eef5f7}
 .cal-notes li{display:flex;align-items:baseline;gap:10px}
 .note-mark{flex:0 0 auto;width:10px;height:10px;border-radius:50%;background:var(--sage-ink);display:inline-block}
 .note-school .note-mark{border-radius:2px;height:5px;width:14px;background:#9ec6d2}
+
+/* Uitleg: hoofdstukken met schermafbeeldingen. */
+.chapters{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:10px}
+.chapters a{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-height:72px;text-decoration:none;color:var(--ink)}
+.chapter-number{flex:0 0 auto;width:38px;height:38px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+.chapter-nav{display:grid;gap:10px;margin-top:16px}
+.prose figure.shot{margin:18px 0;padding:0}
+.prose figure.shot img{width:100%;height:auto;border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px #1c354114;background:#fff}
+.prose figure.shot figcaption{color:#6a7477;font-size:.9rem;margin-top:6px}
+.prose .tip{background:var(--sand-tint);border:1px solid #e6dcc9;border-radius:12px;padding:12px 14px}
+.prose a{color:var(--sea-ink)}

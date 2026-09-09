@@ -262,6 +262,35 @@ test("wintersluiting: het beheer slaat november tot en met februari over", async
   assert.match(res.text, /Maart 2027/i);
 });
 
+test("uitleg: overzicht, hoofdstukken met plaatjes, en heen en weer bladeren", async () => {
+  let res = await request("GET", "/beheer/uitleg");
+  assert.equal(res.status, 200);
+  assert.match(res.text, /Uitleg over de site/);
+  for (const t of ["De website", "Een aanvraag, van begin tot eind", "Het beheer", "Als iets niet lukt"]) {
+    assert.ok(res.text.includes(t), `hoofdstuk "${t}" staat in het overzicht`);
+  }
+  assert.match(res.text, /href="\/beheer\/uitleg\/de-website"/);
+
+  res = await request("GET", "/beheer/uitleg/beheer");
+  assert.equal(res.status, 200);
+  assert.match(res.text, /<figure class="shot"><img src="\/beheer\/static\/uitleg\/inloggen.png"/);
+  assert.match(res.text, /<p class="tip">/);
+  assert.match(res.text, /href="\/beheer\/uitleg\/aanvragen"/, "vorige hoofdstuk");
+  assert.match(res.text, /href="\/beheer\/uitleg\/als-iets-niet-lukt"/, "volgende hoofdstuk");
+
+  // de plaatjes worden echt geserveerd
+  res = await request("GET", "/beheer/static/uitleg/inloggen.png");
+  assert.equal(res.status, 200);
+
+  // onbekend hoofdstuk gaat terug naar het overzicht
+  res = await request("GET", "/beheer/uitleg/bestaat-niet");
+  assert.equal(res.location, "/beheer/uitleg");
+
+  // en vanaf Hulp is de uitleg te vinden
+  res = await request("GET", "/beheer/hulp");
+  assert.match(res.text, /href="\/beheer\/uitleg"/);
+});
+
 test("hulp, back-up en uitloggen", async () => {
   let res = await request("GET", "/beheer/hulp");
   assert.match(res.text, /Een aanvraag beantwoorden/);
@@ -277,4 +306,5 @@ test("hulp, back-up en uitloggen", async () => {
   assert.equal(jar.tl_sessie, undefined);
   assert.equal((await request("GET", "/beheer")).location, "/beheer/inloggen");
 });
+
 

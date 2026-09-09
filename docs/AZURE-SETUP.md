@@ -8,9 +8,8 @@ wat het kost, en hoe je de drie Strato-domeinen eraan hangt. Volg de stappen op 
 ## 1. Wat je bouwt, en waarom
 
 De site is statische HTML, gegenereerd door een buildscript. Een Static Web App zou daar
-op zich voor volstaan, maar de server kiest per domein de juiste taalmap en de boekingsadmin
-die erbij komt (beschikbaarheidskalender, aanvragen goedkeuren, inloggen) heeft server-side
-code en een database nodig. Daarom een **Web App op Linux met Node 24**, hetzelfde patroon
+op zich voor volstaan, maar de server kiest per domein de juiste taalmap, en het beheer
+(beschikbaarheidskalender, aanvragen, inloggen) heeft server-side code en opslag nodig. Daarom een **Web App op Linux met Node 24**, hetzelfde patroon
 als DoGoDa en TrainerBjörn — een `Server.js` die Express draait. Je kent het al en je kunt er
 later API-routes naast zetten zonder te migreren.
 
@@ -20,7 +19,7 @@ later API-routes naast zetten zonder te migreren.
 | Regio | **West Europe** | Dichtst bij de bezoekers (NL/FR/DE). Kies dezelfde regio voor alle resources, anders betaal je dataverkeer tussen regio's. |
 | App Service Plan | **B1, Linux** | Zie hieronder. |
 | Web App | `ty-luwa`, Node 24 LTS | Naam moet wereldwijd uniek zijn op `azurewebsites.net`; dit is de naam die daadwerkelijk is aangemaakt. |
-| Database | PostgreSQL Flexible Server, B1ms | Pas nodig bij de boekingsadmin. Zie §7. |
+| Database | geen aparte resource | De planning staat in een SQLite-bestand op de App Service zelf (`/home/data`). Zie §7. |
 
 ### Waarom B1 en niet F1 (gratis)
 
@@ -81,14 +80,28 @@ node Server.js
 
 ## 4. Applicatie-instellingen
 
-Niets verplicht hier voor de site zelf — welke taal een domein toont (§6) staat vast in
-`content/routes.json`, geen Application setting nodig. Eén optionele:
+Welke taal een domein toont (§6) staat vast in `content/routes.json`; daar is geen
+Application setting voor. Het beheer en het aanvraagformulier (§7) hebben er wel een paar
+nodig. Zet ze onder **Configuration → Application settings**:
 
 | Naam | Waarde | Waarom |
 |---|---|---|
+| `DATA_DIR` | `/home/data` | Waar de SQLite-database en de snapshots staan. `/home` blijft bewaard over deploys en herstarts heen; `wwwroot` niet. |
+| `BEHEER_EMAILS` | `luuk@…,wanda@…,bjorn@…` | Wie mag inloggen op `/beheer`. Alleen deze adressen krijgen een inlogcode. |
+| `BEHEER_HOST` | `ty-luwa.nl` | Het enige domein waar het beheer op draait. Tot de domeinen live zijn: `ty-luwa.azurewebsites.net`. |
+| `MAIL_PROVIDER` | `acs` | Mail via Azure Communication Services (§7). Weglaten of `console` = alleen loggen, niets versturen. |
+| `ACS_ENDPOINT` | `https://<naam>.europe.communication.azure.com` | De Communication Services-resource. |
+| `ACS_KEY` | *(sleutel)* | Een van de twee toegangssleutels van die resource. Liever als Key Vault reference. |
+| `MAIL_FROM` | `DoNotReply@ty-luwa.nl` | Afzender; moet een gekoppeld adres van het geverifieerde domein zijn. |
+| `MAIL_REPLY_TO` | *(adressen van Luuk en Wanda, komma's ertussen)* | Reply-To op elke mail aan een gast (ontvangstbevestiging en antwoorden): antwoordt de gast, dan landt dat in hun eigen mailbox. Staat in mailheaders, niet op de site. |
+| `MAIL_NOTIFY` | *(adressen, komma's ertussen)* | Waar "nieuwe aanvraag" heen gaat. Leeg = `BEHEER_EMAILS`. |
+| `TRANSLATOR_KEY` | *(sleutel)* | Azure AI Translator, voor antwoorden in de taal van de gast en gastberichten in het Nederlands (§7). Leeg = niet vertalen. |
+| `TRANSLATOR_REGION` | `westeurope` | De regio van de Translator-resource; verplicht bij de sleutel. |
+| `BACKUP_EMAIL` | *(adres van Björn)* | Krijgt elke week de planning als JSON-bijlage. |
 | `WEBSITE_RUN_FROM_PACKAGE` | `1` | Alleen als je zonder GitHub Actions deployt. Bij de workflow hieronder niet nodig. |
 
-`PORT` zet je **niet** zelf — App Service injecteert die.
+`PORT` zet je **niet** zelf — App Service injecteert die. Lokaal staan dezelfde namen in een
+`.env` in de repo-root (gitignored); `Server.js` leest dat bestand.
 
 ---
 
@@ -96,10 +109,10 @@ Niets verplicht hier voor de site zelf — welke taal een domein toont (§6) sta
 
 Gekozen: **continuous deployment aangezet in de creation wizard** (het "Deployment"-tabblad
 bij het aanmaken van de Web App), niet een los workflow-bestand in deze repo. Azure heeft
-daar zelf de GitHub-koppeling, de app-registratie, de federated credential (OIDC) en een
-workflow-bestand voor aangemaakt en naar `main` gepusht. Er staat daarom **geen**
-`.github/workflows/`-bestand in deze repo — dat zou een tweede, botsende deploy geven bij
-elke push. Dit is dezelfde route als DoGoDa gebruikt.
+daar zelf de GitHub-koppeling, de app-registratie, de federated credential (OIDC) en het
+workflow-bestand `.github/workflows/main_ty-luwa.yml` voor aangemaakt en naar `main`
+gepusht. Voeg er zelf geen tweede workflow naast — dat geeft een botsende deploy bij elke
+push. Dit is dezelfde route als DoGoDa gebruikt.
 
 Controleren of het goed staat:
 
@@ -191,37 +204,92 @@ configuratiestap, het werkt zodra de domeinen en TLS staan.
 
 ---
 
-## 7. De boekingsadmin (volgende fase)
+## 7. Het beheer en het aanvraagformulier
 
-Nog niet gebouwd. Dit is de vorm die past op wat er nu staat:
+Gebouwd. Wat er draait, en wat je eenmalig in Azure moet inrichten.
 
-**Database.** Azure Database for PostgreSQL Flexible Server, SKU **B1ms Burstable**,
-32 GB opslag, West Europe — ± €15–18 per maand. Zet **Allow public access from Azure
-services** aan, of koppel via VNet-integratie als je strenger wilt zijn. Voor één huis met
-een handvol boekingen per jaar is Postgres ruim bemeten maar wel de minste eigen code:
-alternatieven als Azure Table Storage (± €0,50 per maand) besparen geld maar kosten je
-zelfgeschreven query-logica.
+**Wat het is.** `ty-luwa.nl/beheer` is een Nederlandstalige beheertool voor Luuk en Wanda:
+kalender per maand, periodes toevoegen (verhuurd, optie, wij zelf, gesloten), aanvragen
+afhandelen, hulp, reservekopie. De publieke sites tonen dezelfde planning als vrij/bezet,
+zonder details. Het aanvraagformulier slaat op in dezelfde database en mailt Luuk en Wanda
+en de gast. Uitleg voor de beheerders: `docs/HANDLEIDING-BEHEER.md` (ook op `/beheer/hulp`).
 
-**Inloggen.** Twee rollen: beheer en de maison. De goedkoopste betrouwbare route is
-**App Service Built-in Authentication (Easy Auth)** met Microsoft Entra ID, afgeschermd op
-`/admin/*` — geen wachtwoordcode van jezelf, geen sessiebeheer, gratis. Voorwaarde is wel
-dat beide gebruikers een Microsoft-account hebben. Zo niet, dan een eigen loginformulier met
-gehashte wachtwoorden en sessies in Postgres.
+**Opslag: SQLite in `/home/data`.** Geen aparte databaseserver. Node 24 heeft SQLite
+ingebouwd (`node:sqlite`); het bestand staat in `DATA_DIR` = `/home/data`, buiten
+`wwwroot`, dus een deploy raakt het niet. `/home` is op App Service een netwerkmount (SMB):
+daarom gebruikt `lib/db.js` het klassieke rollback-journal en geen WAL, en draait de app op
+**één instance**. Schaal de App Service nooit uit naar meerdere instances; dat is voor deze
+site ook nergens voor nodig. Controleren of `/home` inderdaad de persistente mount is:
+Kudu → SSH → `mount | grep /home`.
 
-**Secrets.** Connection strings horen niet in de repo. Zet ze in **Application settings**,
-of beter in **Azure Key Vault** met een Key Vault reference. `.env` staat in `.gitignore`.
+**Reservekopieën.** Elke dag schrijft de server een JSON-snapshot naar
+`/home/data/backups/` (dertig bewaard) en controleert de database; elke week gaat de
+snapshot per mail naar `BACKUP_EMAIL`. In het beheer staat onder Hulp een downloadknop.
+Terugzetten: `DATA_DIR=/home/data node scripts/restore.js <snapshot.json> --ja` via Kudu SSH.
 
-**Structuur.** Voeg `routes/api.js` toe naast `Server.js` en mount die **vóór** de
-pagina-handler — die staat aan het eind van `Server.js` en vangt anders elke API-route af,
-net als de 404-handler daaronder. Zet het beheer op één taal en één domein
-(`ty-luwa.nl/beheer`), buiten de `hreflang`-set; `robots.txt` sluit `/beheer` al uit.
+**Inloggen: zonder wachtwoord.** Wie op `BEHEER_EMAILS` staat vult zijn adres in en krijgt
+een mail met een link en een code van zes cijfers; daarna een cookie van een jaar op dat
+toestel. Geen Easy Auth en geen Microsoft-account nodig; sessies en codes staan gehasht in
+dezelfde database. Uitloggen kan in het beheer; alle sessies in één keer ongeldig maken kan
+door de tabel `sessions` te legen (`scripts/restore.js` raakt die niet).
+
+**Mail: Azure Communication Services Email.** Eenmalig:
+
+1. **Create a resource → Communication Services**, naam bv. `acs-tyluwa`, data location
+   Europe, in `rg-tyluwa-prod`.
+2. **Create a resource → Email Communication Service**, zelfde resource group.
+   Daarin **Provision domains → Add domain → Custom domain**: `ty-luwa.nl`. Azure toont
+   TXT-records voor domeinverificatie, SPF en twee DKIM-CNAME's. Zet die bij Strato in de
+   DNS van `ty-luwa.nl` en klik op Verify. Dit kan een uur duren.
+3. Bij het domein: **MailFrom addresses** — de standaard is `DoNotReply@ty-luwa.nl`; dat is
+   de `MAIL_FROM`.
+4. Terug in de Communication Services-resource: **Email → Domains → Connect domain**, kies
+   het domein van stap 2.
+5. **Keys**: kopieer de endpoint-URL en een sleutel naar `ACS_ENDPOINT` en `ACS_KEY` (§4).
+   De code praat rechtstreeks met de REST-API en tekent de verzoeken zelf; er is geen SDK.
+
+Kosten: ACS Email rekent per mail (fracties van een cent); bij een handvol aanvragen per
+maand is dat afgerond nul. Zonder `MAIL_PROVIDER=acs` logt de server elke mail alleen
+(handig lokaal) en werkt de rest gewoon door.
+
+**Vertalen: Azure AI Translator.** Luuk en Wanda typen hun antwoord in het Nederlands in
+het beheer; de site vertaalt het naar de taal van de gast, laat het eerst zien en verstuurt
+het dan vanaf `MAIL_FROM` met Reply-To naar `MAIL_REPLY_TO`. Binnenkomende berichten in
+fr/en/de krijgen een Nederlandse vertaling in het beheer en in de meldingsmail. Eenmalig:
+
+1. **Create a resource → Translator** (Azure AI services), naam bv. `tr-tyluwa`, regio
+   **West Europe**, pricing tier **F0** (gratis, 2 miljoen tekens per maand; ruim genoeg).
+2. **Keys and Endpoint**: kopieer een sleutel naar `TRANSLATOR_KEY` en de regio
+   (`westeurope`) naar `TRANSLATOR_REGION`. Het eindpunt is het wereldwijde
+   `api.cognitive.microsofttranslator.com`; `TRANSLATOR_ENDPOINT` alleen zetten als je een
+   ander eindpunt gebruikt.
+
+Zonder sleutel gaat een antwoord in het Nederlands, met een melding in het beheer; er wordt
+nooit iets verstuurd als het vertalen mislukt.
+
+**Structuur in de code.** `routes/beheer.js` en `routes/api.js` zijn in `Server.js`
+gemonteerd **vóór** de paginahandler, die anders elke route afvangt. Het beheer staat op één
+taal en één domein (`BEHEER_HOST`), buiten de `hreflang`-set; `robots.txt` sluit `/beheer`
+en `/api` uit. Andere bekende domeinen sturen `/beheer` door naar `ty-luwa.nl`.
+
+**Juli en Siblu.** Siblu verhuurt de caravan in juli. De server zet juli van dit jaar en de
+twee volgende automatisch in de kalender als soort "Via Siblu" (roze); publiek staat er
+"mogelijk boekbaar via Siblu" met een link naar leconguel.fr, en een aanvraag voor die
+nachten krijgt die verwijzing. Halen Luuk en Wanda de periode weg of passen ze hem aan, dan
+blijft dat zo voor dat jaar.
+
+**Testen na de inrichting.** Log in met een echt adres, zet een testperiode, kijk op
+`ty-luwa.fr/disponibilites` of hij bezet toont, stuur vanaf `ty-luwa.com` een testaanvraag,
+controleer de twee mails, en stuur vanuit het beheer een antwoord (het voorbeeld toont de
+vertaling). Verwijder daarna de testperiode weer (of zet hem terug).
 
 ---
 
 ## 8. Wat er nog moet gebeuren aan de site zelf
 
-Zie de README. Kort: definitieve foto's in plaats van `assets/photos/provisional/`, en het
-aanvraagformulier dat nog niets verstuurt omdat dat op de boekingsadmin wacht.
+Zie de README. Kort: definitieve foto's in plaats van `assets/photos/provisional/`, en de
+beslisinformatie (prijsindicatie, minimumverblijf, wisseldag) die alleen Luuk en Wanda
+kunnen aanleveren.
 
 De SEO-kant is af: elke pagina draagt een self-canonical, `hreflang` naar alle vier de
 taalversies plus `x-default`, Open Graph, JSON-LD en een eigen meta description, en er is

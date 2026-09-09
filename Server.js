@@ -2,6 +2,12 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 
+// Lokaal staan de instellingen in .env (gitignored); op Azure zijn het
+// Application settings. Node 24 leest .env zonder dependency.
+if (fs.existsSync(path.join(__dirname, ".env"))) {
+  process.loadEnvFile(path.join(__dirname, ".env"));
+}
+
 const app = express();
 const port = process.env.PORT || 8080;
 
@@ -11,7 +17,30 @@ app.set("trust proxy", true);
 
 const PUBLIC_DIR = path.join(__dirname, "public");
 const routes = require(path.join(__dirname, "content", "routes.json"));
+const content = require(path.join(__dirname, "content", "site-content.json"));
 const { languages, domains, slugs, legacyPaths } = routes;
+
+// --- planning: database, opslag, kalender ---------------------------------
+// Eén SQLite-bestand in DATA_DIR (op Azure /home/data, buiten wwwroot).
+// Alles wat dynamisch is (kalender, aanvragen, beheer) leest en schrijft daar.
+const config = require("./lib/config").load();
+const db = require("./lib/db").open(path.join(config.dataDir, "ty-luwa.sqlite"));
+const store = require("./lib/store").createStore(db);
+const pages = require("./lib/page").createPageRenderer({
+  publicDir: PUBLIC_DIR,
+  content,
+  routes,
+  store,
+  timeZone: config.timeZone,
+});
+const mailer = require("./lib/mail").createMailer(config.mail);
+const translator = require("./lib/translate").createTranslator(config.translate);
+if (!translator.enabled) {
+  console.log("Geen TRANSLATOR_KEY: berichten worden niet vertaald");
+}
+if (mailer.provider === "console") {
+  console.log("MAIL_PROVIDER=console: mails worden gelogd, niet verstuurd");
+}
 
 // Elke taal heeft een eigen domein en een eigen map met gegenereerde HTML.
 // Duits deelt ty-luwa.com met Engels en is daar de enige taal met een prefix,
@@ -33,13 +62,34 @@ for (const host of Object.keys(HOSTS)) {
 
 const DEFAULT_LANG = routes.defaultLanguage;
 
+/**
+ * Het IP van de bezoeker. Met trust proxy aan is req.ip het eerste adres in
+ * X-Forwarded-For, en dat vult de client zelf in; het laatste adres is wat
+ * Azure's front-end erachter zet. Azure plakt daar een poort aan vast.
+ */
+function clientIp(req) {
+  const xff = String(req.headers["x-forwarded-for"] || "");
+  const last = xff.split(",").pop().trim();
+  const raw = last || req.socket.remoteAddress || "";
+  return raw.replace(/^::ffff:/, "").replace(/:\d+$/, "");
+}
+
 /** Host zonder poort en zonder www. */
 function normalizeHost(req) {
   return (req.headers.host || "").toLowerCase().split(":")[0].replace(/^www\./, "");
 }
 
+// Lokaal geeft geen domein de taal aan; daar doet een prefix dat: /nl/..., /fr/...
+// (de README beloofde dat al). In productie komen deze hosts nooit binnen.
+const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
+const LOCAL = languages.map((lang) => ({ lang, prefix: `/${lang}` }));
+
+function isLocalHost(host) {
+  return LOCAL_HOSTS.has(host);
+}
+
 function resolveLang(host, pathname) {
-  const candidates = HOSTS[host];
+  const candidates = HOSTS[host] || (isLocalHost(host) ? LOCAL : null);
   if (!candidates) return null;
   for (const c of candidates) {
     if (!c.prefix) return c;
@@ -91,6 +141,37 @@ app.use(
     setHeaders(res) {
       res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
     },
+  })
+);
+
+// --- beheer ---------------------------------------------------------------
+// Alleen op ty-luwa.nl (BEHEER_HOST) en lokaal; andere bekende hosts sturen
+// door, onbekende krijgen 404. Vóór de paginahandler, die vangt anders alles.
+app.use(
+  "/beheer",
+  require("./routes/beheer").createBeheerRouter({
+    store,
+    mailer,
+    translator,
+    config,
+    isLocalHost,
+    knownHost: (host) => Boolean(HOSTS[host]),
+  })
+);
+
+// --- aanvraagformulier ----------------------------------------------------
+// Vóór de paginahandler en de 404: die vangen anders elke route af.
+app.use(
+  require("./routes/api").createApiRouter({
+    store,
+    mailer,
+    translator,
+    config,
+    content,
+    routes,
+    pages,
+    clientIp,
+    knownHost: (host) => Boolean(HOSTS[host]) || isLocalHost(host),
   })
 );
 
@@ -151,6 +232,16 @@ app.use((req, res, next) => {
   // nieuwe assethash en die moet meteen doorkomen.
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Content-Language", lang);
+
+  // De beschikbaarheidspagina krijgt bij elk verzoek de actuele kalender.
+  if (name === slugs.availability[lang]) {
+    // ?verzonden=1 is de no-JS-route na een aanvraag (redirect na de post).
+    const status = req.query.verzonden
+      ? { kind: "sent", text: content[lang].availability.sent }
+      : null;
+    res.type("html");
+    return res.send(pages.renderAvailabilityPage(lang, status));
+  }
   return res.sendFile(file);
 });
 
@@ -166,6 +257,13 @@ app.use((req, res) => {
   return res.type("text/plain").send("Not found");
 });
 
-app.listen(port, () => {
-  console.log(`Ty LuWa website running on port ${port}`);
-});
+module.exports = app;
+
+if (require.main === module) {
+  // Onderhoud (opruimen, dagelijkse snapshot, wekelijkse back-upmail) draait
+  // alleen in het echte proces, niet in tests.
+  require("./lib/jobs").createJobs({ store, db, mailer, config }).start();
+  app.listen(port, () => {
+    console.log(`Ty LuWa website running on port ${port}`);
+  });
+}

@@ -14,6 +14,10 @@ Service; deploy op push naar `main` via `.github/workflows/main_ty-luwa.yml`.
 - `photo-masters/` is onbewerkt bronmateriaal en wordt nooit meegebouwd;
   `scripts/retouch-photos.py` maakt `assets/photos/` reproduceerbaar.
 - Merk-assets: `assets/brand/` (afgeleiden via `scripts/brand-assets.js`).
+- Planning en aanvragen: SQLite in `DATA_DIR` via `lib/store.js`; beheer op
+  `ty-luwa.nl/beheer` (`routes/beheer.js`, Nederlands, voor Luuk en Wanda); publieke
+  kalender vrij/bezet die `Server.js` bij elk verzoek in de beschikbaarheidspagina zet.
+  Instellingen en Azure-inrichting: `docs/AZURE-SETUP.md` §4 en §7. `npm test` moet groen.
 
 ## Harde merkwetten (nooit van afwijken)
 
@@ -23,7 +27,8 @@ Service; deploy op push naar `main` via `.github/workflows/main_ty-luwa.yml`.
   koelkast/vriesvak, vaatwasser; badkamer met douche en wasmachine; apart toilet;
   ruime overdekte veranda; privé-tuintje met ligbedden; 1 parkeerplek.
 - **Beschikbaar op aanvraag.** Succes is een aanvraag plus persoonlijk contact. Geen
-  automatische boeking of betaling suggereren zolang dat proces niet echt bestaat.
+  automatische boeking of betaling suggereren; het beheer bevestigt nooit automatisch aan
+  een gast, alleen de ontvangst van de aanvraag.
 - **Geen fake reviews, fake schaarste, countdowns of "x mensen kijken nu".** Er zijn
   geen testimonials; die worden niet verzonnen.
 - **Attributie:** Ty LuWa beheert de camping niet en de sterren zijn van de camping:

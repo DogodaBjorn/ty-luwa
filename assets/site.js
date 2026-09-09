@@ -48,21 +48,160 @@
   }
 
   // --- aanvraagformulier -------------------------------------------------
-  // Verzenden is nog niet ingericht; dat wacht op de boekingsadmin. Tot die er
-  // is vangt dit de submit af en toont het de melding die in de content staat,
-  // in plaats van de pagina te herladen naar niets.
+  // Zonder JavaScript post het formulier gewoon naar /api/aanvraag en komt de
+  // melding via de server terug in de pagina. Met JavaScript blijft de pagina
+  // staan: de aanvraag gaat via fetch en de melding verschijnt onder het
+  // formulier, in de taal van de pagina (de server stuurt de tekst mee).
   var form = document.querySelector("[data-request-form]");
   if (form) {
     var status = form.querySelector("[data-form-status]");
+    var submit = form.querySelector("[data-form-submit]");
+    var arrival = form.querySelector('[name="arrival"]');
+    var departure = form.querySelector('[name="departure"]');
+    var nightsOut = form.querySelector("[data-form-nights]");
+    var calBlock = document.querySelector("[data-calendar]");
+
+    var showStatus = function (text, kind) {
+      if (!status) return;
+      status.textContent = text;
+      status.className = "form-status is-" + kind;
+      status.hidden = false;
+      status.setAttribute("role", "status");
+      status.scrollIntoView({ behavior: "smooth", block: "center" });
+    };
+
+    // Niet in het verleden: de datumvelden krijgen vandaag als ondergrens.
+    var todayIso = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 10);
+    if (arrival) arrival.min = todayIso;
+    if (departure) departure.min = todayIso;
+
+    var nightsBetween = function (a, b) {
+      return Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
+    };
+    var updateNights = function () {
+      if (!nightsOut || !calBlock) return;
+      var a = arrival.value, b = departure.value;
+      if (a && b && b > a) {
+        var n = nightsBetween(a, b);
+        nightsOut.textContent = n === 1
+          ? calBlock.getAttribute("data-night")
+          : calBlock.getAttribute("data-nights").replace("{n}", n);
+      } else {
+        nightsOut.textContent = "";
+      }
+      if (a && departure) departure.min = a > todayIso ? a : todayIso;
+    };
+    if (arrival) arrival.addEventListener("change", updateNights);
+    if (departure) departure.addEventListener("change", updateNights);
+
     form.addEventListener("submit", function (e) {
+      if (!window.fetch || !window.URLSearchParams) return; // gewone post
       e.preventDefault();
       if (!form.reportValidity()) return;
-      if (status) {
-        status.hidden = false;
-        status.setAttribute("role", "status");
-        status.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (submit) submit.disabled = true;
+      fetch(form.getAttribute("action"), {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams(new FormData(form)).toString(),
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          showStatus(data.message, data.ok ? "sent" : "error");
+          if (data.ok) {
+            form.reset();
+            updateNights();
+            form.dispatchEvent(new CustomEvent("tl:sent"));
+          }
+        })
+        .catch(function () {
+          showStatus(form.getAttribute("data-error-server") || "Error", "error");
+        })
+        .then(function () {
+          if (submit) submit.disabled = false;
+        });
+    });
+  }
+
+  // --- beschikbaarheidskalender --------------------------------------------
+  // De kalender staat al in de pagina (server-side). Dit maakt hem tikbaar:
+  // eerste tik is de aankomstdag, tweede tik de vertrekdag, en de datums
+  // komen in het formulier. Op een telefoon één maand tegelijk met pijlen.
+  if (calBlock && form) {
+    var months = [].slice.call(calBlock.querySelectorAll(".cal"));
+    var hint = calBlock.querySelector("[data-cal-hint]");
+    if (hint) hint.hidden = false;
+    var busy = {};
+    [].slice.call(calBlock.querySelectorAll(".cal-day.is-busy")).forEach(function (td) {
+      busy[td.getAttribute("data-date")] = true;
+    });
+    var addDay = function (iso, n) {
+      return new Date(Date.parse(iso) + n * 86400000).toISOString().slice(0, 10);
+    };
+    var freeNights = function (a, b) {
+      for (var d = a; d < b; d = addDay(d, 1)) if (busy[d]) return false;
+      return true;
+    };
+    var paint = function () {
+      var a = arrival.value, b = departure.value;
+      [].slice.call(calBlock.querySelectorAll(".cal-day")).forEach(function (td) {
+        var d = td.getAttribute("data-date");
+        td.classList.toggle("is-selected", d === a || d === b);
+        td.classList.toggle("in-range", Boolean(a && b && d > a && d < b));
+      });
+    };
+    calBlock.addEventListener("click", function (e) {
+      var td = e.target.closest(".cal-day");
+      if (!td || td.classList.contains("is-past")) return;
+      var d = td.getAttribute("data-date");
+      var a = arrival.value;
+      if (a && !departure.value && d > a && freeNights(a, d)) {
+        departure.value = d;
+      } else if (!busy[d]) {
+        arrival.value = d;
+        departure.value = "";
+      } else {
+        return;
+      }
+      updateNights();
+      paint();
+      if (departure.value) {
+        var nameField = form.querySelector('[name="name"]');
+        if (nameField && window.innerWidth <= 900) form.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     });
+    arrival.addEventListener("change", paint);
+    departure.addEventListener("change", paint);
+    form.addEventListener("tl:sent", paint);
+
+    // Eén maand tegelijk op een smal scherm.
+    var nav = document.createElement("div");
+    nav.className = "cal-nav";
+    nav.innerHTML =
+      '<button type="button" class="btn btn-secondary" data-cal-prev>\u2039 ' + calBlock.getAttribute("data-prev") + "</button>" +
+      '<button type="button" class="btn btn-secondary" data-cal-next>' + calBlock.getAttribute("data-next") + " \u203a</button>";
+    calBlock.insertBefore(nav, calBlock.firstChild);
+    var current = 0;
+    var showMonth = function (i) {
+      current = Math.max(0, Math.min(months.length - 1, i));
+      months.forEach(function (m, j) { m.classList.toggle("is-shown", j === current); });
+      nav.querySelector("[data-cal-prev]").disabled = current === 0;
+      nav.querySelector("[data-cal-next]").disabled = current === months.length - 1;
+    };
+    nav.querySelector("[data-cal-prev]").addEventListener("click", function () { showMonth(current - 1); });
+    nav.querySelector("[data-cal-next]").addEventListener("click", function () { showMonth(current + 1); });
+    var mq = window.matchMedia("(max-width: 900px)");
+    var applyPaging = function () {
+      calBlock.classList.toggle("is-paged", mq.matches);
+      if (mq.matches) showMonth(current);
+    };
+    if (mq.addEventListener) mq.addEventListener("change", applyPaging);
+    applyPaging();
+    paint();
   }
 
   // --- lightbox ------------------------------------------------------------

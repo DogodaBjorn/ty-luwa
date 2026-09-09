@@ -226,3 +226,52 @@ html.lightbox-open{overflow:hidden}
   .brand img{max-height:64px}
   .mobile-menu{top:100px}
 }
+
+/* ---- Beschikbaarheidskalender, september 2026 --------------------------- */
+
+/* De server zet de kalender bij elk verzoek vers in de pagina (lib/page.js),
+   dus hij werkt zonder JavaScript. Bezet is nooit alleen een kleur: arcering
+   plus een verborgen woord voor schermlezers. */
+.visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.cal-block{margin:0 0 40px}
+.cal-months{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.cal{width:100%;border-collapse:separate;border-spacing:3px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px 10px 10px;box-shadow:var(--shadow-soft);table-layout:fixed}
+.cal caption{color:var(--navy);font-family:Lora,Georgia,serif;font-size:1.15rem;font-weight:600;text-align:left;padding:4px 8px 10px;text-transform:capitalize}
+.cal th{color:#6a7477;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 0 6px}
+.cal td{height:42px;text-align:center;vertical-align:middle;border-radius:10px;font-weight:600;color:var(--navy);position:relative}
+.cal td a{display:flex;align-items:center;justify-content:center;width:100%;height:100%;border-radius:10px}
+.cal-day{background:#f4f9fa}
+.cal-day.is-past{background:transparent;color:#b6bec1;font-weight:500}
+.cal-day.is-busy{background:repeating-linear-gradient(135deg,#e6d8bd 0 4px,var(--sand-tint) 4px 9px);color:#6b5b33;text-decoration:line-through;text-decoration-color:#a8946a}
+.cal-day.is-busy.is-past{opacity:.55}
+.cal-day.is-today .cal-num{box-shadow:inset 0 0 0 2px var(--sea);border-radius:8px;padding:2px 6px}
+.cal-day.is-selected,.cal-day.is-selected.is-today{background:var(--navy);color:#fff}
+.cal-day.in-range{background:#d9ebf0}
+.cal-legend{display:flex;flex-wrap:wrap;align-items:center;gap:10px 26px;margin:16px 4px 0;color:#535b5f;font-size:.93rem}
+.cal-legend ul{display:flex;gap:22px;margin:0;padding:0;list-style:none}
+.cal-legend li{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--navy)}
+.cal-legend p{margin:0}
+.cal-swatch{width:22px;height:22px;border-radius:7px;background:#f4f9fa;border:1px solid #d9e3e6;display:inline-block}
+.cal-swatch.is-busy{background:repeating-linear-gradient(135deg,#e6d8bd 0 4px,var(--sand-tint) 4px 9px);border-color:#d9c9a5}
+.cal-nav{display:none;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px}
+.cal-nav .btn{padding:11px 16px;min-height:44px}
+.cal-hint{color:#535b5f;font-size:.93rem;margin:14px 4px 0}
+.cal-block.is-paged .cal-nav{display:flex}
+.cal-block.is-paged .cal-months{display:block}
+.cal-block.is-paged .cal{display:none}
+.cal-block.is-paged .cal.is-shown{display:table}
+@media (width<=900px){.cal-months{grid-template-columns:1fr}.cal td{height:46px}}
+@media (width<=600px){.cal{border-spacing:2px;padding:8px 6px 6px}.cal td{height:44px;font-size:.95rem}}
+
+/* Aanvraagformulier: honeypot buiten beeld, melding in twee smaken, nachtenteller. */
+.request-form .hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.request-form{position:relative}
+.form-status.is-sent{border-color:#b9cbaa;color:#3f5230;background:#eef4e8}
+.form-status.is-error{border-color:#e2b8a8;color:#7a3b26;background:#fbeee9}
+.form-nights{margin:-8px 0 0;color:var(--sea-ink);font-weight:600;font-size:.95rem;min-height:1.2em}
+.form-nights:empty{display:none}
+
+/* Juli is van Siblu: eigen kleur, en in de legenda een link naar hun site. */
+.cal-day.is-busy.kind-siblu{background:repeating-linear-gradient(135deg,#f6cfdd 0 4px,#fbe9f0 4px 9px);color:#8c2f55;text-decoration-color:#c98aa5}
+.cal-swatch.kind-siblu{background:repeating-linear-gradient(135deg,#f6cfdd 0 4px,#fbe9f0 4px 9px);border-color:#ecc3d3}
+.cal-legend a{color:#8c2f55;text-decoration:underline;text-underline-offset:3px}

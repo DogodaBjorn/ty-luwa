@@ -11,7 +11,9 @@ Website voor het vakantiehuis op Le Conguel, Quiberon (Bretagne). Drie domeinen,
 | `ty-luwa.com/de/` | Duits | `ty-luwa.com/de/unterkunft` |
 
 Statische HTML, gegenereerd door een buildscript en geserveerd door een kleine
-Express-server op Azure App Service. Geen framework.
+Express-server op Azure App Service. Geen framework. Daarnaast één dynamisch deel: de
+planning (SQLite op de server), met een publieke vrij/bezet-kalender op elke taalsite, een
+aanvraagformulier dat echt verstuurt, en het beheer voor Luuk en Wanda op `ty-luwa.nl/beheer`.
 
 ## Draaien
 
@@ -19,6 +21,7 @@ Express-server op Azure App Service. Geen framework.
 npm install
 npm start          # bouwt en start op http://localhost:8080
 npm run build      # alleen bouwen
+npm test           # datums, kalender, opslag, mail, aanvraag en beheer (na een build)
 ```
 
 Lokaal draait alles op `localhost`, waar geen domein de taal aangeeft. Ga direct naar
@@ -27,6 +30,11 @@ Lokaal draait alles op `localhost`, waar geen domein de taal aangeeft. Ga direct
 ```bash
 curl -H "Host: ty-luwa.fr" localhost:8080/le-logement
 ```
+
+Het beheer staat lokaal op `localhost:8080/beheer`. Zet in een `.env` in de repo-root
+`BEHEER_EMAILS=jouw@adres` en laat `MAIL_PROVIDER` weg: elke mail (ook de inlogcode) komt
+dan in de terminal. De planning staat in `data/` (gitignored). Alle instellingen:
+`docs/AZURE-SETUP.md` §4.
 
 ## Structuur
 
@@ -39,10 +47,21 @@ assets/                     site.css, site.js, foto's, logo's (brand/: het volle
 photo-masters/              onbewerkte foto's, niet meegebouwd
 scripts/build-site.js       genereert public/
 scripts/retouch-photos.py   maakt assets/photos/ uit photo-masters/ (reproduceerbaar)
-Server.js                   host → taal, redirects, sitemap
+Server.js                   host → taal, redirects, sitemap; kalender in de pagina;
+                            monteert routes/
+routes/api.js               POST /api/aanvraag (het formulier)
+routes/beheer.js            ty-luwa.nl/beheer, de beheertool (schermen: lib/beheer-views.js)
+lib/                        dates, calendar (maandraster), db + store (SQLite), auth
+                            (inloggen per code), mail (Azure Communication Services),
+                            mail-texts, validate, page (kalender-injectie), jobs (onderhoud)
+assets/beheer/              css en js van het beheer (niet gehasht, los geserveerd)
+test/                       node --test; de workflow draait ze vóór elke deploy
+data/                       SQLite + snapshots, gitignored (op Azure: /home/data)
+scripts/restore.js          zet een snapshot terug
 public/                     GEGENEREERD, gitignored — nooit met de hand bewerken
-docs/AZURE-SETUP.md         Azure, DNS bij Strato, TLS, deployment, boekingsadmin
+docs/AZURE-SETUP.md         Azure, DNS bij Strato, TLS, deployment, instellingen, mail
 docs/MEERTALIGHEID.md       hoe de drie domeinen en vier talen in elkaar zitten
+docs/HANDLEIDING-BEHEER.md  uitleg van het beheer voor Luuk en Wanda (ook op /beheer/hulp)
 ```
 
 Een tekst wijzigen is `content/site-content.json`. Een URL wijzigen is
@@ -67,6 +86,32 @@ reden dat de drie domeinen zin hebben.
 
 `site.css` en `site.js` krijgen een inhoudshash in hun bestandsnaam, zodat ze een jaar
 gecached mogen worden en een deploy toch meteen doorkomt.
+
+De beschikbaarheidspagina is de uitzondering op "alles staat in het bestand": de build zet
+er een marker in, en `Server.js` vervangt die bij elk verzoek door de actuele kalender
+(twaalf maanden, vrij/bezet). Zo klopt de beschikbaarheid zonder rebuild en zonder
+JavaScript; met JavaScript wordt de kalender tikbaar en bladert hij per maand op een
+telefoon.
+
+## Planning, aanvragen en beheer
+
+Eén planning voor de drie sites, in een SQLite-bestand (`node:sqlite`, geen dependency).
+Wat Luuk en Wanda in het beheer zetten, zien bezoekers als bezet; wat bezoekers aanvragen,
+staat bij hen in de inbox. Details en de Azure-inrichting: `docs/AZURE-SETUP.md` §7.
+
+- **Aanvraag** (`routes/api.js`): servervalidatie, bezette nachten geweigerd, honeypot,
+  vijf per uur per adres. Eerst opslaan, dan mailen: Luuk en Wanda krijgen "nieuwe
+  aanvraag", de gast een ontvangstbevestiging in zijn taal. Niets daarvan is een boeking.
+- **Beheer** (`routes/beheer.js`): inloggen met een code per mail (geen wachtwoord, een
+  jaar ingelogd), kalender per maand met lijst eronder, periodes toevoegen en bewerken met
+  overlapwaarschuwing, verwijderen met Terugzetten, aanvragen in de kalender zetten, en
+  **antwoorden in het Nederlands** die de site vertaalt (Azure AI Translator, `lib/translate.js`)
+  en vanaf Ty LuWa verstuurt in de taal van de gast; of de gast mailen vanuit de eigen mail-app.
+- **Juli is van Siblu**: staat elk jaar automatisch in de kalender als eigen soort (roze),
+  publiek "mogelijk boekbaar via Siblu" met link naar leconguel.fr. Ontworpen voor een telefoon en voor ogen van 67 en
+  70: grote tekst, hoge knoppen, één actie per scherm, geen modals.
+- **Onderhoud** (`lib/jobs.js`): dagelijkse snapshot in `data/backups/`, wekelijkse
+  back-upmail, opruimen van verlopen codes en sessies.
 
 ## Herkomst van de content
 
@@ -132,11 +177,6 @@ bladeren. Titel en tekst staan per foto en per taal in `content/site-content.jso
 `layout.lightbox`. Een nieuwe foto heeft dus alt, categorie, titel en tekst nodig in alle
 vier de talen, anders breekt de build.
 
-### Het aanvraagformulier verstuurt nog niets
-
-`assets/site.js` vangt de submit af en toont de melding die in de content staat. Echt
-versturen wacht op de boekingsadmin.
-
 ### Beslisinformatie die de site nog niet geeft
 
 Uit de UI/UX-beoordeling (september 2026): het overtuigingstraject is dun op precies het
@@ -145,12 +185,13 @@ strand, en de FAQ heeft drie vragen op een verder lege pagina. Dat is content di
 Luuk en Wanda kunnen aanleveren; het hoort in `content/site-content.json` (FAQ-items en
 de introtekst van beschikbaarheid) en niet in de layout. Ook de datumvelden tonen de
 volgorde van de browser van de bezoeker (`mm/dd/yyyy` in een Engelstalige browser); dat is
-browsergedrag en niet vanuit de pagina te sturen.
+browsergedrag en niet vanuit de pagina te sturen. Sinds de kalender tikbaar is, hoeft een
+gast de velden meestal niet meer zelf in te vullen.
 
-### Boekingsadmin
+### Inrichten in Azure
 
-Eén gedeelde planningsdatabase, één Nederlandstalige beheertool voor Luuk en Wanda.
-Zie `docs/AZURE-SETUP.md` §7 en `docs/MEERTALIGHEID.md` §5.
+Het beheer en de mail werken pas na de eenmalige inrichting uit `docs/AZURE-SETUP.md` §4
+(Application settings) en §7 (Communication Services, domeinverificatie bij Strato).
 
 ## Opruimen in de DoGoDa-repo
 

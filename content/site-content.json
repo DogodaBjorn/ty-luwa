@@ -224,8 +224,54 @@
       "phEmail": "naam@voorbeeld.nl",
       "phMessage": "Vertel kort met wie je komt en of je vragen hebt.",
       "submit": "Aanvraag versturen",
-      "status": "Het online versturen wordt op dit moment nog ingericht — er is niets verzonden. Neem voorlopig rechtstreeks contact op met Luuk en Wanda; binnenkort werkt het formulier volledig.",
-      "note": "Beschikbaarheid wordt persoonlijk bevestigd. Geen automatische boeking, geen betaling vooraf."
+      "note": "Beschikbaarheid wordt persoonlijk bevestigd. Geen automatische boeking, geen betaling vooraf.",
+      "calendar": {
+        "title": "Wanneer is Ty LuWa vrij?",
+        "text": "De kalender laat zien welke nachten al bezet zijn. Vrij betekent: vraag gerust aan; Luuk en Wanda bevestigen persoonlijk.",
+        "aria": "Beschikbaarheid per maand",
+        "legendFree": "Vrij",
+        "legendBusy": "Bezet",
+        "departureNote": "Op een vertrekdag kun je aankomen: die dag telt als vrij.",
+        "prev": "Vorige maand",
+        "next": "Volgende maand",
+        "today": "Vandaag",
+        "tapHint": "Tik op je aankomstdag en daarna op je vertrekdag; de datums komen dan in het formulier.",
+        "night": "1 nacht",
+        "nights": "{n} nachten",
+        "srFree": "vrij",
+        "srBusy": "bezet",
+        "srPast": "voorbij",
+        "legendSiblu": "Mogelijk boekbaar via Siblu",
+        "srSiblu": "mogelijk boekbaar via Siblu",
+        "sibluUrl": "https://leconguel.fr/"
+      },
+      "sent": "Je aanvraag is verstuurd. Luuk en Wanda bekijken de beschikbaarheid en nemen persoonlijk contact met je op.",
+      "errors": {
+        "dates": "Kies een aankomst- en vertrekdatum; vertrek moet na aankomst liggen.",
+        "past": "De aankomstdag ligt in het verleden.",
+        "tooFar": "Zo ver vooruit is de planning nog niet open. Kies een datum binnen twee jaar.",
+        "tooLong": "Een aanvraag kan tot 28 nachten zijn. Wil je langer? Stuur een kortere aanvraag met een opmerking erbij.",
+        "tooMany": "Ty LuWa is er voor maximaal 6 gasten.",
+        "adults": "Minstens één volwassene.",
+        "name": "Vul je naam in.",
+        "email": "Vul een geldig e-mailadres in, dan kunnen Luuk en Wanda antwoorden.",
+        "occupied": "Deze periode overlapt met nachten die al bezet zijn (vanaf {first}). Kies een andere periode.",
+        "rate": "Er kwamen te veel aanvragen achter elkaar vanaf dit adres. Probeer het over een uur nog eens.",
+        "server": "Het versturen is even niet gelukt. Probeer het zo nog eens.",
+        "siblu": "In deze periode verhuurt Siblu Ty LuWa. Kijk voor juli op leconguel.fr."
+      },
+      "receipt": {
+        "subject": "Je aanvraag bij Ty LuWa is ontvangen",
+        "greeting": "Beste {name},",
+        "body": "We hebben je aanvraag voor {from} tot {to} ({nights}) goed ontvangen, voor {party}. Luuk en Wanda bekijken de beschikbaarheid en nemen persoonlijk contact met je op. Dit is nog geen boeking en er is niets betaald.",
+        "closing": "Hartelijke groet,\nLuuk en Wanda\nTy LuWa · Camping Le Conguel · Quiberon"
+      },
+      "party": {
+        "adult": "1 volwassene",
+        "adults": "{n} volwassenen",
+        "child": "1 kind",
+        "children": "{n} kinderen"
+      }
     },
     "conguel": {
       "eyebrow": "De camping",
@@ -515,8 +561,54 @@
       "phEmail": "name@example.com",
       "phMessage": "Tell us briefly who is coming and whether you have any questions.",
       "submit": "Send request",
-      "status": "Online sending is still being set up — nothing has been sent. For now, please contact Luuk and Wanda directly; the form will be fully working soon.",
-      "note": "Availability is confirmed personally. No automatic booking, no upfront payment."
+      "note": "Availability is confirmed personally. No automatic booking, no upfront payment.",
+      "calendar": {
+        "title": "When is Ty LuWa free?",
+        "text": "The calendar shows which nights are already taken. Free means: do ask; Luuk and Wanda confirm personally.",
+        "aria": "Availability by month",
+        "legendFree": "Free",
+        "legendBusy": "Taken",
+        "departureNote": "On a departure day you can arrive: that day counts as free.",
+        "prev": "Previous month",
+        "next": "Next month",
+        "today": "Today",
+        "tapHint": "Tap your arrival day, then your departure day; the dates go into the form.",
+        "night": "1 night",
+        "nights": "{n} nights",
+        "srFree": "free",
+        "srBusy": "taken",
+        "srPast": "past",
+        "legendSiblu": "Possibly bookable through Siblu",
+        "srSiblu": "possibly bookable through Siblu",
+        "sibluUrl": "https://leconguel.fr/"
+      },
+      "sent": "Your request has been sent. Luuk and Wanda will check availability and get in touch with you personally.",
+      "errors": {
+        "dates": "Choose an arrival and a departure date; departure must come after arrival.",
+        "past": "The arrival day is in the past.",
+        "tooFar": "The planning isn’t open that far ahead yet. Choose a date within two years.",
+        "tooLong": "A request can cover up to 28 nights. For longer, send a shorter request with a note.",
+        "tooMany": "Ty LuWa sleeps 6 guests at most.",
+        "adults": "At least one adult.",
+        "name": "Please fill in your name.",
+        "email": "Please enter a valid e-mail address so Luuk and Wanda can reply.",
+        "occupied": "This period overlaps nights that are already taken (from {first}). Please choose another period.",
+        "rate": "Too many requests came in from this address in a row. Please try again in an hour.",
+        "server": "Sending didn’t work just now. Please try again in a moment.",
+        "siblu": "In this period Ty LuWa is let through Siblu. For July, see leconguel.fr."
+      },
+      "receipt": {
+        "subject": "Your request to Ty LuWa has been received",
+        "greeting": "Dear {name},",
+        "body": "We have received your request for {from} to {to} ({nights}), for {party}. Luuk and Wanda will check availability and get in touch with you personally. This is not a booking yet and nothing has been paid.",
+        "closing": "Warm regards,\nLuuk and Wanda\nTy LuWa · Camping Le Conguel · Quiberon"
+      },
+      "party": {
+        "adult": "1 adult",
+        "adults": "{n} adults",
+        "child": "1 child",
+        "children": "{n} children"
+      }
     },
     "conguel": {
       "eyebrow": "The campsite",
@@ -806,8 +898,54 @@
       "phEmail": "name@beispiel.de",
       "phMessage": "Erzählt kurz, wer mitkommt und ob ihr Fragen habt.",
       "submit": "Anfrage senden",
-      "status": "Der Online-Versand wird derzeit noch eingerichtet — es wurde nichts gesendet. Kontaktiert vorerst bitte Luuk und Wanda direkt; das Formular funktioniert bald vollständig.",
-      "note": "Die Verfügbarkeit wird persönlich bestätigt. Keine automatische Buchung, keine Vorauszahlung."
+      "note": "Die Verfügbarkeit wird persönlich bestätigt. Keine automatische Buchung, keine Vorauszahlung.",
+      "calendar": {
+        "title": "Wann ist Ty LuWa frei?",
+        "text": "Der Kalender zeigt, welche Nächte schon vergeben sind. Frei heißt: fragt gern an; Luuk und Wanda bestätigen persönlich.",
+        "aria": "Verfügbarkeit pro Monat",
+        "legendFree": "Frei",
+        "legendBusy": "Belegt",
+        "departureNote": "An einem Abreisetag ist eine Anreise möglich: dieser Tag zählt als frei.",
+        "prev": "Voriger Monat",
+        "next": "Nächster Monat",
+        "today": "Heute",
+        "tapHint": "Tippt auf euren Anreisetag und dann auf den Abreisetag; die Daten stehen dann im Formular.",
+        "night": "1 Nacht",
+        "nights": "{n} Nächte",
+        "srFree": "frei",
+        "srBusy": "belegt",
+        "srPast": "vorbei",
+        "legendSiblu": "Eventuell buchbar über Siblu",
+        "srSiblu": "eventuell buchbar über Siblu",
+        "sibluUrl": "https://leconguel.fr/"
+      },
+      "sent": "Eure Anfrage ist abgeschickt. Luuk und Wanda prüfen die Verfügbarkeit und melden sich persönlich bei euch.",
+      "errors": {
+        "dates": "Wählt ein Anreise- und ein Abreisedatum; die Abreise muss nach der Anreise liegen.",
+        "past": "Der Anreisetag liegt in der Vergangenheit.",
+        "tooFar": "So weit im Voraus ist die Planung noch nicht offen. Wählt ein Datum innerhalb von zwei Jahren.",
+        "tooLong": "Eine Anfrage kann bis zu 28 Nächte umfassen. Für länger schickt bitte eine kürzere Anfrage mit einer Anmerkung.",
+        "tooMany": "Ty LuWa hat Platz für höchstens 6 Gäste.",
+        "adults": "Mindestens ein Erwachsener.",
+        "name": "Bitte gebt euren Namen an.",
+        "email": "Bitte gebt eine gültige E-Mail-Adresse an, damit Luuk und Wanda antworten können.",
+        "occupied": "Dieser Zeitraum überschneidet sich mit Nächten, die schon vergeben sind (ab {first}). Bitte wählt einen anderen Zeitraum.",
+        "rate": "Von dieser Adresse kamen zu viele Anfragen hintereinander. Versucht es in einer Stunde noch einmal.",
+        "server": "Das Senden hat gerade nicht geklappt. Bitte versucht es gleich noch einmal.",
+        "siblu": "In diesem Zeitraum vermietet Siblu Ty LuWa. Für Juli schaut auf leconguel.fr."
+      },
+      "receipt": {
+        "subject": "Eure Anfrage bei Ty LuWa ist angekommen",
+        "greeting": "Liebe(r) {name},",
+        "body": "Wir haben eure Anfrage für {from} bis {to} ({nights}) für {party} erhalten. Luuk und Wanda prüfen die Verfügbarkeit und melden sich persönlich bei euch. Das ist noch keine Buchung, und es wurde nichts bezahlt.",
+        "closing": "Herzliche Grüße,\nLuuk und Wanda\nTy LuWa · Camping Le Conguel · Quiberon"
+      },
+      "party": {
+        "adult": "1 Erwachsener",
+        "adults": "{n} Erwachsene",
+        "child": "1 Kind",
+        "children": "{n} Kinder"
+      }
     },
     "conguel": {
       "eyebrow": "Der Campingplatz",
@@ -1097,8 +1235,54 @@
       "phEmail": "nom@exemple.fr",
       "phMessage": "Dites-nous en quelques mots qui vient et si vous avez des questions.",
       "submit": "Envoyer la demande",
-      "status": "L’envoi en ligne est encore en cours de mise en place — rien n’a été envoyé. Pour l’instant, contactez directement Luuk et Wanda ; le formulaire sera bientôt pleinement opérationnel.",
-      "note": "Les disponibilités sont confirmées personnellement. Pas de réservation automatique, pas de paiement à l’avance."
+      "note": "Les disponibilités sont confirmées personnellement. Pas de réservation automatique, pas de paiement à l’avance.",
+      "calendar": {
+        "title": "Quand Ty LuWa est-il libre ?",
+        "text": "Le calendrier indique les nuits déjà prises. Libre veut dire : demandez sans hésiter ; Luuk et Wanda confirment personnellement.",
+        "aria": "Disponibilités par mois",
+        "legendFree": "Libre",
+        "legendBusy": "Occupé",
+        "departureNote": "Le jour d’un départ, une arrivée est possible : ce jour compte comme libre.",
+        "prev": "Mois précédent",
+        "next": "Mois suivant",
+        "today": "Aujourd’hui",
+        "tapHint": "Touchez votre jour d’arrivée, puis votre jour de départ ; les dates se placent dans le formulaire.",
+        "night": "1 nuit",
+        "nights": "{n} nuits",
+        "srFree": "libre",
+        "srBusy": "occupé",
+        "srPast": "passé",
+        "legendSiblu": "Peut-être réservable via Siblu",
+        "srSiblu": "peut-être réservable via Siblu",
+        "sibluUrl": "https://leconguel.fr/"
+      },
+      "sent": "Votre demande est envoyée. Luuk et Wanda vérifient les disponibilités et vous contactent personnellement.",
+      "errors": {
+        "dates": "Choisissez une date d’arrivée et une date de départ ; le départ doit suivre l’arrivée.",
+        "past": "Le jour d’arrivée est déjà passé.",
+        "tooFar": "Le planning n’est pas encore ouvert aussi loin. Choisissez une date dans les deux ans.",
+        "tooLong": "Une demande peut couvrir jusqu’à 28 nuits. Pour plus longtemps, faites une demande plus courte avec une remarque.",
+        "tooMany": "Ty LuWa accueille 6 personnes au maximum.",
+        "adults": "Au moins un adulte.",
+        "name": "Indiquez votre nom.",
+        "email": "Indiquez une adresse e-mail valide, pour que Luuk et Wanda puissent répondre.",
+        "occupied": "Cette période chevauche des nuits déjà prises (à partir du {first}). Choisissez une autre période.",
+        "rate": "Trop de demandes se sont suivies depuis cette adresse. Réessayez dans une heure.",
+        "server": "L’envoi n’a pas abouti. Réessayez dans un instant.",
+        "siblu": "Sur cette période, Ty LuWa est loué par Siblu. Pour juillet, voyez leconguel.fr."
+      },
+      "receipt": {
+        "subject": "Votre demande auprès de Ty LuWa est bien reçue",
+        "greeting": "Bonjour {name},",
+        "body": "Nous avons bien reçu votre demande du {from} au {to} ({nights}), pour {party}. Luuk et Wanda vérifient les disponibilités et vous contactent personnellement. Ce n’est pas encore une réservation et rien n’a été payé.",
+        "closing": "Bien cordialement,\nLuuk et Wanda\nTy LuWa · Camping Le Conguel · Quiberon"
+      },
+      "party": {
+        "adult": "1 adulte",
+        "adults": "{n} adultes",
+        "child": "1 enfant",
+        "children": "{n} enfants"
+      }
     },
     "conguel": {
       "eyebrow": "Le camping",

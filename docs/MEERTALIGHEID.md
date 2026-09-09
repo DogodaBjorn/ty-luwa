@@ -101,18 +101,22 @@ in het Nederlands**, voor zijn ouders.
 
 - De beschikbaarheid die `ty-luwa.fr` toont komt uit dezelfde tabel als die op `ty-luwa.nl`.
   Er is één waarheid over welke datums vrij zijn; alleen de presentatie verschilt per taal.
-- Het beheer hoort op **één domein en wordt niet vertaald**. Logische plek:
-  `ty-luwa.nl/beheer`, achter App Service Easy Auth. Nederlands, want dat is de taal van de
-  beheerders.
-- Aanvragen die op `.fr` of `.com` binnenkomen landen in diezelfde inbox. Sla bij elke
-  aanvraag op **in welke taal hij binnenkwam**, zodat het antwoord in de juiste taal kan.
-- De beheertool valt buiten de `hreflang`-set en hoort in `robots.txt` uitgesloten te worden.
+- Het beheer staat op **één domein en wordt niet vertaald**: `ty-luwa.nl/beheer`
+  (`BEHEER_HOST`), met inloggen per e-mailcode. Nederlands, want dat is de taal van de
+  beheerders. Andere domeinen sturen `/beheer` daarheen door.
+- Aanvragen die op `.fr` of `.com` binnenkomen landen in diezelfde inbox, **met de taal en
+  het domein erbij**. De gast krijgt zijn ontvangstbevestiging in zijn eigen taal; de
+  "Mail …"-knop in het beheer zet onderwerp en aanhef in die taal klaar.
+- De publieke kalender wordt niet gebouwd maar bij elk verzoek door de server in de pagina
+  gezet (`lib/page.js`), met maand- en dagnamen via `Intl` per taal en de zinnen
+  (legenda, meldingen, ontvangstmail) uit `content/site-content.json` onder
+  `availability.calendar`, `availability.errors` en `availability.receipt`.
+- Het beheer valt buiten de `hreflang`-set; `robots.txt` sluit `/beheer` en `/api` uit.
 
-De keuze van database en authenticatie staat in `AZURE-SETUP.md` §7 en verandert hier niet
-door.
+Opslag, inloggen en mail staan in `AZURE-SETUP.md` §7.
 
 ## 6. Wat er nog moet
 
 1. Definitieve foto's in plaats van `assets/photos/provisional/`.
-2. Het aanvraagformulier echt laten versturen — wacht op de boekingsadmin (§5).
-3. De boekingsadmin zelf.
+2. Beslisinformatie in de FAQ en op de beschikbaarheidspagina (prijsindicatie,
+   minimumverblijf, wisseldag), aan te leveren door Luuk en Wanda.

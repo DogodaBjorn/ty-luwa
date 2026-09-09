@@ -247,8 +247,8 @@ html.lightbox-open{overflow:hidden}
 .cal-day.is-today .cal-num{box-shadow:inset 0 0 0 2px var(--sea);border-radius:8px;padding:2px 6px}
 .cal-day.is-selected,.cal-day.is-selected.is-today{background:var(--navy);color:#fff}
 .cal-day.in-range{background:#d9ebf0}
-.cal-legend{display:flex;flex-wrap:wrap;align-items:center;gap:10px 26px;margin:16px 4px 0;color:#535b5f;font-size:.93rem}
-.cal-legend ul{display:flex;gap:22px;margin:0;padding:0;list-style:none}
+.cal-legend{display:grid;gap:10px;margin:16px 4px 0;color:#535b5f;font-size:.93rem}
+.cal-legend ul{display:flex;flex-wrap:wrap;gap:10px 22px;margin:0;padding:0;list-style:none}
 .cal-legend li{display:flex;align-items:center;gap:8px;font-weight:600;color:var(--navy)}
 .cal-legend p{margin:0}
 .cal-swatch{width:22px;height:22px;border-radius:7px;background:#f4f9fa;border:1px solid #d9e3e6;display:inline-block}
@@ -258,8 +258,8 @@ html.lightbox-open{overflow:hidden}
 .cal-hint{color:#535b5f;font-size:.93rem;margin:14px 4px 0}
 .cal-block.is-paged .cal-nav{display:flex}
 .cal-block.is-paged .cal-months{display:block}
-.cal-block.is-paged .cal{display:none}
-.cal-block.is-paged .cal.is-shown{display:table}
+.cal-block.is-paged .cal-month{display:none}
+.cal-block.is-paged .cal-month.is-shown{display:block}
 @media (width<=900px){.cal-months{grid-template-columns:1fr}.cal td{height:46px}}
 @media (width<=600px){.cal{border-spacing:2px;padding:8px 6px 6px}.cal td{height:44px;font-size:.95rem}}
 
@@ -275,3 +275,15 @@ html.lightbox-open{overflow:hidden}
 .cal-day.is-busy.kind-siblu{background:repeating-linear-gradient(135deg,#f6cfdd 0 4px,#fbe9f0 4px 9px);color:#8c2f55;text-decoration-color:#c98aa5}
 .cal-swatch.kind-siblu{background:repeating-linear-gradient(135deg,#f6cfdd 0 4px,#fbe9f0 4px 9px);border-color:#ecc3d3}
 .cal-legend a{color:#8c2f55;text-decoration:underline;text-underline-offset:3px}
+
+/* Feestdagen en schoolvakanties van het land van deze taal. Nooit alleen een
+   kleur: onder elke maand staan ze ook als regel, en de cel draagt een
+   verborgen woord voor schermlezers. */
+.cal-day.has-holiday .cal-num{box-shadow:0 -6px 0 -4px var(--sage-ink);border-radius:2px}
+.cal-day.has-school{box-shadow:inset 0 -4px 0 -1px #bcdbe4}
+.cal-day.is-busy.has-school{box-shadow:inset 0 -4px 0 -1px #9ec6d2}
+.cal-notes{list-style:none;margin:6px 2px 0;padding:0;display:grid;gap:4px;font-size:.86rem;color:#535b5f}
+.cal-notes li{display:flex;align-items:baseline;gap:8px}
+.note-mark{flex:0 0 auto;width:10px;height:10px;border-radius:50%;background:var(--sage-ink);display:inline-block;transform:translateY(1px)}
+.note-school .note-mark,.mark-school{border-radius:2px;height:5px;width:14px;background:#9ec6d2}
+.cal-legend .note-mark{transform:none}

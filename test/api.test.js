@@ -76,7 +76,7 @@ test("kalender staat in de pagina", { skip: !built && "site niet gebouwd" }, asy
   const res = await request("GET", "/disponibilites", { headers: { Host: "ty-luwa.fr" } });
   assert.equal(res.status, 200);
   const html = await res.text();
-  assert.match(html, /<table class="cal" data-month="/);
+  assert.match(html, /<div class="cal-month" data-month="/);
   assert.doesNotMatch(html, /tl:calendar/);
 });
 

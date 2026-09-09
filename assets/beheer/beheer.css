@@ -65,6 +65,7 @@ button.link,a.link{background:none;border:0;padding:10px 4px;min-height:44px;col
 /* Kalender */
 .month-nav{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:8px}
 .month-nav h1{margin:0;font-size:1.35rem;text-transform:capitalize;text-align:center}
+.cal-month{display:block}
 .cal{width:100%;border-collapse:separate;border-spacing:3px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:8px 6px;table-layout:fixed}
 .cal caption{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 .cal th{color:#6a7477;font-size:.75rem;font-weight:700;text-transform:uppercase;padding:4px 0 6px}
@@ -131,3 +132,11 @@ blockquote.translated{border-left-color:var(--sea);background:#eef5f7}
 .sent{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:10px}
 .sent li{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
 .sent li p{margin:4px 0 0}
+
+/* Nederlandse feestdagen en schoolvakanties, ter informatie bij het plannen. */
+.cal-day.has-holiday .cal-num{box-shadow:0 -6px 0 -4px var(--sage-ink);border-radius:2px}
+.cal-day.has-school{box-shadow:inset 0 -4px 0 -1px #bcdbe4}
+.cal-notes{list-style:none;margin:10px 2px 0;padding:0;display:grid;gap:6px;font-size:.9rem;color:#535b5f}
+.cal-notes li{display:flex;align-items:baseline;gap:10px}
+.note-mark{flex:0 0 auto;width:10px;height:10px;border-radius:50%;background:var(--sage-ink);display:inline-block}
+.note-school .note-mark{border-radius:2px;height:5px;width:14px;background:#9ec6d2}

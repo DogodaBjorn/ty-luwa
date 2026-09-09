@@ -118,7 +118,7 @@ test("validatie van een periode", () => {
   assert.throws(() => store.createPeriod({ arrival: "12-07-2026", departure: "2026-07-19", kind: "rented" }));
 });
 
-test("migratie 2: siblu, vertaald bericht, antwoorden, en een oude database migreert mee", () => {
+test("migraties: een database van het eerste uur komt bij de huidige versie uit", () => {
   const { DatabaseSync } = require("node:sqlite");
   const { MIGRATIONS, migrate } = require("../lib/db");
   const db = new DatabaseSync(":memory:");
@@ -127,7 +127,7 @@ test("migratie 2: siblu, vertaald bericht, antwoorden, en een oude database migr
   db.prepare("INSERT INTO requests (arrival, departure, adults, name, email, lang, created_at) VALUES ('2026-07-01','2026-07-08',2,'A','a@x','fr','t')").run();
   db.prepare("INSERT INTO periods (arrival, departure, kind, request_id, created_at, updated_at) VALUES ('2026-07-01','2026-07-08','rented',1,'t','t')").run();
   migrate(db);
-  assert.equal(db.prepare("PRAGMA user_version").get().user_version, 2);
+  assert.equal(db.prepare("PRAGMA user_version").get().user_version, MIGRATIONS.length);
   const store = createStore(db);
   assert.equal(store.getPeriod(1).request_id, 1, "data en koppeling bewaard");
   const s = store.createPeriod({ arrival: "2027-07-01", departure: "2027-08-01", kind: "siblu" });
@@ -143,4 +143,16 @@ test("migratie 2: siblu, vertaald bericht, antwoorden, en een oude database migr
   const other = createStore(require("../lib/db").open(":memory:"));
   other.importSnapshot(snap);
   assert.equal(other.listMessages(1).length, 1);
+
+  // migratie 3: feestdagen
+  store.replaceHolidays("NL", 2027, [
+    { kind: "public", startDate: "2027-04-27", endDate: "2027-04-27", name: "Koningsdag", nationwide: true, regions: [] },
+    { kind: "school", startDate: "2027-07-10", endDate: "2027-08-22", name: "Zomervakantie", nationwide: false, regions: ["Noord", "Zuid"] },
+  ]);
+  assert.equal(store.holidaysBetween("NL", "2027-07-01", "2027-08-01").length, 1);
+  assert.equal(store.holidaysBetween("NL", "2027-07-01", "2027-08-01")[0].regions, "Noord, Zuid");
+  assert.equal(store.holidaysBetween("FR", "2027-07-01", "2027-08-01").length, 0);
+  store.replaceHolidays("NL", 2027, [{ kind: "public", startDate: "2027-04-27", endDate: "2027-04-27", name: "Koningsdag", nationwide: true, regions: [] }]);
+  assert.equal(store.holidaysBetween("NL", "2027-01-01", "2028-01-01").length, 1, "vervangt, stapelt niet");
+  assert.deepEqual(store.holidayYears().map((r) => `${r.country} ${r.year}: ${r.n}`), ["NL 2027: 1"]);
 });

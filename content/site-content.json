@@ -244,7 +244,11 @@
         "legendSiblu": "Mogelijk boekbaar via Siblu",
         "srSiblu": "mogelijk boekbaar via Siblu",
         "sibluUrl": "https://leconguel.fr/",
-        "closedNote": "Van november tot en met februari is Camping Le Conguel gesloten; die maanden staan niet in de kalender."
+        "closedNote": "Van november tot en met februari is Camping Le Conguel gesloten; die maanden staan niet in de kalender.",
+        "legendHoliday": "Feestdag",
+        "legendSchool": "Schoolvakantie (in een deel van het land)",
+        "srHoliday": "feestdag",
+        "srSchool": "schoolvakantie"
       },
       "sent": "Je aanvraag is verstuurd. Luuk en Wanda bekijken de beschikbaarheid en nemen persoonlijk contact met je op.",
       "errors": {
@@ -583,7 +587,11 @@
         "legendSiblu": "Possibly bookable through Siblu",
         "srSiblu": "possibly bookable through Siblu",
         "sibluUrl": "https://leconguel.fr/",
-        "closedNote": "From November through February, Camping Le Conguel is closed; those months are not in the calendar."
+        "closedNote": "From November through February, Camping Le Conguel is closed; those months are not in the calendar.",
+        "legendHoliday": "Bank holiday",
+        "legendSchool": "School holiday (in part of the country)",
+        "srHoliday": "bank holiday",
+        "srSchool": "school holiday"
       },
       "sent": "Your request has been sent. Luuk and Wanda will check availability and get in touch with you personally.",
       "errors": {
@@ -922,7 +930,11 @@
         "legendSiblu": "Eventuell buchbar über Siblu",
         "srSiblu": "eventuell buchbar über Siblu",
         "sibluUrl": "https://leconguel.fr/",
-        "closedNote": "Von November bis Februar ist der Camping Le Conguel geschlossen; diese Monate stehen nicht im Kalender."
+        "closedNote": "Von November bis Februar ist der Camping Le Conguel geschlossen; diese Monate stehen nicht im Kalender.",
+        "legendHoliday": "Feiertag",
+        "legendSchool": "Schulferien (in einem Teil des Landes)",
+        "srHoliday": "Feiertag",
+        "srSchool": "Schulferien"
       },
       "sent": "Eure Anfrage ist abgeschickt. Luuk und Wanda prüfen die Verfügbarkeit und melden sich persönlich bei euch.",
       "errors": {
@@ -1261,7 +1273,11 @@
         "legendSiblu": "Peut-être réservable via Siblu",
         "srSiblu": "peut-être réservable via Siblu",
         "sibluUrl": "https://leconguel.fr/",
-        "closedNote": "De novembre à février, le Camping Le Conguel est fermé ; ces mois ne figurent pas dans le calendrier."
+        "closedNote": "De novembre à février, le Camping Le Conguel est fermé ; ces mois ne figurent pas dans le calendrier.",
+        "legendHoliday": "Jour férié",
+        "legendSchool": "Vacances scolaires (dans une partie du pays)",
+        "srHoliday": "jour férié",
+        "srSchool": "vacances scolaires"
       },
       "sent": "Votre demande est envoyée. Luuk et Wanda vérifient les disponibilités et vous contactent personnellement.",
       "errors": {

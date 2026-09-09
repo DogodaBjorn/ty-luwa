@@ -132,7 +132,7 @@
   // eerste tik is de aankomstdag, tweede tik de vertrekdag, en de datums
   // komen in het formulier. Op een telefoon één maand tegelijk met pijlen.
   if (calBlock && form) {
-    var months = [].slice.call(calBlock.querySelectorAll(".cal"));
+    var months = [].slice.call(calBlock.querySelectorAll(".cal-month"));
     var hint = calBlock.querySelector("[data-cal-hint]");
     if (hint) hint.hidden = false;
     var busy = {};

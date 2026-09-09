@@ -14,7 +14,12 @@ const texts = require("../lib/mail-texts");
 const { validatePeriod } = require("../lib/validate");
 const { PERIOD_KINDS } = require("../lib/store");
 
-const CAL_LABELS = { free: "vrij", busy: "bezet", past: "voorbij", today: "vandaag" };
+const { holidayMap } = require("../lib/holidays");
+
+const CAL_LABELS = {
+  free: "vrij", busy: "bezet", past: "voorbij", today: "vandaag",
+  holiday: "feestdag", school: "schoolvakantie",
+};
 
 function createBeheerRouter({ store, mailer, translator, config, isLocalHost, knownHost, log = console, now = () => new Date().toISOString() }) {
   const tr = translator || { enabled: false, translate: async () => null, tryTranslate: async () => null };
@@ -138,10 +143,15 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
     const from = `${ym}-01`;
     const to = `${dates.addMonths(ym, 1)}-01`;
     const kinds = store.occupiedNightKinds(from, to);
+    // In het beheer de Nederlandse feestdagen en vakanties: dat is de taal
+    // van Luuk en Wanda, en het zegt iets over de drukte.
+    const holidayRows = store.holidaysBetween("NL", from, to);
     const gridHtml = calendar.renderMonth({
       ym,
       occupied: new Set(kinds.keys()),
       kinds,
+      holidays: holidayMap(holidayRows, dates),
+      holidayRows,
       today: today(),
       minDate: "0000-00-00", // in het beheer is het verleden gewoon bewerkbaar
       lang: "nl",

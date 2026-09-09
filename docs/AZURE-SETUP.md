@@ -267,6 +267,14 @@ fr/en/de krijgen een Nederlandse vertaling in het beheer en in de meldingsmail. 
 Zonder sleutel gaat een antwoord in het Nederlands, met een melding in het beheer; er wordt
 nooit iets verstuurd als het vertalen mislukt.
 
+**De mails zien eruit als Ty LuWa.** Melding, ontvangstbevestiging, antwoord, inlogmail en
+back-up gaan als opgemaakte mail met een tekstversie ernaast (ACS stuurt beide mee). De
+opmaak is gebouwd op wat Outlook aankan; het logo komt van `https://ty-luwa.nl/assets/brand/`
+en de mail blijft leesbaar als een mailprogramma afbeeldingen blokkeert. Wil je een mail
+bekijken zonder er een te versturen: `node scripts/mail-preview.js` schrijft alle varianten
+als HTML weg (en maakt er plaatjes van als Playwright er is). Lokaal met
+`MAIL_PROVIDER=console` bewaart `MAIL_DEBUG_DIR` elke verstuurde mail als bestand.
+
 **Structuur in de code.** `routes/beheer.js` en `routes/api.js` zijn in `Server.js`
 gemonteerd **vóór** de paginahandler, die anders elke route afvangt. Het beheer staat op één
 taal en één domein (`BEHEER_HOST`), buiten de `hreflang`-set; `robots.txt` sluit `/beheer`

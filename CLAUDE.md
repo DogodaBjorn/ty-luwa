@@ -20,7 +20,13 @@ Service; deploy op push naar `main` via `.github/workflows/main_ty-luwa.yml`.
   Instellingen en Azure-inrichting: `docs/AZURE-SETUP.md` §4 en §7. `npm test` moet groen.
 - Seizoen (november t/m februari dicht) in `lib/season.js`; feestdagen en schoolvakanties
   per land in `lib/holidays.js` (open bronnen, dagelijks opgehaald). Uitleg voor de
-  beheerders: `docs/uitleg/` op `/beheer/uitleg`, plaatjes via `scripts/screenshots.js`.
+  beheerders: `docs/uitleg/` op `/beheer/uitleg`, plaatjes via `scripts/screenshots.js`
+  (telefoon én laptop).
+- Mails: blokken als gegevens in `lib/mail-doc.js`, opmaak in `mail-html.js`, tekst in
+  `mail-text.js`; inhoud in `lib/mail-texts.js`. Nooit alleen de HTML aanpassen — de
+  tekstversie hoort dezelfde feiten te dragen, en de test controleert dat. De
+  bijzonderheden bij een aanvraag komen uit `lib/highlights.js` en voeden zowel de mail
+  als het beheerscherm. Bekijken: `node scripts/mail-preview.js`.
 
 ## Harde merkwetten (nooit van afwijken)
 

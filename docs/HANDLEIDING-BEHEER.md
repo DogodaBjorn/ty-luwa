@@ -50,5 +50,7 @@ Lukt iets niet, of staat er iets vreemds? Bel Björn. Er kan niets kapot: er is 
 
 ## Meer uitleg
 
-Op **Hulp → Naar de uitleg** staan vier hoofdstukken met plaatjes: over de website, over hoe
-een aanvraag loopt, over het beheer, en wat te doen als iets niet lukt.
+Op **Hulp → Naar de uitleg** staan acht hoofdstukken met plaatjes, van de website tot wat te
+doen als iets niet lukt. Boven elk hoofdstuk staat waar het over gaat, zodat je later één
+ding kunt terugzoeken. Lees je op de laptop terwijl je het op de telefoon nadoet? Zet dan
+bovenaan de schakelaar op "telefoon". Alles achter elkaar (en afdrukken) kan ook.

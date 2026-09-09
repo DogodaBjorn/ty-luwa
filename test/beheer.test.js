@@ -176,6 +176,10 @@ test("aanvraag: in de kalender zetten, afwijzen, terug naar nieuw", async () => 
   res = await request("GET", "/beheer/aanvraag/1");
   assert.match(res.text, /mailto:hans%40example.de\?subject=Eure%20Anfrage/);
   assert.match(res.text, /Mit Hund/);
+  // dezelfde bijzonderheden als in de meldingsmail
+  assert.match(res.text, /<h2>Bijzonderheden<\/h2>/);
+  assert.match(res.text, /class="tone-calm">\s*<strong>In de kalender is deze periode vrij/);
+  assert.match(res.text, /Feestdagen nog niet opgehaald|Feestdagen en schoolvakanties|Geen feestdag/);
 
   res = await request("GET", "/beheer/periode/nieuw?aanvraag=1&soort=rented");
   assert.match(res.text, /value="rented" checked/);

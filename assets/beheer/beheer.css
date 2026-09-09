@@ -151,3 +151,16 @@ blockquote.translated{border-left-color:var(--sea);background:#eef5f7}
 .prose figure.shot figcaption{color:#6a7477;font-size:.9rem;margin-top:6px}
 .prose .tip{background:var(--sand-tint);border:1px solid #e6dcc9;border-radius:12px;padding:12px 14px}
 .prose a{color:var(--sea-ink)}
+
+/* Bijzonderheden bij een aanvraag: dezelfde inhoud als in de meldingsmail. */
+.highlights{list-style:none;padding:0;margin:0 0 16px;display:grid;gap:10px}
+.highlights li{border-radius:12px;padding:12px 14px;border:1px solid;border-left-width:4px}
+.highlights li strong{display:block;margin-bottom:2px}
+.highlights li p{margin:2px 0 0;font-size:.95rem}
+.highlights .tone-warn{background:var(--warn-bg);border-color:#e9c8bc;border-left-color:var(--sand);color:var(--warn)}
+.highlights .tone-info{background:#e8f1f4;border-color:#cfe0e7;border-left-color:var(--sea);color:var(--sea-ink)}
+.highlights .tone-calm{background:var(--ok-bg);border-color:#c8d8bb;border-left-color:var(--sage);color:var(--ok)}
+.highlights dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:8px 0 0;font-size:.93rem}
+.highlights dt{font-weight:700;white-space:nowrap}
+.highlights dd{margin:0}
+@media (max-width:520px){.highlights dl{grid-template-columns:1fr;gap:0 0}.highlights dt{margin-top:6px}}

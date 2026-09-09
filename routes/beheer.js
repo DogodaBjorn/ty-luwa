@@ -15,6 +15,7 @@ const { validatePeriod } = require("../lib/validate");
 const { PERIOD_KINDS } = require("../lib/store");
 
 const { holidayMap } = require("../lib/holidays");
+const { loadContext, collectHighlights } = require("../lib/highlights");
 
 const CAL_LABELS = {
   free: "vrij", busy: "bezet", past: "voorbij", today: "vandaag",
@@ -290,11 +291,18 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
         r.message_nl = nl;
       }
     }
+    // Dezelfde bijzonderheden als in de meldingsmail, uit dezelfde functie.
+    let highlights = [];
+    try {
+      highlights = collectHighlights(loadContext(store, r, today()));
+    } catch (e) {
+      log.error("Bijzonderheden verzamelen mislukt:", e.message);
+    }
     res.send(
       views.requestDetailView({
         ...ctx(req),
         request: r,
-        overlap: overlapOf(r),
+        highlights,
         mailto: texts.mailto(r),
         periods: store.periodsOfRequest(r.id),
         messages: store.listMessages(r.id),

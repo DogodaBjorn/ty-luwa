@@ -1,5 +1,7 @@
 # Als iets niet lukt
 
+De kleine dingen die weleens misgaan, en wat je er zelf aan kunt doen.
+
 ## Ik kom niet in het beheer
 
 Ga naar ty-luwa.nl/beheer, vul je e-mailadres in en vraag een nieuwe code aan. Kijk ook even in de map ongewenste mail of spam; de eerste keer kan de mail daar belanden. Sleep hem dan naar je gewone postvak, dan gaat het daarna vanzelf goed.

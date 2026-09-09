@@ -22,6 +22,16 @@ Als iemand op de site een aanvraag doet, krijg je een mail en staat de aanvraag 
 4. Is het rond of bijna rond? Tik op **Zet in kalender als optie** of **als verhuurd**. De datums en de naam staan dan al ingevuld; tik op Opslaan.
 5. Gaat het niet door? Tik op **Afwijzen**. De aanvraag verhuist naar "Afgehandeld" en je kunt hem daar altijd terugzetten.
 
+## De winter en de feestdagen
+
+Van november tot en met februari is de camping dicht. Die maanden slaat de kalender over, en
+gasten kunnen ze niet aanvragen. Wil je er toch iets in zetten (onderhoud bijvoorbeeld), dan
+kan dat gewoon; het scherm waarschuwt alleen even.
+
+Een stipje boven een datum is een Nederlandse feestdag, een streepje onderin een
+schoolvakantie. Onder de maand staan ze ook als regel. Handig om te zien wanneer het druk
+wordt. Op de site zelf ziet elke bezoeker de dagen van zijn eigen land.
+
 ## Juli en Siblu
 
 In juli verhuurt Siblu de caravan. Juli staat daarom elk jaar vanzelf in de kalender als **Via Siblu** (roze). Bezoekers van de site zien dan "mogelijk boekbaar via Siblu" met een link naar de camping. Klopt het een jaar niet, pas de periode dan gewoon aan of haal hem weg; hij komt niet vanzelf terug.
@@ -37,3 +47,8 @@ Ga naar ty-luwa.nl/beheer, vul je e-mailadres in en tik op de link in de mail, o
 ## Bel Björn
 
 Lukt iets niet, of staat er iets vreemds? Bel Björn. Er kan niets kapot: er is elke week automatisch een reservekopie.
+
+## Meer uitleg
+
+Op **Hulp → Naar de uitleg** staan vier hoofdstukken met plaatjes: over de website, over hoe
+een aanvraag loopt, over het beheer, en wat te doen als iets niet lukt.

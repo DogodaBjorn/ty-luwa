@@ -51,7 +51,9 @@ Server.js                   host → taal, redirects, sitemap; kalender in de pa
                             monteert routes/
 routes/api.js               POST /api/aanvraag (het formulier)
 routes/beheer.js            ty-luwa.nl/beheer, de beheertool (schermen: lib/beheer-views.js)
-lib/                        dates, calendar (maandraster), db + store (SQLite), auth
+docs/uitleg/                de uitleg voor Luuk en Wanda (getoond op /beheer/uitleg)
+lib/                        dates, season (winter), calendar (maandraster), holidays,
+                            db + store (SQLite), auth
                             (inloggen per code), mail (Azure Communication Services),
                             mail-texts, validate, page (kalender-injectie), jobs (onderhoud)
 assets/beheer/              css en js van het beheer (niet gehasht, los geserveerd)
@@ -108,7 +110,24 @@ staat bij hen in de inbox. Details en de Azure-inrichting: `docs/AZURE-SETUP.md`
   **antwoorden in het Nederlands** die de site vertaalt (Azure AI Translator, `lib/translate.js`)
   en vanaf Ty LuWa verstuurt in de taal van de gast; of de gast mailen vanuit de eigen mail-app.
 - **Juli is van Siblu**: staat elk jaar automatisch in de kalender als eigen soort (roze),
-  publiek "mogelijk boekbaar via Siblu" met link naar leconguel.fr. Ontworpen voor een telefoon en voor ogen van 67 en
+  publiek "mogelijk boekbaar via Siblu" met link naar leconguel.fr.
+- **Winter**: de camping is dicht van november tot en met februari (`lib/season.js`). Die
+  maanden staan nergens in de kalender en een aanvraag ervoor wordt geweigerd.
+- **Feestdagen en schoolvakanties** per taalsite (`lib/holidays.js`): NL Nederlandse, FR
+  Franse, DE Duitse, .com Engelse. Open bronnen zonder sleutel (OpenHolidays, gov.uk),
+  dagelijks opgehaald en in de database bewaard. Controleren: `node scripts/holidays-check.js`.
+- **Uitleg voor Luuk en Wanda** op `/beheer/uitleg`: vier hoofdstukken met
+  schermafbeeldingen, tekst in `docs/uitleg/`.
+
+### Schermafbeeldingen van de uitleg verversen
+
+```bash
+npm install --no-save playwright && npx playwright install chromium
+node scripts/screenshots.js      # schrijft assets/beheer/uitleg/*.png
+```
+
+Het script start de site met een tijdelijke database en verzonnen voorbeeldgegevens, dus er
+komen nooit echte gastgegevens in de plaatjes. Draai het opnieuw als het ontwerp verandert. Ontworpen voor een telefoon en voor ogen van 67 en
   70: grote tekst, hoge knoppen, één actie per scherm, geen modals.
 - **Onderhoud** (`lib/jobs.js`): dagelijkse snapshot in `data/backups/`, wekelijkse
   back-upmail, opruimen van verlopen codes en sessies.

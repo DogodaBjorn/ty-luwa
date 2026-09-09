@@ -18,6 +18,9 @@ Service; deploy op push naar `main` via `.github/workflows/main_ty-luwa.yml`.
   `ty-luwa.nl/beheer` (`routes/beheer.js`, Nederlands, voor Luuk en Wanda); publieke
   kalender vrij/bezet die `Server.js` bij elk verzoek in de beschikbaarheidspagina zet.
   Instellingen en Azure-inrichting: `docs/AZURE-SETUP.md` §4 en §7. `npm test` moet groen.
+- Seizoen (november t/m februari dicht) in `lib/season.js`; feestdagen en schoolvakanties
+  per land in `lib/holidays.js` (open bronnen, dagelijks opgehaald). Uitleg voor de
+  beheerders: `docs/uitleg/` op `/beheer/uitleg`, plaatjes via `scripts/screenshots.js`.
 
 ## Harde merkwetten (nooit van afwijken)
 

@@ -1,5 +1,7 @@
 # Een aanvraag, van begin tot eind
 
+Van het moment dat iemand het formulier verstuurt tot jullie antwoord, en wat er daarna in de kalender komt.
+
 ## Wat er gebeurt als iemand het formulier verstuurt
 
 Drie dingen, meteen:

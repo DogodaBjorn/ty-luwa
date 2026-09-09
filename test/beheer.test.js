@@ -266,33 +266,45 @@ test("wintersluiting: het beheer slaat november tot en met februari over", async
   assert.match(res.text, /Maart 2027/i);
 });
 
-test("uitleg: overzicht, hoofdstukken met plaatjes, en heen en weer bladeren", async () => {
+test("uitleg: acht hoofdstukken, inhoudsopgave, twee sets plaatjes en alles op één pagina", async () => {
   let res = await request("GET", "/beheer/uitleg");
   assert.equal(res.status, 200);
   assert.match(res.text, /Uitleg over de site/);
-  for (const t of ["De website", "Een aanvraag, van begin tot eind", "Het beheer", "Als iets niet lukt"]) {
+  for (const t of ["In het kort", "De website", "De kalender lezen", "Inloggen", "Een aanvraag krijgen", "Antwoorden en vertalen", "De planning bijhouden", "Als iets niet lukt"]) {
     assert.ok(res.text.includes(t), `hoofdstuk "${t}" staat in het overzicht`);
   }
-  assert.match(res.text, /href="\/beheer\/uitleg\/de-website"/);
+  assert.match(res.text, /href="\/beheer\/uitleg\/in-het-kort"/);
+  assert.match(res.text, /href="\/beheer\/uitleg\/alles"/);
 
-  res = await request("GET", "/beheer/uitleg/beheer");
+  // een hoofdstuk: inhoudsopgave uit de tussenkoppen, plaatjes in twee maten
+  res = await request("GET", "/beheer/uitleg/de-planning-bijhouden");
   assert.equal(res.status, 200);
-  assert.match(res.text, /<figure class="shot"><img src="\/beheer\/static\/uitleg\/inloggen.png"/);
-  assert.match(res.text, /<p class="tip">/);
-  assert.match(res.text, /href="\/beheer\/uitleg\/aanvragen"/, "vorige hoofdstuk");
+  assert.match(res.text, /<nav class="toc"/);
+  assert.match(res.text, /<a href="#een-periode-toevoegen">Een periode toevoegen<\/a>/);
+  assert.match(res.text, /<h2 id="een-periode-toevoegen">/);
+  assert.match(res.text, /<img class="shot-mob" src="\/beheer\/static\/uitleg\/periode.png"/);
+  assert.match(res.text, /<img class="shot-lap" src="\/beheer\/static\/uitleg\/periode-laptop.png"/);
+  assert.match(res.text, /data-shot-switch/);
+  assert.match(res.text, /href="\/beheer\/uitleg\/antwoorden-en-vertalen"/, "vorige hoofdstuk");
   assert.match(res.text, /href="\/beheer\/uitleg\/als-iets-niet-lukt"/, "volgende hoofdstuk");
 
-  // de plaatjes worden echt geserveerd
-  res = await request("GET", "/beheer/static/uitleg/inloggen.png");
+  // tipblokken en de plaatjes worden echt geserveerd
+  res = await request("GET", "/beheer/uitleg/inloggen");
+  assert.match(res.text, /<p class="tip">/);
+  assert.equal((await request("GET", "/beheer/static/uitleg/inloggen.png")).status, 200);
+
+  // alles achter elkaar, met een afdrukknop
+  res = await request("GET", "/beheer/uitleg/alles");
   assert.equal(res.status, 200);
+  assert.match(res.text, /data-print/);
+  assert.equal((res.text.match(/class="card prose chapter"/g) || []).length, 8);
+  assert.match(res.text, /id="h8"/);
 
   // onbekend hoofdstuk gaat terug naar het overzicht
-  res = await request("GET", "/beheer/uitleg/bestaat-niet");
-  assert.equal(res.location, "/beheer/uitleg");
+  assert.equal((await request("GET", "/beheer/uitleg/bestaat-niet")).location, "/beheer/uitleg");
 
   // en vanaf Hulp is de uitleg te vinden
-  res = await request("GET", "/beheer/hulp");
-  assert.match(res.text, /href="\/beheer\/uitleg"/);
+  assert.match((await request("GET", "/beheer/hulp")).text, /href="\/beheer\/uitleg"/);
 });
 
 test("hulp, back-up en uitloggen", async () => {

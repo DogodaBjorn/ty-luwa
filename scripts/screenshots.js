@@ -15,6 +15,7 @@ const path = require("path");
 
 const OUT = path.join(__dirname, "..", "assets", "beheer", "uitleg");
 const PHONE = { width: 390, height: 844 };
+const LAPTOP = { width: 1100, height: 800 };
 
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), "tyluwa-shots-"));
 process.env.DATA_DIR = dir;
@@ -72,18 +73,44 @@ try {
   const launch = {};
   if (fs.existsSync("/opt/pw-browsers/chromium")) launch.executablePath = "/opt/pw-browsers/chromium";
   const browser = await playwright.chromium.launch(launch);
-  const page = await browser.newPage({ viewport: PHONE });
+  // Twee opnames van elk scherm: één zoals het op een telefoon staat en één
+  // zoals het op een laptop staat. De uitleg toont de juiste (of die je kiest).
+  // Eén context, twee pagina's: zo delen ze de sessie en hoeft er maar één
+  // keer ingelogd te worden.
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  await page.setViewportSize(PHONE);
+  const wide = await context.newPage();
+  await wide.setViewportSize(LAPTOP);
+  let lastUrl = null;
   const shot = async (name, selector) => {
     const target = selector ? page.locator(selector).first() : page;
     await target.screenshot({ path: path.join(OUT, `${name}.png`) });
-    realLog(`  ${name}.png`);
+    if (lastUrl) {
+      await wide.goto(lastUrl, { waitUntil: "domcontentloaded" });
+      const w = selector ? wide.locator(selector).first() : wide;
+      await w.screenshot({ path: path.join(OUT, `${name}-laptop.png`) });
+    }
+    realLog(`  ${name}.png + -laptop`);
+  };
+  const open = async (url, waitFor) => {
+    lastUrl = url;
+    await page.goto(url, { waitUntil: "domcontentloaded" });
+    if (waitFor) await page.waitForSelector(waitFor);
+  };
+  /** Schermen die pas na klikken verschijnen: dezelfde stappen op beide maten. */
+  const shotSteps = async (name, selector, steps) => {
+    for (const [target, suffix] of [[page, ""], [wide, "-laptop"]]) {
+      await steps(target);
+      await target.locator(selector).first().screenshot({ path: path.join(OUT, `${name}${suffix}.png`) });
+    }
+    realLog(`  ${name}.png + -laptop`);
   };
 
   realLog("Publieke site:");
-  await page.goto(`${base}/nl/`, { waitUntil: "domcontentloaded" });
+  await open(`${base}/nl/`);
   await shot("publiek-home");
-  await page.goto(`${base}/nl/beschikbaarheid`, { waitUntil: "domcontentloaded" });
-  await page.waitForSelector(".cal-block.is-paged");
+  await open(`${base}/nl/beschikbaarheid`, ".cal-block.is-paged");
   const months = await page.locator(".cal-month").evaluateAll((els) => els.map((e) => e.dataset.month));
   for (let i = 0; i < Math.max(0, months.indexOf(ym)); i++) await page.click("[data-cal-next]");
   await shot("publiek-kalender", ".cal-block");
@@ -91,7 +118,7 @@ try {
   await shot("publiek-formulier", "[data-request-form]");
 
   realLog("Beheer:");
-  await page.goto(`${base}/beheer/inloggen`, { waitUntil: "domcontentloaded" });
+  await open(`${base}/beheer/inloggen`);
   await shot("inloggen", "main");
   await page.fill("#email", "uitleg@voorbeeld.nl");
   await page.click("button[type=submit]");
@@ -100,47 +127,58 @@ try {
   await page.fill("#code", code);
   await page.click("button[type=submit]");
   await page.waitForSelector(".month");
-  await page.goto(`${base}/beheer?m=${ym}`, { waitUntil: "domcontentloaded" });
+  await open(`${base}/beheer?m=${ym}`);
   await shot("beheer-kalender", "main");
 
-  await page.goto(`${base}/beheer/periode/nieuw`, { waitUntil: "domcontentloaded" });
+  await open(`${base}/beheer/periode/nieuw`);
   await page.click("label.tile.kind-rented");
   await page.fill("#arrival", d(4));
   await page.dispatchEvent("#arrival", "change");
   await page.fill("#guestName", "Familie Bakker");
   await shot("periode", "main");
-  await page.click("form[data-period-form] button[type=submit]");
-  await page.waitForSelector(".flash.overlap, .flash-ok");
-  if (await page.locator(".flash.overlap").count()) await shot("overlap", "main");
 
-  await page.goto(`${base}/beheer/periode/1/verwijderen`, { waitUntil: "domcontentloaded" });
+  await shotSteps("overlap", "main", async (target) => {
+    await target.goto(`${base}/beheer/periode/nieuw`, { waitUntil: "domcontentloaded" });
+    await target.click("label.tile.kind-rented");
+    await target.fill("#arrival", d(4));
+    await target.dispatchEvent("#arrival", "change");
+    await target.fill("#guestName", "Familie Bakker");
+    await target.click("form[data-period-form] button[type=submit]");
+    await target.waitForSelector(".flash.overlap, .flash-ok");
+  });
+
+  await open(`${base}/beheer/periode/1/verwijderen`);
   await shot("verwijderen", "main");
 
-  await page.goto(`${base}/beheer/aanvragen`, { waitUntil: "domcontentloaded" });
+  await open(`${base}/beheer/aanvragen`);
   await shot("aanvragen", "main");
-  await page.goto(`${base}/beheer/aanvraag/${req.id}`, { waitUntil: "domcontentloaded" });
+  await open(`${base}/beheer/aanvraag/${req.id}`);
   await shot("aanvraag", "main");
-  await page.fill("#reply", "Ja, die week is nog vrij. Wat leuk dat jullie met de kinderen komen! De vaatwasser doet het prima.");
-  await page.click(".reply button[type=submit]");
-  await page.waitForSelector(".preview, .flash-warn");
-  await shot("antwoord", "main");
 
-  // De meldingsmail als plaatje: de tekst uit de log in een simpel kaartje.
-  const mail = logged.filter((l) => l.includes("Nieuwe aanvraag")).pop() || "";
-  const body = mail.split("\n").filter((l) => !l.startsWith("---")).join("\n");
-  const mailPage = await browser.newPage({ viewport: { width: 780, height: 620 } });
-  await mailPage.setContent(
-    `<body style="margin:0;background:#faf7f1;font-family:system-ui,sans-serif">
-      <div style="margin:24px;background:#fff;border:1px solid #e7e1d7;border-radius:14px;padding:22px">
-        <p style="margin:0 0 12px;color:#6a7477;font-size:14px">Van: Ty LuWa &lt;DoNotReply@ty-luwa.nl&gt;</p>
-        <pre style="margin:0;white-space:pre-wrap;font-family:system-ui,sans-serif;font-size:15px;line-height:1.5;color:#2e3436">${body
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")}</pre>
-      </div>
-    </body>`
-  );
-  await mailPage.screenshot({ path: path.join(OUT, "mail-melding.png") });
-  realLog("  mail-melding.png");
+  await shotSteps("antwoord", "main", async (target) => {
+    await target.goto(`${base}/beheer/aanvraag/${req.id}`, { waitUntil: "domcontentloaded" });
+    await target.fill("#reply", "Ja, die week is nog vrij. Wat leuk dat jullie met de kinderen komen! De vaatwasser doet het prima.");
+    await target.click(".reply button[type=submit]");
+    await target.waitForSelector(".preview, .flash-warn");
+  });
+
+  // De meldingsmail zelf, precies zoals hij verstuurd wordt.
+  realLog("Mail:");
+  const texts = require("../lib/mail-texts");
+  const { loadContext, collectHighlights } = require("../lib/highlights");
+  const mail = texts.notify(store.getRequest(req.id), {
+    beheerUrl: "https://ty-luwa.nl/beheer",
+    highlights: collectHighlights(loadContext(store, store.getRequest(req.id), today)),
+    messageNl: store.getRequest(req.id).message_nl,
+  });
+  for (const [size, suffix] of [[PHONE, ""], [LAPTOP, "-laptop"]]) {
+    const mp = await context.newPage();
+    await mp.setViewportSize({ width: size.width, height: size.height });
+    await mp.setContent(mail.html, { waitUntil: "domcontentloaded" });
+    await mp.screenshot({ path: path.join(OUT, `mail-melding${suffix}.png`), fullPage: true });
+    await mp.close();
+  }
+  realLog("  mail-melding.png + -laptop");
 
   await browser.close();
   server.close();

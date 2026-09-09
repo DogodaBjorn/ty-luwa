@@ -164,3 +164,36 @@ blockquote.translated{border-left-color:var(--sea);background:#eef5f7}
 .highlights dt{font-weight:700;white-space:nowrap}
 .highlights dd{margin:0}
 @media (max-width:520px){.highlights dl{grid-template-columns:1fr;gap:0 0}.highlights dt{margin-top:6px}}
+
+/* Uitleg: inhoudsopgave, twee sets schermafbeeldingen, afdrukken.
+   Zonder JavaScript toont de CSS de opname die bij de schermbreedte past;
+   de schakelaar (data-shots op <html>) overschrijft dat, voor wie op de
+   laptop leest terwijl hij het op de telefoon nadoet. */
+.toc{background:var(--sand-tint);border:1px solid #e6dcc9;border-radius:14px;padding:14px 16px;margin:0 0 18px}
+.toc p{font-weight:700;color:var(--navy);margin:0 0 6px}
+.toc ul{list-style:none;padding:0;margin:0;display:grid;gap:2px}
+.toc a{display:block;padding:8px 0;min-height:40px;color:var(--sea-ink);font-weight:600}
+.shot-switch{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 14px;font-size:.95rem;color:#535b5f}
+.shot-switch button{min-height:44px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font:inherit;font-weight:700;color:#5a6a70;cursor:pointer}
+.shot-switch button[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.prose .shot img{width:100%;height:auto;border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px #1c354114;background:#fff}
+.shot .shot-lap{display:none}
+@media (min-width:820px){.shot .shot-mob{display:none}.shot .shot-lap{display:block}}
+html[data-shots="mob"] .shot .shot-mob{display:block}
+html[data-shots="mob"] .shot .shot-lap{display:none}
+html[data-shots="lap"] .shot .shot-mob{display:none}
+html[data-shots="lap"] .shot .shot-lap{display:block}
+.chapter{margin-top:16px}
+@media print{
+  .top,.bottom-action,.no-print,.shot-switch,.toc,.chapter-nav,.back,.logout{display:none!important}
+  body{background:#fff}
+  main{padding:0;max-width:none}
+  .card{border:0;padding:0;margin:0 0 18px;break-inside:auto}
+  h1,h2,h3{break-after:avoid;page-break-after:avoid}
+  .prose figure.shot{break-inside:avoid;page-break-inside:avoid;max-width:16cm}
+  .prose .shot img{box-shadow:none}
+  .shot .shot-mob{display:none!important}
+  .shot .shot-lap{display:block!important}
+  .prose .tip{border:1px solid #ccc}
+  a[href^="/"]::after{content:""}
+}

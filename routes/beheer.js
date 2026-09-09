@@ -41,7 +41,7 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
       const slug = file.replace(/^\d+-/, "").replace(/\.md$/, "");
       const title = (/^#\s+(.*)$/m.exec(md) || [, slug])[1];
       const summary = (/^(?!#|!|>)(\S.*)$/m.exec(md) || [, ""])[1].replace(/\*\*/g, "");
-      return { file, slug, title, summary, html: views.markdownToHtml(md) };
+      return { file, slug, title, summary, headings: views.headings(md), html: views.markdownToHtml(md) };
     });
 
   const hostOf = (req) => String(req.headers.host || "").toLowerCase().split(":")[0].replace(/^www\./, "");
@@ -370,6 +370,10 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
   // --- hulp en back-up -----------------------------------------------------
   router.get("/uitleg", (req, res) => {
     res.send(views.uitlegIndexView({ ...ctx(req), chapters }));
+  });
+
+  router.get("/uitleg/alles", (req, res) => {
+    res.send(views.uitlegAllView({ ...ctx(req), chapters }));
   });
 
   router.get("/uitleg/:slug", (req, res) => {

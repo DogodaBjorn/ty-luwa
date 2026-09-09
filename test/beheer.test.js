@@ -79,7 +79,7 @@ test("inloggen met code, daarna met link (die is dan al verbruikt)", async () =>
   assert.ok(jar.tl_inloggen, "login-cookie gezet");
   const mail = logged.find((l) => l.includes("Je inlogcode"));
   const code = /^\s{4}(\d{6})$/m.exec(mail)[1];
-  const link = /Tik op deze link: \S+\/beheer\/inloglink\/(\S+)/.exec(mail)[1];
+  const link = /\/beheer\/inloglink\/(\S+)/.exec(mail)[1];
 
   res = await request("POST", "/beheer/inlogcode", { body: { code: "000000" } });
   assert.match(res.text, /Die code klopt niet/);

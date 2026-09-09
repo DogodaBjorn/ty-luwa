@@ -99,7 +99,7 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
       const link = `${req.protocol}://${req.headers.host}/beheer/inloglink/${login.token}`;
       const m = texts.login({ code: login.code, link });
       try {
-        await mailer.send({ to: login.email, subject: m.subject, text: m.text, replyTo: "" });
+        await mailer.send({ to: login.email, subject: m.subject, text: m.text, html: m.html, replyTo: "" });
       } catch (e) {
         log.error("Inlogmail mislukt:", e.message);
       }
@@ -338,7 +338,7 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
     const m = texts.reply(r, { nl: bodyNl, translated: r.lang === "nl" ? null : translated });
     let status = "ok";
     try {
-      await mailer.send({ to: r.email, subject: m.subject, text: m.text });
+      await mailer.send({ to: r.email, subject: m.subject, text: m.text, html: m.html });
     } catch (e) {
       status = e.message;
       log.error("Antwoord aan gast mislukt:", e.message);

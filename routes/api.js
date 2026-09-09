@@ -8,6 +8,7 @@ const dates = require("../lib/dates");
 const season = require("../lib/season");
 const { validateRequest } = require("../lib/validate");
 const texts = require("../lib/mail-texts");
+const { loadContext, collectHighlights } = require("../lib/highlights");
 
 const RATE_WINDOW_MS = 60 * 60 * 1000;
 const RATE_MAX = 5;
@@ -93,9 +94,15 @@ function createApiRouter({ store, mailer, translator, config, content, routes, p
     const results = [];
     try {
       if (config.mail.notify.length) {
-        const overlap = store.overlappingPeriods(r.arrival, r.departure);
-        const m = texts.notify(saved, { beheerUrl, overlap, messageNl });
-        await mailer.send({ to: config.mail.notify, subject: m.subject, text: m.text, replyTo: r.email });
+        // Een kapotte feestdagentabel mag nooit een melding opeten.
+        let highlights = [];
+        try {
+          highlights = collectHighlights(loadContext(store, saved, today));
+        } catch (e) {
+          log.error("Bijzonderheden verzamelen mislukt:", e.message);
+        }
+        const m = texts.notify(saved, { beheerUrl, highlights, messageNl });
+        await mailer.send({ to: config.mail.notify, subject: m.subject, text: m.text, html: m.html, replyTo: r.email });
         results.push("notify:ok");
       } else {
         results.push("notify:geen-ontvanger");
@@ -106,7 +113,7 @@ function createApiRouter({ store, mailer, translator, config, content, routes, p
     }
     try {
       const m = texts.receipt(saved, content);
-      await mailer.send({ to: r.email, subject: m.subject, text: m.text });
+      await mailer.send({ to: r.email, subject: m.subject, text: m.text, html: m.html });
       results.push("receipt:ok");
     } catch (e) {
       results.push(`receipt:${e.message}`);

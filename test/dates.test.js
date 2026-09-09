@@ -68,3 +68,18 @@ test("formattering per taal", () => {
   assert.equal(d.weekdayNames("nl")[0].toLowerCase().slice(0, 2), "ma");
   assert.equal(d.weekdayNames("en")[6].slice(0, 3), "Sun");
 });
+
+test("lange bereiken, dag-en-maand en hoe ver vooruit", () => {
+  assert.equal(d.formatRangeLong("2026-07-11", "2026-07-18", "nl"), "zaterdag 11 juli t/m zaterdag 18 juli 2026");
+  assert.equal(d.formatRangeLong("2026-12-28", "2027-01-04", "nl"), "maandag 28 december 2026 t/m maandag 4 januari 2027");
+  assert.equal(d.formatRangeLong("2026-07-11", "2026-07-18", "fr", "au"), "samedi 11 juillet au samedi 18 juillet 2026");
+  assert.equal(d.formatDayMonth("2026-07-14", "nl"), "14 juli");
+  assert.equal(d.formatDayMonth("2026-07-14", "fr"), "14 juillet");
+
+  assert.equal(d.relativeAhead("2026-09-09", "2026-09-09"), "vandaag");
+  assert.equal(d.relativeAhead("2026-09-09", "2026-09-10"), "morgen");
+  assert.equal(d.relativeAhead("2026-09-09", "2026-09-21"), "over 12 dagen");
+  assert.equal(d.relativeAhead("2026-09-09", "2027-07-11"), "over 10 maanden");
+  assert.equal(d.relativeAhead("2026-09-09", "2029-07-11"), "over 3 jaar");
+  assert.equal(d.relativeAhead("2026-09-09", "2026-09-01"), "in het verleden");
+});

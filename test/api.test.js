@@ -90,7 +90,7 @@ test("aanvraag versturen: opgeslagen, twee mails, daarna dubbel genegeerd", { sk
   const mails = logged.filter((l) => l.includes("--- MAIL"));
   assert.equal(mails.length, 2);
   assert.match(mails[0], /Aan: ouders@example.nl/);
-  assert.match(mails[0], /Nieuwe aanvraag: Marie Dupont/);
+  assert.match(mails[0], /Nieuwe aanvraag · Marie Dupont/);
   assert.match(mails[1], /Aan: marie@example.fr/);
   assert.match(mails[1], /Bonjour Marie Dupont,/);
   assert.match(mails[1], /7 nuits/);

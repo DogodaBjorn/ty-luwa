@@ -11,6 +11,13 @@ test("een goede aanvraag", () => {
   assert.deepEqual(r.data, { arrival: "2026-10-03", departure: "2026-10-10", adults: 2, children: 1, name: "Marie Dupont", email: "marie@example.fr", message: "Bonjour", lang: "fr" });
 });
 
+test("het volle huis mag: vier volwassenen plus twee kinderen", () => {
+  const r = validateRequest({ ...good, adults: "4", children: "2" }, ctx);
+  assert.equal(r.ok, true);
+  assert.equal(r.data.adults, 4);
+  assert.equal(r.data.children, 2);
+});
+
 test("elke foutcode", () => {
   const code = (patch) => validateRequest({ ...good, ...patch }, ctx).code;
   assert.equal(code({ website: "spam" }), "honeypot");
@@ -21,6 +28,7 @@ test("elke foutcode", () => {
   assert.equal(code({ arrival: "2028-10-03", departure: "2028-10-10" }), "tooFar");
   assert.equal(code({ departure: "2026-11-03" }), "tooLong");
   assert.equal(code({ adults: "0" }), "adults");
+  assert.equal(code({ adults: "5", children: "0" }), "tooManyAdults");
   assert.equal(code({ adults: "4", children: "3" }), "tooMany");
   assert.equal(code({ children: "-1" }), "tooMany");
   assert.equal(code({ name: "M" }), "name");

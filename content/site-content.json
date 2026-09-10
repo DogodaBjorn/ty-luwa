@@ -52,12 +52,12 @@
       "heroTitlePre": "Een comfortabel vakantieplekje aan de ",
       "heroTitleEm": "Bretonse kust",
       "heroTitlePost": ".",
-      "heroBody": "Ruimte om buiten te leven, een complete mobil-home voor maximaal 6 personen en de voorzieningen van Le Conguel binnen handbereik.",
+      "heroBody": "Ruimte om buiten te leven, een complete mobil-home voor 4 personen met plek voor 2 kinderen extra, en de voorzieningen van Le Conguel binnen handbereik.",
       "heroCtaSecondary": "Ontdek Ty LuWa",
       "facts": [
         {
-          "title": "Max. 6 personen",
-          "sub": "2 slaapkamers + slaapbank"
+          "title": "4 personen",
+          "sub": "+ 2 kinderen op de slaapbank"
         },
         {
           "title": "Ruime veranda",
@@ -79,9 +79,9 @@
       },
       "stay": {
         "title": "Alles wat je nodig hebt voor een ontspannen verblijf.",
-        "body": "De mobil-home is ingericht voor maximaal zes personen. De hoofdslaapkamer heeft een tweepersoonsbed en inloopkast, de tweede slaapkamer twee eenpersoonsbedden en de hoekbank kan worden omgebouwd tot tweepersoons slaapplaats.",
+        "body": "De mobil-home is ingericht voor vier personen, met plek voor twee kinderen extra. De hoofdslaapkamer heeft een tweepersoonsbed en inloopkast, de tweede slaapkamer twee eenpersoonsbedden en de hoekbank kan worden omgebouwd tot slaapplaats voor twee kinderen.",
         "features": [
-          "2 aparte slaapkamers + slaapbank",
+          "2 aparte slaapkamers + slaapbank voor 2 kinderen",
           "Badkamer met ruime douche en wasmachine",
           "Apart toilet",
           "Vaatwasser en complete keuken"
@@ -107,7 +107,7 @@
     },
     "stay": {
       "eyebrow": "Het verblijf",
-      "title": "Een complete mobil-home voor maximaal 6 personen.",
+      "title": "Een complete mobil-home voor 4 personen, plus 2 kinderen.",
       "text": "Open leefruimte, twee slaapkamers, ruime veranda, eigen tuintje en een keuken waar je echt in kunt koken.",
       "sleepTitle": "Waar je slaapt",
       "amenitiesTitle": "Voorzieningen",
@@ -122,7 +122,7 @@
         },
         {
           "title": "Woonkamer",
-          "detail": "slaapbank voor 2 personen"
+          "detail": "slaapbank voor 2 kinderen"
         }
       ],
       "amenities": [
@@ -157,7 +157,7 @@
           "alt": "Woonkamer en keuken in één overzicht",
           "category": "Wonen",
           "title": "Wonen en koken in één ruimte",
-          "caption": "Geen aparte hokjes: wie kookt, praat gewoon mee. Zo voelt zes personen nog steeds als samen."
+          "caption": "Geen aparte hokjes: wie kookt, praat gewoon mee. Zo blijft het ook met een vol huis samen."
         },
         "kitchen": {
           "alt": "Complete keuken met oven, magnetron, koelkast en vaatwasser",
@@ -175,13 +175,13 @@
           "alt": "Tweede slaapkamer met twee eenpersoonsbedden",
           "category": "Slapen",
           "title": "De tweede slaapkamer",
-          "caption": "Twee eenpersoonsbedden, fijn voor kinderen of vrienden. Samen met de slaapbank in de woonkamer slaap je hier met zes."
+          "caption": "Twee eenpersoonsbedden, fijn voor kinderen of vrienden. Met de slaapbank in de woonkamer slapen er nog twee kinderen bij."
         },
         "bathroom": {
           "alt": "Badkamer met ruime douche",
           "category": "Badkamer",
           "title": "De badkamer",
-          "caption": "Een ruime douche voor het zand van de dag, en een wasmachine voor de handdoeken. Het toilet is apart, wel zo praktisch met zes."
+          "caption": "Een ruime douche voor het zand van de dag, en een wasmachine voor de handdoeken. Het toilet is apart, wel zo praktisch met een vol huis."
         },
         "closet": {
           "alt": "Inloopkast bij de hoofdslaapkamer",
@@ -256,7 +256,8 @@
         "past": "De aankomstdag ligt in het verleden.",
         "tooFar": "Zo ver vooruit is de planning nog niet open. Kies een datum binnen twee jaar.",
         "tooLong": "Een aanvraag kan tot 28 nachten zijn. Wil je langer? Stuur een kortere aanvraag met een opmerking erbij.",
-        "tooMany": "Ty LuWa is er voor maximaal 6 gasten.",
+        "tooMany": "Ty LuWa is er voor 4 personen, plus hooguit 2 kinderen op de slaapbank.",
+        "tooManyAdults": "Ty LuWa is er voor maximaal 4 volwassenen.",
         "adults": "Minstens één volwassene.",
         "name": "Vul je naam in.",
         "email": "Vul een geldig e-mailadres in, dan kunnen Luuk en Wanda antwoorden.",
@@ -323,7 +324,7 @@
       "items": [
         {
           "q": "Voor hoeveel personen is Ty LuWa geschikt?",
-          "a": "Maximaal 6 personen: twee slaapkamers en een slaapbank voor twee personen."
+          "a": "Voor 4 personen in de twee slaapkamers, plus hooguit 2 kinderen op de slaapbank in de woonkamer."
         },
         {
           "q": "Kan ik direct boeken?",
@@ -395,12 +396,12 @@
       "heroTitlePre": "A comfortable holiday spot on the ",
       "heroTitleEm": "Breton coast",
       "heroTitlePost": ".",
-      "heroBody": "Room to live outdoors, a fully equipped mobile home for up to 6 people, and the facilities of Le Conguel close at hand.",
+      "heroBody": "Room to live outdoors, a fully equipped mobile home for 4 people with room for 2 extra children, and the facilities of Le Conguel close at hand.",
       "heroCtaSecondary": "Discover Ty LuWa",
       "facts": [
         {
-          "title": "Up to 6 people",
-          "sub": "2 bedrooms + sofa bed"
+          "title": "4 people",
+          "sub": "+ 2 children on the sofa bed"
         },
         {
           "title": "Spacious veranda",
@@ -422,9 +423,9 @@
       },
       "stay": {
         "title": "Everything you need for a relaxed stay.",
-        "body": "The mobile home sleeps up to six. The main bedroom has a double bed and walk-in wardrobe, the second bedroom has two single beds, and the corner sofa converts into a double sleeping place.",
+        "body": "The mobile home sleeps four, with room for two extra children. The main bedroom has a double bed and walk-in wardrobe, the second bedroom has two single beds, and the corner sofa converts into a sleeping place for two children.",
         "features": [
-          "2 separate bedrooms + sofa bed",
+          "2 separate bedrooms + sofa bed for 2 children",
           "Bathroom with spacious shower and washing machine",
           "Separate toilet",
           "Dishwasher and complete kitchen"
@@ -450,7 +451,7 @@
     },
     "stay": {
       "eyebrow": "The accommodation",
-      "title": "A complete mobile home for up to 6 people.",
+      "title": "A complete mobile home for 4 people, plus 2 children.",
       "text": "Open living space, two bedrooms, a spacious veranda, your own garden and a kitchen you can really cook in.",
       "sleepTitle": "Where you sleep",
       "amenitiesTitle": "Amenities",
@@ -465,7 +466,7 @@
         },
         {
           "title": "Living room",
-          "detail": "sofa bed for 2 people"
+          "detail": "sofa bed for 2 children"
         }
       ],
       "amenities": [
@@ -500,7 +501,7 @@
           "alt": "Living room and kitchen in one view",
           "category": "Living",
           "title": "Living and cooking in one space",
-          "caption": "No separate boxes: whoever cooks stays part of the conversation. That is how six people still feel like company."
+          "caption": "No separate boxes: whoever cooks stays part of the conversation. That is how a full house still feels like company."
         },
         "kitchen": {
           "alt": "Complete kitchen with oven, microwave, fridge and dishwasher",
@@ -518,13 +519,13 @@
           "alt": "Second bedroom with two single beds",
           "category": "Sleeping",
           "title": "The second bedroom",
-          "caption": "Two single beds, ideal for children or friends. Together with the sofa bed in the living room, the house sleeps six."
+          "caption": "Two single beds, ideal for children or friends. With the sofa bed in the living room, two more children sleep here."
         },
         "bathroom": {
           "alt": "Bathroom with spacious shower",
           "category": "Bathroom",
           "title": "The bathroom",
-          "caption": "A spacious shower for the sand of the day, and a washing machine for the towels. The toilet is separate, which matters with six."
+          "caption": "A spacious shower for the sand of the day, and a washing machine for the towels. The toilet is separate, which matters with a full house."
         },
         "closet": {
           "alt": "Walk-in wardrobe by the main bedroom",
@@ -599,7 +600,8 @@
         "past": "The arrival day is in the past.",
         "tooFar": "The planning isn’t open that far ahead yet. Choose a date within two years.",
         "tooLong": "A request can cover up to 28 nights. For longer, send a shorter request with a note.",
-        "tooMany": "Ty LuWa sleeps 6 guests at most.",
+        "tooMany": "Ty LuWa sleeps 4 people, plus at most 2 children on the sofa bed.",
+        "tooManyAdults": "Ty LuWa sleeps at most 4 adults.",
         "adults": "At least one adult.",
         "name": "Please fill in your name.",
         "email": "Please enter a valid e-mail address so Luuk and Wanda can reply.",
@@ -666,7 +668,7 @@
       "items": [
         {
           "q": "How many people can Ty LuWa accommodate?",
-          "a": "Up to 6 people: two bedrooms and a sofa bed for two."
+          "a": "Four people in the two bedrooms, plus at most two children on the sofa bed in the living room."
         },
         {
           "q": "Can I book directly?",
@@ -738,12 +740,12 @@
       "heroTitlePre": "Ein gemütliches Urlaubsplätzchen an der ",
       "heroTitleEm": "bretonischen Küste",
       "heroTitlePost": ".",
-      "heroBody": "Platz zum Draußenleben, ein komplett ausgestattetes Mobilheim für bis zu 6 Personen und die Einrichtungen von Le Conguel direkt nebenan.",
+      "heroBody": "Platz zum Draußenleben, ein komplett ausgestattetes Mobilheim für 4 Personen mit Platz für 2 Kinder extra und die Einrichtungen von Le Conguel direkt nebenan.",
       "heroCtaSecondary": "Ty LuWa entdecken",
       "facts": [
         {
-          "title": "Max. 6 Personen",
-          "sub": "2 Schlafzimmer + Schlafsofa"
+          "title": "4 Personen",
+          "sub": "+ 2 Kinder auf dem Schlafsofa"
         },
         {
           "title": "Große Veranda",
@@ -765,9 +767,9 @@
       },
       "stay": {
         "title": "Alles, was ihr für einen entspannten Urlaub braucht.",
-        "body": "Das Mobilheim ist für bis zu sechs Personen eingerichtet. Das Hauptschlafzimmer hat ein Doppelbett und einen begehbaren Kleiderschrank, das zweite Schlafzimmer zwei Einzelbetten, und das Ecksofa lässt sich zum Doppelschlafplatz umbauen.",
+        "body": "Das Mobilheim ist für vier Personen eingerichtet, mit Platz für zwei Kinder extra. Das Hauptschlafzimmer hat ein Doppelbett und einen begehbaren Kleiderschrank, das zweite Schlafzimmer zwei Einzelbetten, und das Ecksofa lässt sich zum Schlafplatz für zwei Kinder umbauen.",
         "features": [
-          "2 separate Schlafzimmer + Schlafsofa",
+          "2 separate Schlafzimmer + Schlafsofa für 2 Kinder",
           "Bad mit großer Dusche und Waschmaschine",
           "Separates WC",
           "Spülmaschine und komplette Küche"
@@ -793,7 +795,7 @@
     },
     "stay": {
       "eyebrow": "Die Unterkunft",
-      "title": "Ein komplettes Mobilheim für bis zu 6 Personen.",
+      "title": "Ein komplettes Mobilheim für 4 Personen, plus 2 Kinder.",
       "text": "Offener Wohnraum, zwei Schlafzimmer, große Veranda, eigenes Gärtchen und eine Küche, in der man wirklich kochen kann.",
       "sleepTitle": "Wo ihr schlaft",
       "amenitiesTitle": "Ausstattung",
@@ -808,7 +810,7 @@
         },
         {
           "title": "Wohnzimmer",
-          "detail": "Schlafsofa für 2 Personen"
+          "detail": "Schlafsofa für 2 Kinder"
         }
       ],
       "amenities": [
@@ -843,7 +845,7 @@
           "alt": "Wohnzimmer und Küche in einem Blick",
           "category": "Wohnen",
           "title": "Wohnen und Kochen in einem Raum",
-          "caption": "Keine getrennten Kammern: Wer kocht, redet einfach mit. So fühlen sich sechs Personen immer noch wie Gesellschaft an."
+          "caption": "Keine getrennten Kammern: Wer kocht, redet einfach mit. So bleibt es auch bei vollem Haus gesellig."
         },
         "kitchen": {
           "alt": "Komplette Küche mit Backofen, Mikrowelle, Kühlschrank und Spülmaschine",
@@ -861,13 +863,13 @@
           "alt": "Zweites Schlafzimmer mit zwei Einzelbetten",
           "category": "Schlafen",
           "title": "Das zweite Schlafzimmer",
-          "caption": "Zwei Einzelbetten, ideal für Kinder oder Freunde. Zusammen mit dem Schlafsofa im Wohnzimmer schlafen hier sechs."
+          "caption": "Zwei Einzelbetten, ideal für Kinder oder Freunde. Mit dem Schlafsofa im Wohnzimmer schlafen hier noch zwei Kinder mit."
         },
         "bathroom": {
           "alt": "Badezimmer mit großer Dusche",
           "category": "Bad",
           "title": "Das Badezimmer",
-          "caption": "Eine große Dusche für den Sand des Tages und eine Waschmaschine für die Handtücher. Die Toilette ist separat, was zu sechst zählt."
+          "caption": "Eine große Dusche für den Sand des Tages und eine Waschmaschine für die Handtücher. Die Toilette ist separat, was bei vollem Haus zählt."
         },
         "closet": {
           "alt": "Begehbarer Kleiderschrank am Hauptschlafzimmer",
@@ -942,7 +944,8 @@
         "past": "Der Anreisetag liegt in der Vergangenheit.",
         "tooFar": "So weit im Voraus ist die Planung noch nicht offen. Wählt ein Datum innerhalb von zwei Jahren.",
         "tooLong": "Eine Anfrage kann bis zu 28 Nächte umfassen. Für länger schickt bitte eine kürzere Anfrage mit einer Anmerkung.",
-        "tooMany": "Ty LuWa hat Platz für höchstens 6 Gäste.",
+        "tooMany": "Ty LuWa hat Platz für 4 Personen, plus höchstens 2 Kinder auf dem Schlafsofa.",
+        "tooManyAdults": "Ty LuWa hat Platz für höchstens 4 Erwachsene.",
         "adults": "Mindestens ein Erwachsener.",
         "name": "Bitte gebt euren Namen an.",
         "email": "Bitte gebt eine gültige E-Mail-Adresse an, damit Luuk und Wanda antworten können.",
@@ -1009,7 +1012,7 @@
       "items": [
         {
           "q": "Für wie viele Personen ist Ty LuWa geeignet?",
-          "a": "Für maximal 6 Personen: zwei Schlafzimmer und ein Schlafsofa für zwei."
+          "a": "Für 4 Personen in den beiden Schlafzimmern, plus höchstens 2 Kinder auf dem Schlafsofa im Wohnzimmer."
         },
         {
           "q": "Kann ich direkt buchen?",
@@ -1081,12 +1084,12 @@
       "heroTitlePre": "Un coin de vacances confortable sur la ",
       "heroTitleEm": "côte bretonne",
       "heroTitlePost": ".",
-      "heroBody": "De l’espace pour vivre dehors, un mobil-home tout équipé pour 6 personnes maximum et les services du Conguel à portée de main.",
+      "heroBody": "De l’espace pour vivre dehors, un mobil-home tout équipé pour 4 personnes avec de la place pour 2 enfants en plus, et les services du Conguel à portée de main.",
       "heroCtaSecondary": "Découvrir Ty LuWa",
       "facts": [
         {
-          "title": "6 personnes max.",
-          "sub": "2 chambres + canapé-lit"
+          "title": "4 personnes",
+          "sub": "+ 2 enfants sur le canapé-lit"
         },
         {
           "title": "Grande véranda",
@@ -1108,9 +1111,9 @@
       },
       "stay": {
         "title": "Tout ce qu’il faut pour un séjour détendu.",
-        "body": "Le mobil-home est aménagé pour six personnes maximum. La chambre principale dispose d’un lit double et d’un dressing, la seconde chambre de deux lits simples, et le canapé d’angle se transforme en couchage double.",
+        "body": "Le mobil-home est aménagé pour quatre personnes, avec de la place pour deux enfants en plus. La chambre principale dispose d’un lit double et d’un dressing, la seconde chambre de deux lits simples, et le canapé d’angle se transforme en couchage pour deux enfants.",
         "features": [
-          "2 chambres séparées + canapé-lit",
+          "2 chambres séparées + canapé-lit pour 2 enfants",
           "Salle de bain avec grande douche et lave-linge",
           "WC séparés",
           "Lave-vaisselle et cuisine complète"
@@ -1136,7 +1139,7 @@
     },
     "stay": {
       "eyebrow": "Le logement",
-      "title": "Un mobil-home complet pour 6 personnes maximum.",
+      "title": "Un mobil-home complet pour 4 personnes, plus 2 enfants.",
       "text": "Espace de vie ouvert, deux chambres, grande véranda, jardin privé et une cuisine où l’on peut vraiment cuisiner.",
       "sleepTitle": "Où vous dormez",
       "amenitiesTitle": "Équipements",
@@ -1151,7 +1154,7 @@
         },
         {
           "title": "Salon",
-          "detail": "canapé-lit pour 2 personnes"
+          "detail": "canapé-lit pour 2 enfants"
         }
       ],
       "amenities": [
@@ -1186,7 +1189,7 @@
           "alt": "Salon et cuisine en un seul coup d’œil",
           "category": "Séjour",
           "title": "Vivre et cuisiner dans un même espace",
-          "caption": "Pas de pièces cloisonnées : celui qui cuisine reste dans la conversation. C’est ainsi qu’à six, on se sent encore ensemble."
+          "caption": "Pas de pièces cloisonnées : celui qui cuisine reste dans la conversation. C’est ainsi qu’à pleine maison, on se sent encore ensemble."
         },
         "kitchen": {
           "alt": "Cuisine complète avec four, micro-ondes, réfrigérateur et lave-vaisselle",
@@ -1204,13 +1207,13 @@
           "alt": "Seconde chambre avec deux lits simples",
           "category": "Chambres",
           "title": "La seconde chambre",
-          "caption": "Deux lits simples, parfaits pour les enfants ou des amis. Avec le canapé-lit du salon, la maison accueille six personnes."
+          "caption": "Deux lits simples, parfaits pour les enfants ou des amis. Avec le canapé-lit du salon, deux enfants de plus dorment ici."
         },
         "bathroom": {
           "alt": "Salle de bain avec grande douche",
           "category": "Salle de bain",
           "title": "La salle de bain",
-          "caption": "Une grande douche pour le sable de la journée, et un lave-linge pour les serviettes. Les toilettes sont séparées, ce qui compte à six."
+          "caption": "Une grande douche pour le sable de la journée, et un lave-linge pour les serviettes. Les toilettes sont séparées, ce qui compte à pleine maison."
         },
         "closet": {
           "alt": "Dressing attenant à la chambre principale",
@@ -1285,7 +1288,8 @@
         "past": "Le jour d’arrivée est déjà passé.",
         "tooFar": "Le planning n’est pas encore ouvert aussi loin. Choisissez une date dans les deux ans.",
         "tooLong": "Une demande peut couvrir jusqu’à 28 nuits. Pour plus longtemps, faites une demande plus courte avec une remarque.",
-        "tooMany": "Ty LuWa accueille 6 personnes au maximum.",
+        "tooMany": "Ty LuWa accueille 4 personnes, plus 2 enfants au maximum sur le canapé-lit.",
+        "tooManyAdults": "Ty LuWa accueille 4 adultes au maximum.",
         "adults": "Au moins un adulte.",
         "name": "Indiquez votre nom.",
         "email": "Indiquez une adresse e-mail valide, pour que Luuk et Wanda puissent répondre.",
@@ -1352,7 +1356,7 @@
       "items": [
         {
           "q": "Pour combien de personnes Ty LuWa convient-il ?",
-          "a": "Pour 6 personnes maximum : deux chambres et un canapé-lit pour deux."
+          "a": "Quatre personnes dans les deux chambres, plus deux enfants au maximum sur le canapé-lit du salon."
         },
         {
           "q": "Puis-je réserver directement ?",

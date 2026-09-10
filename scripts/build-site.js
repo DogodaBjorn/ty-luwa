@@ -628,7 +628,7 @@ function pageAvailability(ctx) {
           </div>
           <p class="form-nights" data-form-nights aria-live="polite"></p>
           <div class="form-row">
-            ${field("adults", a.adults, "number", "", { min: 1, max: 6, value: 2 })}
+            ${field("adults", a.adults, "number", "", { min: 1, max: 4, value: 2 })}
             ${field("children", a.children, "number", "", { min: 0, max: 5, value: 0 })}
           </div>
           ${field("name", a.name, "text", a.phName)}

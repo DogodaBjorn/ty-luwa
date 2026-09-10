@@ -105,7 +105,19 @@ test("aanvraag versturen: opgeslagen, twee mails, daarna dubbel genegeerd", { sk
 test("fouten komen terug in de taal van de pagina", { skip: !built && "site niet gebouwd" }, async () => {
   let res = await post({ ...good, lang: "de", adults: "5", children: "3", email: "x@example.de" });
   assert.equal(res.status, 400);
-  assert.deepEqual(await res.json(), { ok: false, code: "tooMany", message: "Ty LuWa hat Platz für höchstens 6 Gäste." });
+  assert.deepEqual(await res.json(), {
+    ok: false,
+    code: "tooManyAdults",
+    message: "Ty LuWa hat Platz für höchstens 4 Erwachsene.",
+  });
+
+  res = await post({ ...good, lang: "de", adults: "4", children: "3", email: "y@example.de" });
+  assert.equal(res.status, 400);
+  assert.deepEqual(await res.json(), {
+    ok: false,
+    code: "tooMany",
+    message: "Ty LuWa hat Platz für 4 Personen, plus höchstens 2 Kinder auf dem Schlafsofa.",
+  });
 
   res = await post({ ...good, lang: "nl", arrival: day(40), departure: day(41), email: "p@example.nl", name: "Piet" });
   // overlapt met de aanvraag hierboven? Nee: die is nog geen periode. Wel als we er een periode van maken.

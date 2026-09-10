@@ -30,9 +30,11 @@ Service; deploy op push naar `main` via `.github/workflows/main_ty-luwa.yml`.
 
 ## Harde merkwetten (nooit van afwijken)
 
-- **Feitenblad verblijf — niets bij verzinnen:** maximaal 6 gasten; hoofdslaapkamer
-  1 tweepersoonsbed + inloopkast; tweede slaapkamer 2 eenpersoonsbedden; slaapbank
-  voor 2 in de woonkamer; keuken met gasfornuis, gasoven, magnetron,
+- **Feitenblad verblijf — niets bij verzinnen:** 4 personen in de twee slaapkamers,
+  plus hooguit 2 kinderen op de slaapbank (dus nooit meer dan 4 volwassenen en nooit
+  meer dan 6 gasten in totaal); hoofdslaapkamer 1 tweepersoonsbed + inloopkast;
+  tweede slaapkamer 2 eenpersoonsbedden; slaapbank voor 2 kinderen in de
+  woonkamer; keuken met gasfornuis, gasoven, magnetron,
   koelkast/vriesvak, vaatwasser; badkamer met douche en wasmachine; apart toilet;
   ruime overdekte veranda; privé-tuintje met ligbedden; 1 parkeerplek.
 - **Beschikbaar op aanvraag.** Succes is een aanvraag plus persoonlijk contact. Geen

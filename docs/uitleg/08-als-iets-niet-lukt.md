@@ -26,6 +26,14 @@ Dan wordt er niets verstuurd en blijft je tekst staan. Probeer het na een paar m
 
 Meteen daarna staat bovenaan **Terugzetten**; dat brengt alles terug. Ben je dat scherm al kwijt, bel dan Björn: er is elke dag een reservekopie.
 
+## Ik zie de app niet op mijn beginscherm
+
+Ga naar **ty-luwa.nl/beheer**, tik op **Hulp** en dan op **Het beheer op je beginscherm**. Daar staat een knop, en anders de stappen voor jouw telefoon. Zie je de knop niet, dan kan je browser het niet; volg dan de stappen eronder.
+
+## De app vraagt weer om inloggen
+
+Op een iPhone is de app voor Safari een apart programma, dus die weet niet dat je in Safari al ingelogd was. Eén keer opnieuw inloggen dus. **Typ daarbij de zes cijfers uit de mail over**; de knop in de mail opent je gewone browser en niet de app. Daarna blijf je ook in de app een jaar ingelogd.
+
 ## Iets klopt niet in de kalender
 
 De kalender op de site laat precies zien wat er in het beheer staat. Zie je iets anders dan je verwacht, ververs dan de pagina. Blijft het vreemd, bel Björn.

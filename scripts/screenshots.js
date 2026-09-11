@@ -83,6 +83,22 @@ try {
   const wide = await context.newPage();
   await wide.setViewportSize(LAPTOP);
   let lastUrl = null;
+  // Schermen die langer zijn dan het venster in één keer, zonder scrollen: dan
+  // dekt de meelopende kopbalk de bovenkant niet af en staat de vaste knop
+  // onderaan gewoon onder de inhoud. Het venster wordt zo hoog als de pagina.
+  const fits = async (target) => {
+    const h = await target.evaluate(() => document.documentElement.scrollHeight);
+    const size = target.viewportSize();
+    await target.setViewportSize({ width: size.width, height: Math.min(Math.max(h, size.height), 4000) });
+  };
+  const shotTall = async (name, selector) => {
+    await fits(page);
+    await wide.goto(lastUrl, { waitUntil: "domcontentloaded" });
+    await fits(wide);
+    await shot(name, selector);
+    await page.setViewportSize(PHONE);
+    await wide.setViewportSize(LAPTOP);
+  };
   const shot = async (name, selector) => {
     const target = selector ? page.locator(selector).first() : page;
     await target.screenshot({ path: path.join(OUT, `${name}.png`) });
@@ -128,7 +144,7 @@ try {
   await page.click("button[type=submit]");
   await page.waitForSelector(".month");
   await open(`${base}/beheer?m=${ym}`);
-  await shot("beheer-kalender", "main");
+  await shotTall("beheer-kalender", "body");
 
   await open(`${base}/beheer/periode/nieuw`);
   await page.click("label.tile.kind-rented");
@@ -149,6 +165,11 @@ try {
 
   await open(`${base}/beheer/periode/1/verwijderen`);
   await shot("verwijderen", "main");
+
+  // Zonder installatieknop: headless Chromium vuurt beforeinstallprompt niet,
+  // dus de opname toont de stappen — precies wat een iPhone-gebruiker ziet.
+  await open(`${base}/beheer/app`);
+  await shotTall("app", "body");
 
   await open(`${base}/beheer/aanvragen`);
   await shot("aanvragen", "main");

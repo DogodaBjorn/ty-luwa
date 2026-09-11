@@ -22,6 +22,10 @@ Service; deploy op push naar `main` via `.github/workflows/main_ty-luwa.yml`.
   per land in `lib/holidays.js` (open bronnen, dagelijks opgehaald). Uitleg voor de
   beheerders: `docs/uitleg/` op `/beheer/uitleg`, plaatjes via `scripts/screenshots.js`
   (telefoon én laptop).
+- Het beheer als app op het beginscherm: `/beheer/app`, manifest en service worker op
+  eigen routes in `routes/beheer.js` (vóór de inlogmuur, scope `/beheer` zonder slash).
+  De worker in `assets/beheer/app-sw.js` onderschept met opzet niets en mag nooit gaan
+  cachen; daar staat ook hoe je hem intrekt. Iconen komen uit `scripts/brand-assets.js`.
 - Mails: blokken als gegevens in `lib/mail-doc.js`, opmaak in `mail-html.js`, tekst in
   `mail-text.js`; inhoud in `lib/mail-texts.js`. Nooit alleen de HTML aanpassen — de
   tekstversie hoort dezelfde feiten te dragen, en de test controleert dat. De

@@ -117,6 +117,13 @@ staat bij hen in de inbox. Details en de Azure-inrichting: `docs/AZURE-SETUP.md`
 - **Feestdagen en schoolvakanties** per taalsite (`lib/holidays.js`): NL Nederlandse, FR
   Franse, DE Duitse, .com Engelse. Open bronnen zonder sleutel (OpenHolidays, gov.uk),
   dagelijks opgehaald en in de database bewaard. Controleren: `node scripts/holidays-check.js`.
+- **Het beheer als app** op `/beheer/app`: manifest en een service worker op eigen routes
+  in `routes/beheer.js`, vóór de inlogmuur (een manifest wordt zonder cookies opgehaald).
+  De scope is `/beheer` **zonder** afsluitende slash, anders valt de kalender erbuiten. De
+  worker (`assets/beheer/app-sw.js`) bestaat alleen omdat Chrome er een eist voor de
+  installatieknop en onderschept niets — beheerdata mag nooit uit een cache komen; hoe je
+  hem weer intrekt staat in dat bestand. De knop verschijnt alleen bij `beforeinstallprompt`;
+  de stappen voor Android, iPhone en laptop staan er altijd. Iconen: `scripts/brand-assets.js`.
 - **Uitleg voor Luuk en Wanda** op `/beheer/uitleg`: acht hoofdstukken met een
   inhoudsopgave en schermafbeeldingen in twee maten (telefoon en laptop, met een
   schakelaar), plus `/beheer/uitleg/alles` om af te drukken. Tekst in `docs/uitleg/`.

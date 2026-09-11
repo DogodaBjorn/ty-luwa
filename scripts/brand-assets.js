@@ -70,3 +70,53 @@ const q = 88;
 const jpg = jpeg.encode({ data: card, width: CW, height: CH }, q).data;
 fs.writeFileSync(BRAND + "ty-luwa-share.jpg", jpg);
 console.log("share", CW + "x" + CH, "art", W + "x" + H, jpg.length, "bytes, q", q);
+
+// 3. App-iconen voor het beheer op het beginscherm (/beheer/app).
+// Bron is het huisje met de golven uit het merkteken, zonder woordmerk en
+// zonder tagline: op 48 pixels leest alleen het huisje nog. De gemeten
+// begrenzing van dat deel (alpha > 32, boven de "T" van Ty die op rij 427
+// begint) is x 11-659, y 5-418.
+const ICON_BOX = { x0: 11, y0: 5, x1: 659, y1: 418 };
+
+// Source-over: het merkteken is het enige bronbestand mét alpha, dus hier kan
+// niet zoals bij de deelkaart met een kale copy() gestempeld worden.
+function over(dst, dstW, src, ox, oy) {
+  for (let y = 0; y < src.height; y++)
+    for (let x = 0; x < src.width; x++) {
+      const s = (y * src.width + x) * 4;
+      const a = src.data[s + 3] / 255;
+      if (!a) continue;
+      const d = ((oy + y) * dstW + ox + x) * 4;
+      for (let k = 0; k < 3; k++) dst[d + k] = Math.round(src.data[s + k] * a + dst[d + k] * (1 - a));
+    }
+}
+
+// Ondoorzichtig crème: Apple maakt transparantie zwart, en launchers zetten er
+// anders zelf een wit vlak onder.
+function icon(file, size, fraction) {
+  const art = crop(mark, ICON_BOX.x0, ICON_BOX.y0, ICON_BOX.x1 - ICON_BOX.x0 + 1, ICON_BOX.y1 - ICON_BOX.y0 + 1);
+  const w = Math.round(size * fraction);
+  const h = Math.round((w * art.height) / art.width);
+  const small = resize(art, w, h);
+  const out = new PNG({ width: size, height: size });
+  for (let i = 0; i < size * size; i++) {
+    out.data[i * 4] = bg[0];
+    out.data[i * 4 + 1] = bg[1];
+    out.data[i * 4 + 2] = bg[2];
+    out.data[i * 4 + 3] = 255;
+  }
+  over(out.data, size, small, Math.round((size - w) / 2), Math.round((size - h) / 2));
+  fs.writeFileSync(BRAND + file, PNG.sync.write(out));
+  console.log(file, size + "x" + size, "beeld " + w + "x" + h, fs.statSync(BRAND + file).size, "bytes");
+}
+
+// Let op bij een herontwerp: public/assets wordt met max-age=31536000,immutable
+// geserveerd, dus een nieuw ontwerp hoort een nieuwe bestandsnaam te krijgen.
+// En iOS kopieert het icoon bij het installeren: wie het al op zijn beginscherm
+// heeft, ziet een latere wijziging niet.
+icon("ty-luwa-icoon-192.png", 192, 0.8);
+icon("ty-luwa-icoon-512.png", 512, 0.8);
+// maskable: de veilige zone is een cirkel van 80%, dus de diagonaal van het
+// beeld moet daarbinnen passen. Bij deze beeldverhouding (1,57) is dat 66%.
+icon("ty-luwa-icoon-maskable-512.png", 512, 0.66);
+icon("ty-luwa-icoon-apple-180.png", 180, 0.76);

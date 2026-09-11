@@ -197,3 +197,19 @@ html[data-shots="lap"] .shot .shot-lap{display:block}
   .prose .tip{border:1px solid #ccc}
   a[href^="/"]::after{content:""}
 }
+
+/* Het beheer als app op het beginscherm (/beheer/app).
+   .btn[hidden] moet expliciet: display:flex wint anders van het
+   hidden-attribuut, en dan staat de installatieknop er ook in een browser
+   die niet kan installeren. */
+.btn[hidden]{display:none}
+.notice.invite{grid-template-columns:1fr;gap:10px}
+.notice.invite .period-main{display:grid;gap:2px}
+.invite-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.invite-actions form{margin:0}
+.btn.small{width:auto;min-height:48px;padding:8px 18px;margin:0}
+.install-ok{background:var(--ok-bg);border:1px solid #c8d8bb;border-radius:14px;padding:14px 16px;margin:0 0 10px;color:var(--ok)}
+.steps{margin:6px 0 18px;padding:0;list-style:none;counter-reset:stap;display:grid;gap:10px}
+.steps li{counter-increment:stap;display:grid;grid-template-columns:34px 1fr;align-items:start;gap:12px;min-height:34px}
+.steps li::before{content:counter(stap);display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--sand-tint);border:1px solid #e6dcc9;color:var(--navy);font-weight:700;font-size:1rem}
+.glyph{display:inline-flex;vertical-align:-5px;padding:2px 4px;border:1.5px solid var(--line);border-radius:8px;color:var(--sea-ink)}

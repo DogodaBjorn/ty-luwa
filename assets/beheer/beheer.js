@@ -86,3 +86,68 @@
   var print = document.querySelector("[data-print]");
   if (print) print.addEventListener("click", function () { window.print(); });
 })();
+
+// --- het beheer als app op het beginscherm ---------------------------------
+// De stappen op /beheer/app staan er altijd, ook zonder dit bestand. Dit
+// voegt alleen de echte installatieknop toe, en alleen in een browser die
+// zelf zegt dat het kan (Chrome en Edge). Geen gokken op de user-agent.
+(function () {
+  "use strict";
+
+  var inApp = false;
+  try {
+    inApp = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || window.navigator.standalone === true;
+  } catch (e) {}
+
+  // Wie ín de app zit heeft geen uitnodiging voor de app nodig.
+  if (inApp) {
+    var invite = document.querySelector("[data-app-invite]");
+    if (invite && invite.parentNode) invite.parentNode.removeChild(invite);
+  }
+
+  // De service worker bestaat alleen omdat Chrome hem eist voor de
+  // installatieknop; hij onderschept niets. Registreren op elke beheerpagina,
+  // want beforeinstallprompt vuurt bij het laden — wachten tot /beheer/app
+  // betekent dat de knop daar de eerste keer nog niet verschijnt.
+  if ("serviceWorker" in navigator && window.isSecureContext) {
+    navigator.serviceWorker.register("/beheer/sw.js", { scope: "/beheer" }).catch(function () {});
+  }
+
+  var button = document.querySelector("[data-app-install]");
+  var hint = document.querySelector("[data-app-install-hint]");
+  var done = document.querySelector("[data-app-done]");
+  var prompt = null;
+
+  var show = function (el, visible) {
+    if (el) el.hidden = !visible;
+  };
+
+  window.addEventListener("beforeinstallprompt", function (e) {
+    e.preventDefault();
+    prompt = e;
+    show(button, true);
+    show(hint, true);
+  });
+
+  if (button) {
+    button.addEventListener("click", function () {
+      if (!prompt) return;
+      button.disabled = true;
+      prompt.prompt();
+      prompt.userChoice.then(function (choice) {
+        prompt = null;
+        if (choice && choice.outcome === "accepted") return; // appinstalled doet de rest
+        button.disabled = false;
+        show(button, false);
+        show(hint, false);
+      });
+    });
+  }
+
+  window.addEventListener("appinstalled", function () {
+    prompt = null;
+    show(button, false);
+    show(hint, false);
+    show(done, true);
+  });
+})();

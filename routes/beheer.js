@@ -22,11 +22,40 @@ const CAL_LABELS = {
   holiday: "feestdag", school: "schoolvakantie",
 };
 
+// Het beheer als app op het beginscherm (/beheer/app).
+// scope zonder afsluitende slash: "binnen de scope" is een kale prefixtest, en
+// met "/beheer/" zou juist de kalender op /beheer erbuiten vallen — dan is de
+// site niet installeerbaar en klopt geen enkele interne link meer.
+const APP_COOKIE = "tl_app_gezien";
+const MANIFEST = {
+  name: "Ty LuWa beheer",
+  short_name: "Ty LuWa",
+  description: "De planning en de aanvragen van Ty LuWa.",
+  id: "/beheer",
+  start_url: "/beheer?vanuit=app",
+  scope: "/beheer",
+  display: "standalone",
+  background_color: "#FAF7F1",
+  theme_color: "#123F5D",
+  lang: "nl",
+  dir: "ltr",
+  icons: [
+    { src: "/assets/brand/ty-luwa-icoon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
+    { src: "/assets/brand/ty-luwa-icoon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+    { src: "/assets/brand/ty-luwa-icoon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+  ],
+  // Bewust geen "screenshots": Chrome toont die alleen bij een beeldverhouding
+  // tussen 0,5 en 2, en de opnames uit scripts/screenshots.js zijn hele
+  // schermen (390 breed, ruim 1500 hoog) en vallen daar buiten. Een afgekeurd
+  // plaatje meesturen levert niets op; het venster werkt ook zonder.
+};
+
 function createBeheerRouter({ store, mailer, translator, config, isLocalHost, knownHost, log = console, now = () => new Date().toISOString() }) {
   const tr = translator || { enabled: false, translate: async () => null, tryTranslate: async () => null };
   const router = express.Router();
   const helpMd = fs.readFileSync(path.join(__dirname, "..", "docs", "HANDLEIDING-BEHEER.md"), "utf8");
   const helpHtml = views.markdownToHtml(helpMd);
+  const swJs = fs.readFileSync(path.join(__dirname, "..", "assets", "beheer", "app-sw.js"), "utf8");
 
   // De uitleg: één Markdown-bestand per hoofdstuk in docs/uitleg/, met de
   // volgorde in de bestandsnaam. De titel is de eerste kop, de samenvatting
@@ -91,7 +120,7 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
   // --- inloggen ------------------------------------------------------------
   router.get("/inloggen", (req, res) => {
     if (req.admin) return res.redirect("/beheer");
-    res.send(views.loginView());
+    res.send(views.loginView({ fromApp: req.query.vanuit === "app" }));
   });
 
   router.post("/inloggen", async (req, res) => {
@@ -146,6 +175,34 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
     res.redirect("/beheer/inloggen");
   });
 
+  // --- de app op het beginscherm ------------------------------------------
+  // Vóór de inlogmuur, want een manifest wordt zónder cookies opgehaald: achter
+  // requireAdmin krijgt de browser een omleiding naar de inlogpagina en dus
+  // geen manifest, ook als je ingelogd bent. Een worker kan met zo'n omleiding
+  // al helemaal niets. Beide bevatten alleen namen, kleuren en lege code.
+  router.get("/manifest.webmanifest", (req, res) => {
+    res.type("application/manifest+json");
+    res.setHeader("Cache-Control", "public, max-age=600");
+    res.send(JSON.stringify(MANIFEST, null, 2));
+  });
+
+  router.get("/sw.js", (req, res) => {
+    res.type("application/javascript");
+    // Een worker op /beheer/sw.js mag standaard alleen /beheer/ besturen; met
+    // deze header ook /beheer zelf, waar de app op start.
+    res.setHeader("Service-Worker-Allowed", "/beheer");
+    res.setHeader("Cache-Control", "no-cache, max-age=0, must-revalidate");
+    res.send(swJs);
+  });
+
+  // Wie de app opent zonder sessie moet op de inlogpagina horen waaróm.
+  router.use((req, res, next) => {
+    if (!req.admin && req.method === "GET" && req.query.vanuit === "app" && !req.path.startsWith("/inloggen")) {
+      return res.redirect("/beheer/inloggen?vanuit=app");
+    }
+    next();
+  });
+
   // --- vanaf hier alleen ingelogd ----------------------------------------
   router.use(auth.requireAdmin("/beheer/inloggen"));
 
@@ -157,6 +214,10 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
   }
 
   router.get("/", (req, res) => {
+    // Wie hier vanuit de app binnenkomt heeft hem al: geen uitnodiging meer.
+    if (req.query.vanuit === "app" && !req.cookies[APP_COOKIE]) {
+      auth.setCookie(res, APP_COOKIE, "1", { maxAgeSec: 365 * 86400, secure: secure(req) });
+    }
     const ym = monthParam(req);
     const from = `${ym}-01`;
     const to = `${dates.addMonths(ym, 1)}-01`;
@@ -185,8 +246,23 @@ function createBeheerRouter({ store, mailer, translator, config, isLocalHost, kn
         today: today(),
         flash: flashFrom(req),
         firstLogin: Boolean(req.query.welkom),
+        showAppInvite: !req.cookies[APP_COOKIE] && req.query.vanuit !== "app",
       })
     );
+  });
+
+  // Het beheer als app op het beginscherm. Eigen scherm, want een uitleg met
+  // stappen past niet als kaartje tussen de hulp.
+  router.get("/app", (req, res) => {
+    res.send(views.appView({ ...ctx(req), back: req.query.van === "kalender" ? "/beheer" : "/beheer/hulp" }));
+  });
+
+  // "Niet nu": de uitnodiging op de kalender een jaar wegzetten. Een cookie en
+  // geen databaseveld, want "heb ik de app op dít toestel" hoort bij het
+  // toestel: op de laptop moet de uitnodiging nog komen.
+  router.post("/app/niet-nu", (req, res) => {
+    auth.setCookie(res, APP_COOKIE, "1", { maxAgeSec: 365 * 86400, secure: secure(req) });
+    res.redirect("/beheer");
   });
 
   // --- periodes ------------------------------------------------------------

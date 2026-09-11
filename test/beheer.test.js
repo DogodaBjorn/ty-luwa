@@ -50,7 +50,7 @@ function request(method, urlPath, { headers = {}, body, host = "ty-luwa.nl" } = 
           if (attrs.some((a) => a.trim() === "Max-Age=0")) delete jar[k];
           else jar[k] = v;
         }
-        resolve({ status: res.statusCode, location: res.headers.location, text });
+        resolve({ status: res.statusCode, location: res.headers.location, headers: res.headers, text });
       });
     });
     r.on("error", reject);
@@ -69,6 +69,49 @@ test("zonder sessie: naar inloggen; andere hosts weggestuurd", async () => {
   assert.equal((await request("GET", "/beheer", { host: "ty-luwa.fr" })).location, "https://ty-luwa.nl/beheer");
   assert.equal((await request("GET", "/beheer", { host: "evil.example" })).status, 404);
   assert.equal((await request("POST", "/beheer/periode/nieuw", { body: { kind: "own" } })).status, 403);
+});
+
+test("de app op het beginscherm: manifest en worker zijn er ook zonder sessie", async () => {
+  // Een manifest wordt zÃ³nder cookies opgehaald: achter de inlogmuur zou de
+  // browser een omleiding krijgen en dus nooit een manifest zien.
+  const m = await request("GET", "/beheer/manifest.webmanifest");
+  assert.equal(m.status, 200);
+  assert.match(m.headers["content-type"], /manifest/);
+  const manifest = JSON.parse(m.text);
+  // Zonder afsluitende slash, anders valt /beheer zelf buiten de scope.
+  assert.equal(manifest.scope, "/beheer");
+  assert.equal(manifest.display, "standalone");
+  assert.ok(manifest.start_url.startsWith("/beheer"));
+  const sizes = manifest.icons.map((i) => `${i.sizes} ${i.purpose}`);
+  assert.deepEqual(sizes, ["192x192 any", "512x512 any", "512x512 maskable"]);
+
+  const sw = await request("GET", "/beheer/sw.js");
+  assert.equal(sw.status, 200);
+  assert.equal(sw.headers["service-worker-allowed"], "/beheer");
+  assert.doesNotMatch(sw.headers["cache-control"], /no-store/);
+  assert.match(sw.text, /addEventListener\("fetch"/);
+  // De worker mag nooit iets onderscheppen of bewaren: beheerdata mag niet
+  // verouderd getoond worden. Deze twee asserties zijn de hele garantie.
+  assert.doesNotMatch(sw.text.replace(/\/\/.*$/gm, ""), /respondWith/);
+  assert.doesNotMatch(sw.text.replace(/\/\/.*$/gm, ""), /caches/);
+
+  // De host-guard geldt ook voor de nieuwe routes.
+  assert.equal((await request("GET", "/beheer/manifest.webmanifest", { host: "ty-luwa.fr" })).status, 302);
+  assert.equal((await request("GET", "/beheer/sw.js", { host: "evil.example" })).status, 404);
+
+  // De iconen staan op de publieke assets, dus buiten no-store.
+  const icon = await request("GET", "/assets/brand/ty-luwa-icoon-192.png");
+  assert.equal(icon.status, 200);
+  const png = fs.readFileSync(path.join(__dirname, "..", "assets", "brand", "ty-luwa-icoon-192.png"));
+  assert.equal(png.readUInt32BE(16), 192, "breedte uit de PNG-header");
+  assert.equal(png.readUInt32BE(20), 192, "hoogte uit de PNG-header");
+
+  // Uitgelogd de app openen: de inlogpagina zegt waarom dat gebeurt.
+  assert.equal((await request("GET", "/beheer/app")).location, "/beheer/inloggen");
+  assert.equal((await request("GET", "/beheer?vanuit=app")).location, "/beheer/inloggen?vanuit=app");
+  const login = await request("GET", "/beheer/inloggen?vanuit=app");
+  assert.match(login.text, /Je opent de app voor het eerst/);
+  assert.match(login.text, /zes cijfers/);
 });
 
 test("inloggen met code, daarna met link (die is dan al verbruikt)", async () => {
@@ -305,6 +348,32 @@ test("uitleg: acht hoofdstukken, inhoudsopgave, twee sets plaatjes en alles op Ã
 
   // en vanaf Hulp is de uitleg te vinden
   assert.match((await request("GET", "/beheer/hulp")).text, /href="\/beheer\/uitleg"/);
+});
+
+test("de app: uitnodiging op de kalender, eigen scherm, en 'niet nu'", async () => {
+  let res = await request("GET", "/beheer");
+  assert.match(res.text, /data-app-invite/);
+  assert.match(res.text, /Zet het beheer op je beginscherm/);
+
+  res = await request("GET", "/beheer/hulp");
+  assert.match(res.text, /href="\/beheer\/app"/);
+
+  res = await request("GET", "/beheer/app?van=kalender");
+  assert.equal(res.status, 200);
+  assert.match(res.text, /data-app-install/);
+  assert.match(res.text, /Zet op beginscherm/); // de iPhone-stap
+  assert.match(res.text, /App installeren/); // de Android-stap
+  assert.match(res.text, /zes cijfers/); // de losse koekjespot op de iPhone
+  assert.match(res.text, /href="\/beheer"/); // Terug naar de kalender
+
+  // Wegklikken houdt een jaar stand, op dit toestel.
+  res = await request("POST", "/beheer/app/niet-nu");
+  assert.equal(res.location, "/beheer");
+  assert.equal(jar.tl_app_gezien, "1");
+  res = await request("GET", "/beheer");
+  assert.doesNotMatch(res.text, /data-app-invite/);
+  // Maar de vaste plek onder Hulp blijft.
+  assert.match((await request("GET", "/beheer/hulp")).text, /href="\/beheer\/app"/);
 });
 
 test("hulp, back-up en uitloggen", async () => {

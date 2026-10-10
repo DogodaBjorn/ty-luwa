@@ -1,5 +1,5 @@
 <!-- Grounding references for adapter 'craft-grounding' in repo 'ty-luwa (E:\Websites\ty-luwa, remote DogodaBjorn/ty-luwa - live site, drie domeinen, vier talen; Luuk & Wanda's mobil-home op Camping Le Conguel, Quiberon; aanvraag-model, geen boekingsmachine)'.
-     Producer: BookCompiler (E:\bookcompiler) · bundle: bundle_v1_full-corpus · canonical schema 1.0.0.
+     Producer: BookCompiler (E:\bookcompiler) · bundle: bundle_v2_data-visualization · canonical schema 1.0.0.
      Regenerate after bundle updates: .venv\Scripts\python.exe tools\ground_repo.py <this adapter.yaml>
      Contract: docs/INTEGRATION_CONTRACT.md - paraphrased canonical knowledge with page-level provenance; no source-book content. -->
 
@@ -47,8 +47,8 @@ Full operational detail and provenance for every principle this skill cites. Con
 **Provenance.**
 - `CDE-002` (supports) — *Content Design*, “Introduction”, pp. 32–33
 - `CDE-003` (supports) — *Content Design*, “Preparation”, pp. 50–51
-- `EWR-016` (supports) — *Everybody writes*, “Part I Writing Rules”, pp. 53–76
-- `EWR-019` (specializes) — *Everybody writes*, “Part I Writing Rules”, pp. 80–102
+- `EWR-016` (supports) — *Everybody writes*, “Part I Writing Rules”, pp. 53, 75–76
+- `EWR-019` (specializes) — *Everybody writes*, “Part I Writing Rules”, pp. 80–82, 102
 - `DMMT-046` (reinforces) — *Don't Make Me Think, Revisited*, “LARGER CONCERNS AND OUTSIDE INFLUENCES”, pp. 179–182
 - `OWW-041` (contextualizes) — *On Writing Well*, “Part III: Forms”, pp. 84–89
 - `OWW-010` (**contradicts**) — *On Writing Well*: Zinsser's "write for yourself" - on attitude and taste, please yourself, not an imagined audience. Bounded: Zinsser splits craft (reader's, absolute) from attitude (writer's, free) and aims at personal/editorial writing; the audience-first doctrine governs service and commercial content. Both reject pandering; they disagree on whose interest steers topic and stance.
@@ -83,12 +83,12 @@ Full operational detail and provenance for every principle this skill cites. Con
 **Support.** 3 independent source(s) · confidence: high (Three independent sources.)
 
 **Provenance.**
-- `CDE-010` (supports) — *Content Design*, “Preparation”, pp. 87–92
-- `CDE-008` (specializes) — *Content Design*, “Preparation”, pp. 82–86
-- `CDE-019` (specializes) — *Content Design*, “Preparation”, pp. 126–138
+- `CDE-010` (supports) — *Content Design*, “Preparation”, pp. 87–89, 92
+- `CDE-008` (specializes) — *Content Design*, “Preparation”, pp. 82, 84–86
+- `CDE-019` (specializes) — *Content Design*, “Preparation”, pp. 126–127, 130, 133, 138
 - `CDE-022` (specializes) — *Content Design*, “Preparation”, pp. 142–149
 - `EWR-018` (reinforces) — *Everybody writes*, “Part I Writing Rules”, pp. 78–80
-- `DMMT-032` (reinforces) — *Don't Make Me Think, Revisited*, “MAKING SURE YOU GOT THEM RIGHT”, pp. 114–120
+- `DMMT-032` (reinforces) — *Don't Make Me Think, Revisited*, “MAKING SURE YOU GOT THEM RIGHT”, pp. 114, 116–120
 
 ## [CP-012] The opening must seize immediately and say why it matters
 
@@ -132,16 +132,16 @@ Full operational detail and provenance for every principle this skill cites. Con
 - `OWW-020` (contextualizes) — *On Writing Well*, “Part II: Methods”, p. 37
 - `EWR-024` (supports) — *Everybody writes*, “Part I Writing Rules”, pp. 101–105
 - `EWR-021` (reinforces) — *Everybody writes*, “Part I Writing Rules”, pp. 92–95
-- `DMMT-029` (reinforces) — *Don't Make Me Think, Revisited*, “THINGS YOU NEED TO GET RIGHT”, pp. 99–110
+- `DMMT-029` (reinforces) — *Don't Make Me Think, Revisited*, “THINGS YOU NEED TO GET RIGHT”, pp. 99–103, 109–110
 
 ## [CP-026] Front-load the payload - in headings, sentences and pages
 
 **Statement.** Put the most important words and information first at every level: headings open with their key words and say plainly what the reader gets; sentences open with actor and action; the top of a page confirms the reader is in the right place and carries what most of the audience came for; headlines are 90% clear before they are 10% clever.
 
-**Why.** Scanners decide from openings; front-loading is how content survives the F-pattern, the search results page and the feed. Curiosity-gap headings and back-loaded sentences tax exactly the attention the audience hasn't granted yet.
+**Why.** Scanners decide from openings; front-loading is how content survives the F-pattern, the search results page and the feed. Curiosity-gap headings and back-loaded sentences tax exactly the attention the audience hasn't granted yet. Charts obey the same rule: readers spend most of their time on a chart's text, especially its title, so the title carries the finding and the dataset's name drops to the subtitle.
 
 **Apply when**
-- writing any heading, headline, page opening or scannable unit
+- writing any heading, headline, page opening, chart title or scannable unit
 
 **Do not apply when**
 - deliberately literary openings for committed-reading contexts (see CP-012's tension)
@@ -151,6 +151,7 @@ Full operational detail and provenance for every principle this skill cites. Con
 - the page top: confirm right place + deliver what ~80% came for; the rest findable below
 - open sentences with subject and verb; move framing clauses behind them
 - headline: understandable alone, the reader inside it, specific about the payoff
+- chart titles: the finding as an active-verb headline with the keywords readers scan for and no puns; the dataset name goes in the subtitle (see CP-067)
 
 **Diagnostics**
 - truncate each heading after three words - does the payload survive?
@@ -158,6 +159,7 @@ Full operational detail and provenance for every principle this skill cites. Con
 
 **Transformations**
 - 'Everything you need to know about X' → the actual answer/promise, keyworded first
+- chart titled with the dataset's name → the finding as title, the dataset name in the subtitle
 
 **Anti-patterns**
 - teaser headings; joke-first labels; context paragraphs before the point; buried subjects
@@ -165,13 +167,14 @@ Full operational detail and provenance for every principle this skill cites. Con
 **Evaluation criteria**
 - headings scan as promises kept; first lines carry actors and payloads
 
-**Support.** 2 independent source(s) · confidence: high (Two independent sources, mechanically compatible.)
+**Support.** 3 independent source(s) · confidence: high (Three independent sources, mechanically compatible.)
 
 **Provenance.**
 - `CDE-032` (supports) — *Content Design*, “Design”, pp. 196–198
 - `CDE-033` (supports) — *Content Design*, “Design”, pp. 198–199
 - `EWR-022` (reinforces) — *Everybody writes*, “Part I Writing Rules”, pp. 96–98
 - `EWR-062` (specializes) — *Everybody writes*, “Part VI 20 Things Marketers Write”, pp. 339–344
+- `HCW-050` (reinforces) — *How Charts Work: Understand and Explain Data with Confidence*, “15. The best charts are well written”, pp. 168, 247, 259–263, 281
 
 ## [CP-015] Trust the material - show it, and skip the nudge
 
@@ -208,18 +211,19 @@ Full operational detail and provenance for every principle this skill cites. Con
 **Support.** 2 independent source(s) · confidence: high (Two independent sources with worked demonstrations.)
 
 **Provenance.**
-- `OWW-034` (supports) — *On Writing Well*, “Part II: Methods”, pp. 51–131
+- `OWW-034` (supports) — *On Writing Well*, “Part II: Methods”, pp. 51–52, 131
 - `EWR-026` (reinforces) — *Everybody writes*, “Part I Writing Rules”, pp. 107–113
 - `EWR-041` (specializes) — *Everybody writes*, “Part II Writing Rules: Grammar and Usage”, pp. 190–191
 
 ## [CP-019] Never overstate - credibility is a one-strike asset
 
-**Statement.** Keep every claim at the size of the truth: no inflated incidents, manufactured intensities or unearned superlatives; verify names, figures, dates and arithmetic against primary sources before publishing; correct errors visibly - because one statement the audience catches as bogus poisons everything after it, and commercial content is suspected before it is read.
+**Statement.** Keep every claim at the size of the truth - including what a chart's scale, geometry and title imply: no inflated incidents, manufactured intensities, unearned superlatives or false precision; verify names, figures, dates and arithmetic against primary sources before publishing; correct errors visibly - because one statement the audience catches as bogus poisons everything after it, and commercial content is suspected before it is read.
 
-**Why.** Credibility is fragile and non-renewable within a piece; exaggeration also numbs. Handley extends Zinsser's rule into infrastructure (fact-checking, primary sourcing, visible corrections, publisher standards stricter than a newsroom's) because a commercial motive raises the burden of proof; content design adds that visible quality - down to spelling - is a condition of being trusted at all.
+**Why.** Credibility is fragile and non-renewable within a piece; exaggeration also numbs. Handley extends Zinsser's rule into infrastructure (fact-checking, primary sourcing, visible corrections, publisher standards stricter than a newsroom's) because a commercial motive raises the burden of proof; content design adds that visible quality - down to spelling - is a condition of being trusted at all. Data journalism extends the rule to what a chart claims without words: a truncated bar axis can misstate a ratio several times over, and point estimates without their uncertainty claim a precision the data lack.
 
 **Apply when**
 - drafting anything tempted toward exaggeration; reviewing claim-heavy copy; publishing under a brand
+- publishing a chart or a number that will inform a decision
 
 **Do not apply when**
 - declared satire/parody where heightening is the visible device, kept under control
@@ -228,27 +232,36 @@ Full operational detail and provenance for every principle this skill cites. Con
 - report incidents at actual size; cut fabricated intensities
 - every factual claim must survive the challenge: really? - and trace to its original source
 - cite while you write; correct visibly when wrong
+- in charts: bar lengths proportional to values, every axis range tied to a stated benchmark, uncertainty shown where it is material, and titles and verbs no stronger than the data and intervals allow (see CP-066, CP-070)
+- before publishing a pattern, check that it survives a split by the main subgroups and that nothing decisive hides in a catch-all category or footnote (see CP-060)
 
 **Diagnostics**
 - which sentence would I not defend as literally true or clearly figurative?
 - which claims have I actually traced to a primary source?
+- would this chart's visual impression match what a careful reader of the numbers concludes?
 
 **Transformations**
 - hyperbolic scene → the actual odd detail (stranger and funnier)
+- column chart starting at 100 → zero-based bars, or deviation from a named reference
 
 **Anti-patterns**
 - superlative stacking; sourcing from whoever reposted it; silent corrections
+- truncated bar axes; point estimates presented as exact; differences claimed inside overlapping intervals
 
 **Evaluation criteria**
 - claims all survive scrutiny and sourcing; effects land without volume
 
-**Support.** 3 independent source(s) · confidence: high (Three independent sources.)
+**Support.** 4 independent source(s) · confidence: high (Four independent sources.)
 
 **Provenance.**
 - `OWW-029` (supports) — *On Writing Well*, “Part II: Methods”, pp. 45–46
-- `EWR-056` (reinforces) — *Everybody writes*, “Part V Publishing Rules”, pp. 274–347
+- `EWR-056` (reinforces) — *Everybody writes*, “Part V Publishing Rules”, pp. 274–275, 278–286, 346–347
 - `EWR-049` (reinforces) — *Everybody writes*, “Part V Publishing Rules”, pp. 245–247
 - `CDE-004` (contextualizes) — *Content Design*, “Preparation”, pp. 52–54
+- `HCW-047` (specializes) — *How Charts Work: Understand and Explain Data with Confidence*, “14. Scales of justice; axes of evil”, pp. 53, 59, 68, 239–244
+- `HCW-058` (specializes) — *How Charts Work: Understand and Explain Data with Confidence*, “17. Visualising uncertainty - a case study”, pp. 81, 294–298
+- `HCW-009` (reinforces) — *How Charts Work: Understand and Explain Data with Confidence*, “6. Charts of correlation”, pp. 47, 101, 105–107, 127, 193–194
+- `HCW-016` (contextualizes) — *How Charts Work: Understand and Explain Data with Confidence*, “14. Scales of justice; axes of evil”, pp. 72, 76, 111–112, 173, 245–247, 266
 
 ## [CP-036] Manage the goodwill reservoir - trust is spent and refilled by design
 
@@ -281,7 +294,7 @@ Full operational detail and provenance for every principle this skill cites. Con
 **Provenance.**
 - `DMMT-045` (supports) — *Don't Make Me Think, Revisited*, “LARGER CONCERNS AND OUTSIDE INFLUENCES”, pp. 176–178
 - `DMMT-046` (specializes) — *Don't Make Me Think, Revisited*, “LARGER CONCERNS AND OUTSIDE INFLUENCES”, pp. 179–182
-- `CDE-034` (reinforces) — *Content Design*, “Preparation / Design”, pp. 118–200
+- `CDE-034` (reinforces) — *Content Design*, “Preparation / Design”, pp. 118, 199–200
 - `EWR-052` (reinforces) — *Everybody writes*, “Part V Publishing Rules”, pp. 257–260
 
 ## [CP-027] Use the audience's own words - everywhere words appear
@@ -319,10 +332,10 @@ Full operational detail and provenance for every principle this skill cites. Con
 **Support.** 4 independent source(s) · confidence: high (Four independent sources including empirical grounding.)
 
 **Provenance.**
-- `OWW-007` (supports) — *On Writing Well*, “Part I: Principles / Part II: Methods”, pp. 16–115
-- `CDE-006` (reinforces) — *Content Design*, “Preparation”, pp. 64–67
-- `CDE-011` (specializes) — *Content Design*, “Preparation”, pp. 87–201
-- `DMMT-005` (specializes) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 25–148
+- `OWW-007` (supports) — *On Writing Well*, “Part I: Principles / Part II: Methods”, pp. 16, 41, 84–85, 114–115
+- `CDE-006` (reinforces) — *Content Design*, “Preparation”, pp. 64–65, 67
+- `CDE-011` (specializes) — *Content Design*, “Preparation”, pp. 87–88, 91–97, 201
+- `DMMT-005` (specializes) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 25, 82, 87, 148
 - `EWR-036` (reinforces) — *Everybody writes*, “Part II Writing Rules: Grammar and Usage”, pp. 153–157
 
 ## [CP-023] Write to one named reader
@@ -353,41 +366,49 @@ Full operational detail and provenance for every principle this skill cites. Con
 **Support.** 2 independent source(s) · confidence: medium (One source's explicit method plus a second's supporting stance.)
 
 **Provenance.**
-- `EWR-015` (supports) — *Everybody writes*, “Part I Writing Rules”, pp. 63–77
+- `EWR-015` (supports) — *Everybody writes*, “Part I Writing Rules”, pp. 63, 74–75, 77
 - `EWR-059` (specializes) — *Everybody writes*, “Part VI 20 Things Marketers Write”, pp. 311–323
-- `OWW-009` (contextualizes) — *On Writing Well*, “Part I: Principles”, pp. 19–49
+- `OWW-009` (contextualizes) — *On Writing Well*, “Part I: Principles”, pp. 19–20, 22, 49
 
 ## [CP-029] Make it self-evident - remove the question marks
 
 **Statement.** Hold every page and screen to the self-evidence standard: a person of average ability can tell what it is, what they can do and how to use it just by looking; treat every question a user must stop and answer as a defect to remove; settle for self-explanatory (a little thought, well-crafted names and tiny text) only for the genuinely novel or inherently complicated.
 
-**Why.** Krug's First Law and its calibrated fallback: usable means figuring it out without more trouble than it's worth. Question marks compound into abandonment even when each one is small.
+**Why.** Krug's First Law and its calibrated fallback: usable means figuring it out without more trouble than it's worth. Question marks compound into abandonment even when each one is small. Data journalism applies the same cold-viewer test to charts, which travel without their article or report - but because no chart is innately intuitive, a chart's realistic bar is the self-explanatory fallback, reached through a written title, subtitle and annotations.
 
 **Apply when**
 - designing or reviewing any interactive surface or task page
+- a chart may be read away from the document or deck it was made for
 
 **Rules**
 - eliminate the question at its source (design/naming), don't answer it with explanation
 - reserve instructional text for the genuinely novel, kept minimal and adjacent
+- for charts, treat the title, subtitle, annotations and any reading key as part of the design, not as a patch, so the chart stands alone (see CP-067, CP-071)
 
 **Diagnostics**
 - walk the surface asking at each element: what would a first-time user wonder here?
+- if this chart were forwarded alone, would the recipient understand it?
 
 **Transformations**
 - explanatory tooltip on a confusing control → the control redesigned so no tooltip is needed
 
 **Anti-patterns**
 - answering confusion with more copy; tolerating small question marks as minor
+- charts that can only be understood with the surrounding report
 
 **Evaluation criteria**
 - a first-time user narrates the surface correctly at a glance; no stops
 
-**Support.** 1 independent source(s) · confidence: medium (One source, argued as the book's thesis.)
+**Tensions / disagreements**
+- Design-out-explanation (Krug) versus words-make-the-chart (Smith). For interfaces, explanatory text signals a design defect; for charts, titles, subtitles, annotations and reading keys are the design, because no chart is innately intuitive. Bounded by artifact type and consistent with Krug's own self-explanatory fallback for the genuinely novel or complicated.
+
+**Support.** 2 independent source(s) · confidence: medium (The self-evident standard rests on one source; the second source contextualizes rather than supports it.)
 
 **Provenance.**
-- `DMMT-004` (supports) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 22–27
+- `DMMT-004` (supports) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 22–24, 26–27
 - `DMMT-007` (contextualizes) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 29–30
-- `DMMT-003` (contextualizes) — *Don't Make Me Think, Revisited*, “INTRODUCTION: Read me first”, pp. 20–199
+- `DMMT-003` (contextualizes) — *Don't Make Me Think, Revisited*, “INTRODUCTION: Read me first”, pp. 20, 155, 199
+- `HCW-049` (contextualizes) — *How Charts Work: Understand and Explain Data with Confidence*, “15. The best charts are well written”, pp. 124, 173, 256–258
 
 ## [CP-030] Minimize thought per step, not the number of steps
 
@@ -470,31 +491,41 @@ Full operational detail and provenance for every principle this skill cites. Con
 
 **Statement.** Before styling anything, explicitly rank the elements (primary, secondary, tertiary), then make prominence express the ranks - mostly by actively de-emphasizing the non-primary (weight, color, contrast) rather than shouting the primary louder; make visual relationships portray actual relationships (related things look related, nested things look contained), and break every page into regions a viewer could name at a glance.
 
-**Why.** When everything is emphasized nothing is; shouting is the symptom of an unmade ranking decision. Both design sources state the same two-step - decide importance, then let appearance preprocess the page - and both make de-emphasis the workhorse.
+**Why.** When everything is emphasized nothing is; shouting is the symptom of an unmade ranking decision. Both design sources state the same two-step - decide importance, then let appearance preprocess the page - and both make de-emphasis the workhorse. Data journalism arrives at the same mechanism for charts: colour as a highlighter on what the title names, everything else pushed into desaturated grey context, so all the data stay visible but only the story competes for attention.
 
 **Apply when**
 - designing or critiquing any visual surface; a page feels busy or flat
+- a chart has more series or categories than its story discusses
+
+**Do not apply when**
+- colour in a chart encodes a variable every reader must decode across all marks (a sequential or categorical scheme - see CP-069)
 
 **Rules**
 - one true primary action/element per surface; secondary and tertiary actively softened
 - use weight and color before size for text emphasis; trade surface area against contrast to balance
 - style actions by page-rank, not semantics; loud destructive styling belongs at the confirmation step
 - group into nameable regions; give hierarchy a visible containment logic
+- in charts: one saturated highlight on the items or series the title names (two only for two distinct reasons), everything else thin, light, desaturated grey; the highlight and the title point at the same thing
+- give related chart items the same colour or shape and unrelated ones different ones; check for accidental groupings
 
 **Diagnostics**
 - blur test: what pops, in what order - and is that the intended ranking?
 - can a viewer point at and name each region of this page?
+- which marks does the chart's title actually discuss, and are they the ones that stand out?
 
 **Transformations**
 - everything bold and branded → one primary, the rest quietly legible
+- nine coloured lines → one or two labelled focus lines over grey context
 
 **Anti-patterns**
 - emphasis inflation; shouting as unmade decisions; severity-styled buttons regardless of page role
+- a rainbow of series colours with no hierarchy
 
 **Evaluation criteria**
 - the blur test returns the intended ranking; regions are nameable at a glance
+- in a chart, a first-time reader looks first at the element the title is about
 
-**Support.** 2 independent source(s) · confidence: high (Two independent sources with compatible tests.)
+**Support.** 3 independent source(s) · confidence: high (Three independent sources with compatible tests.)
 
 **Provenance.**
 - `RUI-009` (supports) — *Refactoring UI*, “Hierarchy is Everything”, pp. 30–31
@@ -505,47 +536,56 @@ Full operational detail and provenance for every principle this skill cites. Con
 - `RUI-019` (specializes) — *Refactoring UI*, “Hierarchy is Everything”, p. 54
 - `DMMT-013` (reinforces) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 44–47
 - `DMMT-014` (reinforces) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, p. 47
+- `HCW-010` (reinforces) — *How Charts Work: Understand and Explain Data with Confidence*, “16. Designing for charts”, pp. 48, 86–87, 150, 161, 168, 173, 175, 262, 272–273, 298
+- `HCW-019` (specializes) — *How Charts Work: Understand and Explain Data with Confidence*, “5. Charts of change over time”, pp. 75, 86–87, 161
+- `HCW-055` (reinforces) — *How Charts Work: Understand and Explain Data with Confidence*, “16. Designing for charts”, pp. 276–281, 283
 
 ## [CP-040] Start with too much space - and let space do the grouping
 
 **Statement.** Give every element far more breathing room than seems necessary, then remove space until satisfied - never add space until things stop looking cramped; keep more space around a group than inside it so proximity alone communicates belonging; give elements only the width their content needs; and prefer space (or background/shadow shifts) to borders as the separator.
 
-**Why.** Cramped is the default failure; the subtract-from-generous direction produces calm layouts the add-when-cramped direction never reaches. Grouping-by-space is the visual version of the prose tradition's air-around-type: density repels, air invites.
+**Why.** Cramped is the default failure; the subtract-from-generous direction produces calm layouts the add-when-cramped direction never reaches. Grouping-by-space is the visual version of the prose tradition's air-around-type: density repels, air invites. Data journalism grounds the same law in Gestalt perception - proximity and enclosure make readers see groups, rows and columns without extra ink - and applies it inside charts and tables, where white space can replace gridlines and boxes.
 
 **Apply when**
 - laying out anything; a design feels crowded or noisy
+- a chart or table relies on gridlines, borders and boxes to show its structure
 
 **Do not apply when**
-- genuinely dense-by-purpose surfaces (data tables users came to scan)
+- genuinely dense-by-purpose surfaces (data tables users came to scan) - keep their density, but still let alignment and spacing rather than heavy rules define rows and columns
 
 **Rules**
 - start roomy, subtract to taste; white space is removed, not added
 - space-around-group > space-within-group, both axes
 - content-driven widths; empty canvas is not a problem to fill
 - separators in order: space, background change, shadow - border last
+- in charts and tables, let proximity and white space form groups, rows and columns, drop gridlines and boxes that spacing can replace, and keep labels close to what they label
 
 **Diagnostics**
 - is any spacing inside a group larger than the spacing around it?
 - what was added to this layout only because the canvas looked empty?
+- could spacing replace any of the lines or boxes on this chart or table?
 
 **Transformations**
 - border-separated cramped panels → space-separated calm groups
+- table boxed in by full gridlines → table structured by alignment and white space
 
 **Anti-patterns**
 - filling width because it exists; border-on-border separation; cramped-by-default forms
+- heavy borders and gridlines doing work that spacing could do
 
 **Evaluation criteria**
 - groups read at a glance from proximity alone; nothing exists to fill space
 
-**Support.** 3 independent source(s) · confidence: high (Three sources across disciplines.)
+**Support.** 4 independent source(s) · confidence: high (Four sources across disciplines.)
 
 **Provenance.**
 - `RUI-020` (supports) — *Refactoring UI*, “Layout and Spacing”, pp. 56–59
 - `RUI-027` (specializes) — *Refactoring UI*, “Layout and Spacing”, pp. 83–86
-- `RUI-022` (specializes) — *Refactoring UI*, “Layout and Spacing”, pp. 65–71
+- `RUI-022` (specializes) — *Refactoring UI*, “Layout and Spacing”, pp. 65–67, 71
 - `RUI-058` (specializes) — *Refactoring UI*, “Finishing Touches”, pp. 206–209
 - `DMMT-014` (reinforces) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, p. 47
 - `OWW-031` (contextualizes) — *On Writing Well*, “Part II: Methods”, p. 47
+- `HCW-055` (reinforces) — *How Charts Work: Understand and Explain Data with Confidence*, “16. Designing for charts”, pp. 276–281, 283
 
 ## [CP-041] Set type for the reading eye
 
@@ -585,7 +625,7 @@ Full operational detail and provenance for every principle this skill cites. Con
 - `RUI-032` (specializes) — *Refactoring UI*, “Designing Text”, pp. 102–104
 - `RUI-035` (specializes) — *Refactoring UI*, “Designing Text”, pp. 111–114
 - `RUI-036` (specializes) — *Refactoring UI*, “Designing Text”, pp. 115–117
-- `CDE-007` (reinforces) — *Content Design*, “Preparation”, pp. 68–71
+- `CDE-007` (reinforces) — *Content Design*, “Preparation”, pp. 68–69, 71
 
 ## [CP-009] Be a recognizable person on the page - one voice, no costume
 
@@ -622,13 +662,13 @@ Full operational detail and provenance for every principle this skill cites. Con
 
 **Provenance.**
 - `OWW-008` (supports) — *On Writing Well*, “Part I: Principles”, pp. 18–19
-- `OWW-009` (reinforces) — *On Writing Well*, “Part I: Principles”, pp. 19–49
+- `OWW-009` (reinforces) — *On Writing Well*, “Part I: Principles”, pp. 19–20, 22, 49
 - `OWW-044` (reinforces) — *On Writing Well*, “Part IV: Attitudes”, pp. 112–113
 - `OWW-041` (specializes) — *On Writing Well*, “Part III: Forms”, pp. 84–89
 - `OWW-001` (contextualizes) — *On Writing Well*, “Part I: Principles”, pp. 9–10
 - `EWR-004` (supports) — *Everybody writes*, “Start Here”, pp. 31–33
-- `EWR-042` (specializes) — *Everybody writes*, “Part III Voice Rules”, pp. 199–213
-- `EWR-064` (specializes) — *Everybody writes*, “Part VI 20 Things Marketers Write”, pp. 352–377
+- `EWR-042` (specializes) — *Everybody writes*, “Part III Voice Rules”, pp. 199–201, 211–213
+- `EWR-064` (specializes) — *Everybody writes*, “Part VI 20 Things Marketers Write”, pp. 352–364, 366–368, 374–377
 
 ## [CP-013] End deliberately - complete, don't trail off, never echo-summarize
 
@@ -667,52 +707,67 @@ Full operational detail and provenance for every principle this skill cites. Con
 **Support.** 2 independent source(s) · confidence: high (Two independent sources with explicit rules and named anti-patterns.)
 
 **Provenance.**
-- `OWW-022` (supports) — *On Writing Well*, “Part II: Methods”, pp. 38–133
-- `EWR-025` (contextualizes) — *Everybody writes*, “Part I Writing Rules”, pp. 64–106
+- `OWW-022` (supports) — *On Writing Well*, “Part II: Methods”, pp. 38–40, 133
+- `EWR-025` (contextualizes) — *Everybody writes*, “Part I Writing Rules”, pp. 64, 105–106
 
 ## [CP-001] Cut every element that does no work
 
-**Statement.** Remove every element - word, sentence, paragraph or interface component - that does not add something the audience needs: functionless words, long words with short equivalents, inflated phrases, repetition, happy talk, decorative page furniture, and anything the audience already knows or can infer.
+**Statement.** Remove every element - word, sentence, paragraph, interface component or chart element - that does not add something the audience needs: functionless words, long words with short equivalents, inflated phrases, repetition, happy talk, decorative page furniture, chart ornament, whole charts that add nothing beyond their title, and anything the audience already knows or can infer.
 
-**Why.** Attention is the scarce resource. Element strength is inversely proportional to the noise around it; unread words and unused elements still make the artifact look daunting and bury what matters. Four of five corpus sources arrive at this rule independently, for prose, for interface copy and for whole screens.
+**Why.** Attention is the scarce resource. Element strength is inversely proportional to the noise around it; unread words and unused elements still make the artifact look daunting and bury what matters. Five of six corpus sources arrive at this rule independently, for prose, for interface copy, for whole screens and for charts - where data journalism adds a bound: imagery that encodes the data is not decoration.
 
 **Apply when**
-- revising any draft, page or screen
+- revising any draft, page, screen or chart
 - an artifact feels padded, busy, official or important-sounding
 
 **Do not apply when**
 - removal would cost facts the audience needs to understand, decide or act
 - the density IS the content (reference tables, data pages people came to scan)
+- imagery that itself encodes the data, such as countable pictograms or illustrations on a common scale
+- information layers an engaged audience needs to understand the data (see CP-072 and the tension below)
 
 **Rules**
 - delete what loses nothing by its absence
 - replace laborious phrases with their short equivalents
 - start with the worst offenders: welcome blurbs, self-congratulation, filler that only makes a page look full
+- in charts: delete 3D and any ornament that would look the same whatever the data said; fix a dull chart with a better-matched form, a sharper title or a highlighted finding, never with adornment
+- cut whole charts whose marks add nothing beyond their title, and write the sentence instead (see CP-052)
 
 **Diagnostics**
 - is every element doing new work?
 - what exactly would the audience miss if this vanished?
+- would this graphic element still be there if the data were completely different? If so, it is decoration
 
 **Transformations**
 - inflated official phrasing → the plain fact it hides
 - welcome/self-praise paragraph → deleted entirely, its one real fact moved into a heading
+- chart decorated to look less dull → plain chart with a better-matched form, a narrative title and one highlighted finding
 
 **Anti-patterns**
 - throat-clearing frames; euphemism; fad vocabulary; happy talk; filling space because a sparse page looks empty
+- chartjunk added to make thin data look exciting; 3D effects on quantities
 
 **Evaluation criteria**
 - the revision is materially shorter/leaner with zero information loss
+- every visible chart element encodes data or helps the reader decode it
 
-**Support.** 4 independent source(s) · confidence: high (Multi-source, operationally identical advice with independent rationales.)
+**Tensions / disagreements**
+- Cut (Zinsser, Krug, Handley) versus enrich (Smith, CP-072). Both require every element to earn its place and both reject decoration, but they diverge on information layers in data displays - this principle's default is subtraction for a busy, scanning audience; Smith's is addition for an engaged one, each added layer keyed and tested for whether it changes understanding. Resolve by audience mode - glance-speed and scanning contexts cut; engaged, explanatory charts may layer.
+
+**Support.** 5 independent source(s) · confidence: high (Multi-source, operationally identical advice with independent rationales.)
 
 **Provenance.**
-- `OWW-003` (supports) — *On Writing Well*, “Part I: Principles”, pp. 11–17
-- `OWW-007` (specializes) — *On Writing Well*, “Part I: Principles / Part II: Methods”, pp. 16–115
+- `OWW-003` (supports) — *On Writing Well*, “Part I: Principles”, pp. 11, 15–17
+- `OWW-007` (specializes) — *On Writing Well*, “Part I: Principles / Part II: Methods”, pp. 16, 41, 84–85, 114–115
 - `DMMT-019` (reinforces) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 60–61
-- `DMMT-015` (specializes) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 49–148
-- `EWR-012` (supports) — *Everybody writes*, “Part I Writing Rules”, pp. 71–77
-- `EWR-013` (specializes) — *Everybody writes*, “Parts I and II”, pp. 72–172
+- `DMMT-015` (specializes) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 49–50, 148
+- `EWR-012` (supports) — *Everybody writes*, “Part I Writing Rules”, pp. 71–72, 77
+- `EWR-013` (specializes) — *Everybody writes*, “Parts I and II”, pp. 72–73, 171–172
 - `CDE-036` (contextualizes) — *Content Design*, “Design”, pp. 202–203
+- `HCW-002` (specializes) — *How Charts Work: Understand and Explain Data with Confidence*, “2. Why charts matter”, pp. 25–27, 124–125, 233
+- `HCW-012` (specializes) — *How Charts Work: Understand and Explain Data with Confidence*, “4. Charts of magnitude”, pp. 51–52, 172, 177–178
+- `HCW-014` (contextualizes) — *How Charts Work: Understand and Explain Data with Confidence*, “4. Charts of magnitude”, pp. 62–65, 68–70, 192, 217
+- `HCW-030` (**contradicts**) — *How Charts Work: Understand and Explain Data with Confidence*: Smith urges adding information rather than stripping it away - layering colour for groups, size for magnitude and motion for time onto a sound chart for an engaged audience, against dumbing data down. Bounded - he keeps one primary relationship, keys every layer and stops when a layer no longer changes understanding, and exempts charts read at a glance - so the disagreement is about the default direction for information layers (subtract for scanners, add for engaged readers), not about decoration, which both reject.
 
 ## [CP-002] Test by removal - mark it, read without it, then delete
 
@@ -749,8 +804,8 @@ Full operational detail and provenance for every principle this skill cites. Con
 **Provenance.**
 - `OWW-006` (supports) — *On Writing Well*, “Part I: Principles”, pp. 16–18
 - `OWW-030` (reinforces) — *On Writing Well*, “Part II: Methods”, pp. 46–47
-- `DMMT-015` (reinforces) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 49–148
-- `EWR-012` (supports) — *Everybody writes*, “Part I Writing Rules”, pp. 71–77
+- `DMMT-015` (reinforces) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 49–50, 148
+- `EWR-012` (supports) — *Everybody writes*, “Part I Writing Rules”, pp. 71–72, 77
 - `RUI-058` (specializes) — *Refactoring UI*, “Finishing Touches”, pp. 206–209
 
 ## [CP-016] Assume the audience knows nothing - explain in linear, need-ordered steps
@@ -786,9 +841,9 @@ Full operational detail and provenance for every principle this skill cites. Con
 **Support.** 3 independent source(s) · confidence: high (Three independent sources, one contributing empirical grounding.)
 
 **Provenance.**
-- `OWW-035` (supports) — *On Writing Well*, “Part III: Forms”, pp. 77–83
-- `CDE-038` (specializes) — *Content Design*, “Preparation / Design”, pp. 65–206
-- `CDE-006` (reinforces) — *Content Design*, “Preparation”, pp. 64–67
+- `OWW-035` (supports) — *On Writing Well*, “Part III: Forms”, pp. 77–78, 82–83
+- `CDE-038` (specializes) — *Content Design*, “Preparation / Design”, pp. 65, 204–206
+- `CDE-006` (reinforces) — *Content Design*, “Preparation”, pp. 64–65, 67
 - `EWR-028` (reinforces) — *Everybody writes*, “Part I Writing Rules”, pp. 119–124
 
 ## [CP-017] Carry any subject on people and story
@@ -825,10 +880,10 @@ Full operational detail and provenance for every principle this skill cites. Con
 **Support.** 2 independent source(s) · confidence: high (Two independent sources with concrete structures.)
 
 **Provenance.**
-- `OWW-036` (supports) — *On Writing Well*, “Part III: Forms”, pp. 57–88
-- `OWW-021` (reinforces) — *On Writing Well*, “Part II: Methods / Part IV: Attitudes”, pp. 37–126
-- `EWR-047` (specializes) — *Everybody writes*, “Part IV Story Rules”, pp. 232–240
-- `EWR-045` (specializes) — *Everybody writes*, “Parts IV and VI”, pp. 217–378
+- `OWW-036` (supports) — *On Writing Well*, “Part III: Forms”, pp. 57, 79–81, 88
+- `OWW-021` (reinforces) — *On Writing Well*, “Part II: Methods / Part IV: Attitudes”, pp. 37–38, 126
+- `EWR-047` (specializes) — *Everybody writes*, “Part IV Story Rules”, pp. 232–235, 238–240
+- `EWR-045` (specializes) — *Everybody writes*, “Parts IV and VI”, pp. 217, 219–222, 378
 - `EWR-063` (specializes) — *Everybody writes*, “Part VI 20 Things Marketers Write”, pp. 349–351
 
 ## [CP-025] Design every artifact for scanning - reading is the exception
@@ -865,10 +920,10 @@ Full operational detail and provenance for every principle this skill cites. Con
 
 **Provenance.**
 - `CDE-005` (supports) — *Content Design*, “Preparation”, pp. 58–63
-- `CDE-031` (specializes) — *Content Design*, “Design”, pp. 189–236
-- `DMMT-008` (supports) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 32–40
-- `DMMT-016` (specializes) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 50–202
-- `EWR-032` (reinforces) — *Everybody writes*, “Parts I and VI”, pp. 64–303
+- `CDE-031` (specializes) — *Content Design*, “Design”, pp. 189–190, 201–202, 236
+- `DMMT-008` (supports) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 32–34, 38, 40
+- `DMMT-016` (specializes) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 50–52, 191, 202
+- `EWR-032` (reinforces) — *Everybody writes*, “Parts I and VI”, pp. 64, 132–134, 301–303
 - `EWR-030` (specializes) — *Everybody writes*, “Part I Writing Rules”, pp. 127–129
 - `OWW-031` (reinforces) — *On Writing Well*, “Part II: Methods”, p. 47
 
@@ -910,7 +965,7 @@ Full operational detail and provenance for every principle this skill cites. Con
 
 **Statement.** Default to the established convention or a format the audience already knows - where things go, how they work, what they look like, what shape the content takes - and depart only when the replacement is either self-explanatory at zero learning cost or adds enough value to repay a small learning curve; when consistency and clarity collide, clarity wins if the gain is significant and the inconsistency slight.
 
-**Why.** Conventions are pre-paid learning: they let people grasp things in a hurry. The same leverage powers Handley's borrowed formats (moving a resistant story into a shape the audience already loves). The visual-design tradition pushes back for expressive freedom - a real, bounded disagreement preserved below.
+**Why.** Conventions are pre-paid learning: they let people grasp things in a hurry. The same leverage powers Handley's borrowed formats (moving a resistant story into a shape the audience already loves). The visual-design tradition pushes back for expressive freedom, and data journalism pushes back for richer chart vocabularies - real, bounded disagreements preserved below. Data journalism also supplies the mechanism by which a departure repays its learning curve: teach it on the artifact, test it, reuse it.
 
 **Apply when**
 - placing standard elements; choosing interaction patterns; a story resists attention in its native shape
@@ -923,6 +978,7 @@ Full operational detail and provenance for every principle this skill cites. Con
 - keep location-value elements (navigation, identity) rigidly consistent
 - clarity trumps consistency - but only significant clarity against slight inconsistency, and never as a style alibi
 - when a subject resists attention, move it into a familiar borrowed format rather than inventing a novel one
+- when a departure is worth it, pay its learning cost on the artifact itself - a compact reading key, tested on fresh eyes - and reuse it so the learning is paid once (see CP-071)
 
 **Diagnostics**
 - what convention is this replacing, and what was it doing?
@@ -940,14 +996,17 @@ Full operational detail and provenance for every principle this skill cites. Con
 
 **Tensions / disagreements**
 - Protect-conventions (Krug) vs question-the-form (Wathan/Schoger): Krug optimizes stranger-usability, RUI optimizes distinctive interfaces. Both accept the other's boundary condition; the honest rule is posture-by-stakes - the more load-bearing the expectation, the higher the bar for departure.
+- Protect-conventions (Krug) vs extend-the-vocabulary (Smith, CP-071): Smith denies that the familiar chart forms are intuitive at all and accepts substantial learning for explanatory charts when it is taught on the chart and reused; Krug's bar is a small learning curve. Resolve by display mode - glance-speed operational displays stay conventional; explanatory charts for an audience that is rewarded by the insight may extend the vocabulary.
 
-**Support.** 2 independent source(s) · confidence: high (Two supporting sources plus a bounded, explicitly-conditioned dissent.)
+**Support.** 3 independent source(s) · confidence: high (Three supporting sources plus two bounded, explicitly conditioned dissents.)
 
 **Provenance.**
-- `DMMT-011` (supports) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 40–75
+- `DMMT-011` (supports) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 40–43, 75
 - `DMMT-012` (contextualizes) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, p. 44
 - `EWR-048` (reinforces) — *Everybody writes*, “Part IV Story Rules”, pp. 241–244
+- `HCW-028` (contextualizes) — *How Charts Work: Understand and Explain Data with Confidence*, “8. Charts of flow”, pp. 30, 98–99, 128, 135, 143–145, 149, 223–224, 252, 254
 - `RUI-059` (**contradicts**) — *Refactoring UI*: Refactoring UI urges questioning the conventional form of components (a dropdown is just a floating box; radios can be cards). Bounded: RUI itself excepts conventions carrying usability expectations and limits the move to important components - so the disagreement is about the default posture (protect vs question), not about breaking load-bearing conventions.
+- `HCW-001` (**contradicts**) — *How Charts Work: Understand and Explain Data with Confidence*: Smith holds that no chart is innately intuitive - the familiar line, bar and pie are merely the forms everyone was taught - and urges choosing the form the relationship needs and extending the audience's vocabulary rather than playing safe, accepting substantial learning when readers feel rewarded. Bounded - he exempts displays read in seconds and forms that add nothing - so the disagreement is about default posture and the size of an acceptable learning curve, not about breaking conventions for novelty.
 
 ## [CP-032] Make interactive things unmistakably interactive
 
@@ -977,44 +1036,51 @@ Full operational detail and provenance for every principle this skill cites. Con
 **Support.** 2 independent source(s) · confidence: high (Two independent sources.)
 
 **Provenance.**
-- `DMMT-006` (supports) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 26–153
+- `DMMT-006` (supports) — *Don't Make Me Think, Revisited*, “GUIDING PRINCIPLES”, pp. 26, 48–49, 151–153
 - `RUI-034` (reinforces) — *Refactoring UI*, “Designing Text”, pp. 109–110
 
 ## [CP-043] Accessibility is a design constraint, not a compliance garnish
 
 **Statement.** Build access in as a first-class constraint: meet contrast minimums (4.5:1 normal, 3:1 large text) by design moves that keep the design good (flip to dark-on-light, rotate hue) rather than by wrecking it; never let color be the only carrier of meaning; give every non-text element a genuine text alternative matched to intent; never classify disabled people as research outliers; and sequence the work - fix what confuses everyone, then the assistive-tech specifics.
 
-**Why.** Three sources independently refuse the garnish model: visual design supplies craft-compatible techniques, content design the research ethics and alternatives discipline, usability the sequencing insight that guidelines applied to a confusing design fix nothing.
+**Why.** Three sources independently refuse the garnish model: visual design supplies craft-compatible techniques, content design the research ethics and alternatives discipline, usability the sequencing insight that guidelines applied to a confusing design fix nothing. Data journalism adds the chart-specific package: contrast for data as well as text, legible type, distinctions carried by lightness rather than hue, alt text written from the chart's own title and subtitle, and the underlying data on offer.
 
 **Apply when**
 - any visual or content decision; planning research; auditing products
+- publishing any chart, especially online
 
 **Rules**
 - contrast minimums met creatively (invert, rotate hue) - not by abandoning the palette
 - every meaning carried by color gets a second channel (icon, label, contrast)
 - every non-text element: would someone who cannot see or load it still get the meaning? alt text matches intent
 - access needs are patterns to serve, never exceptions to file
+- charts: test data marks and text against contrast requirements; keep on-screen text at roughly 16px minimum in relative units, sans-serif labels and tabular figures; let lightness, not hue alone, carry every distinction; write alt text as [chart type] of [subtitle] that shows [title], then the trend, a few key figures and the source; offer the data as a table or download where feasible
 
 **Diagnostics**
 - greyscale the design - what meaning disappears?
+- can someone who cannot see this chart get its message from the alt text alone?
 
 **Transformations**
 - white text darkened-background hack → dark colored text on light colored background
+- chart image published without alt text → alt text built from chart type, subtitle and title, plus trend, key figures and source
 
 **Anti-patterns**
 - contrast fixed by ugliness (then reverted); decorative alt text; accessibility deferred to a final audit
+- low-contrast pastel chart text; images of charts published without alt text
 
 **Evaluation criteria**
 - contrast passes; greyscale test loses nothing; alt text conveys intent; research includes access needs by default
 
-**Support.** 3 independent source(s) · confidence: high (Three independent sources.)
+**Support.** 4 independent source(s) · confidence: high (Four independent sources.)
 
 **Provenance.**
 - `RUI-043` (supports) — *Refactoring UI*, “Working with Color”, pp. 142–145
 - `RUI-044` (supports) — *Refactoring UI*, “Working with Color”, pp. 146–148
 - `CDE-040` (reinforces) — *Content Design*, “Design”, pp. 209–211
 - `CDE-026` (reinforces) — *Content Design*, “Preparation”, p. 164
-- `DMMT-047` (contextualizes) — *Don't Make Me Think, Revisited*, “LARGER CONCERNS AND OUTSIDE INFLUENCES”, pp. 184–192
+- `DMMT-047` (contextualizes) — *Don't Make Me Think, Revisited*, “LARGER CONCERNS AND OUTSIDE INFLUENCES”, pp. 184, 189–192
+- `HCW-056` (specializes) — *How Charts Work: Understand and Explain Data with Confidence*, “16. Designing for charts”, pp. 284–289
+- `HCW-053` (reinforces) — *How Charts Work: Understand and Explain Data with Confidence*, “16. Designing for charts”, pp. 234, 271–274
 
 ## [CP-047] Interface words are designed elements - eliminate, shrink, place
 
@@ -1110,8 +1176,8 @@ Full operational detail and provenance for every principle this skill cites. Con
 **Support.** 2 independent source(s) · confidence: high (Two independent sources with explicit tests.)
 
 **Provenance.**
-- `EWR-003` (supports) — *Everybody writes*, “Part I Writing Rules”, pp. 29–54
-- `EWR-006` (reinforces) — *Everybody writes*, “Parts I and V”, pp. 53–250
-- `CDE-029` (reinforces) — *Content Design*, “Design”, pp. 182–186
+- `EWR-003` (supports) — *Everybody writes*, “Part I Writing Rules”, pp. 29–30, 54
+- `EWR-006` (reinforces) — *Everybody writes*, “Parts I and V”, pp. 53–54, 249–250
+- `CDE-029` (reinforces) — *Content Design*, “Design”, pp. 182, 186
 
 <!-- rendered by bookcompiler skill compiler v1.0.0 -->

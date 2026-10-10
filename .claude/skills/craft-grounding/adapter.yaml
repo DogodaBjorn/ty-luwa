@@ -1,7 +1,7 @@
 adapter: craft-grounding
 target_repo: ty-luwa (E:\Websites\ty-luwa, remote DogodaBjorn/ty-luwa - live site, drie domeinen, vier talen; Luuk & Wanda's mobil-home op Camping Le Conguel, Quiberon; aanvraag-model, geen boekingsmachine)
 producer: BookCompiler (E:\bookcompiler)
-bundle: bundle_v1_full-corpus
+bundle: bundle_v2_data-visualization
 contract: E:\bookcompiler\docs\INTEGRATION_CONTRACT.md (v1.0.0)
 generated_at: "2026-09-08"
 principle_refs:

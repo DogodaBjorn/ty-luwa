@@ -14,7 +14,7 @@ const RATE_WINDOW_MS = 60 * 60 * 1000;
 const RATE_MAX = 5;
 const DUPLICATE_WINDOW_MS = 10 * 60 * 1000;
 
-function createApiRouter({ store, mailer, translator, config, content, routes, pages, knownHost, clientIp, log = console }) {
+function createApiRouter({ store, mailer, translator, config, content, routes, pages, knownHost, clientIp, tracker = null, log = console }) {
   const router = express.Router();
   const hits = new Map(); // ip -> [timestamps]
 
@@ -81,6 +81,7 @@ function createApiRouter({ store, mailer, translator, config, content, routes, p
     }
 
     const saved = store.createRequest({ ...r, host });
+    if (tracker) tracker.event(req, "request_sent", { host });
     const beheerUrl = `https://${config.beheerHost}/beheer`;
 
     // Het bericht van de gast alvast in het Nederlands, voor de ouders. Best

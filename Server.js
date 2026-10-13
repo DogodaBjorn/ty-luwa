@@ -160,6 +160,15 @@ app.use(
   })
 );
 
+// --- bezoekerslogging -----------------------------------------------------
+// First-party (lib/track.js, identiek aan de kopie in trainerbjorn en dogoda): gaat als batch
+// naar de centrale verzamelaar op dogoda zodra TRACK_COLLECT_KEY staat, anders naar
+// dagbestanden in DATA_DIR/track. Geen cookie, geen IP. Hier, na assets en beheer en vóór het
+// formulier en de pagina's: die zijn wat we willen zien. Uitleg: docs/web-analytics.md in de
+// dogoda-repo.
+const tracker = require("./lib/track").createTracker({ site: "ty-luwa", dir: path.join(config.dataDir, "track") });
+app.use(tracker.middleware);
+
 // --- aanvraagformulier ----------------------------------------------------
 // Vóór de paginahandler en de 404: die vangen anders elke route af.
 app.use(
@@ -172,6 +181,7 @@ app.use(
     routes,
     pages,
     clientIp,
+    tracker,
     knownHost: (host) => Boolean(HOSTS[host]) || isLocalHost(host),
   })
 );

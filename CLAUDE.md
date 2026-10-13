@@ -104,3 +104,12 @@ Grijp naar de canon waar de toegepaste regels zwijgen, naar de basis waar de
 identiteit zelf de vraag is. Waar een huisregel bewust afwijkt van een canoniek
 principe (eerlijkheid boven conversie, aanvraag boven boeking) is dat vastgelegde
 doctrine, geen conflict.
+
+## Bezoekerslogging
+
+`lib/track.js` (identiek aan de kopie in trainerbjorn en dogoda; alle drie of geen) logt elk
+verzoek server-side: geen cookie, geen script, geen IP, een sessiehash die per dag roteert. Met
+`TRACK_COLLECT_KEY` gaan de events als batch naar de verzamelaar op dogoda (`/api/collect`), anders
+naar dagbestanden in `DATA_DIR/track`. Benoemd event: `request_sent` in `routes/api.js`. De
+centrale opzet, instellingen en Bjorns stappen: `docs/web-analytics.md` in de dogoda-repo. Let op:
+de site heeft nog geen privacyverklaring; die staat op Bjorns lijst.

@@ -13,7 +13,9 @@ const path = require("path");
 const crypto = require("crypto");
 
 const ROOT = path.join(__dirname, "..");
-const OUT = path.join(ROOT, "public");
+// SITE_OUT: alleen voor tests, die bouwen in een tijdelijke map zodat ze public/ niet
+// wegvegen terwijl een andere test de server erop draait.
+const OUT = process.env.SITE_OUT || path.join(ROOT, "public");
 const ASSETS = path.join(ROOT, "assets");
 
 const content = require(path.join(ROOT, "content", "site-content.json"));

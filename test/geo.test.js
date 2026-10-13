@@ -3,14 +3,17 @@
 // test leest wat er staat: robots.txt met expliciete AI-agents, llms.txt uit de
 // content, en één entiteit in het JSON-LD van elke pagina in elke taal.
 
-const { test, before, describe } = require("node:test");
+const { test, before, after, describe } = require("node:test");
 const assert = require("node:assert/strict");
 const { execFileSync } = require("node:child_process");
 const fs = require("node:fs");
+const os = require("node:os");
 const path = require("node:path");
 
 const ROOT = path.resolve(__dirname, "..");
-const PUBLIC = path.join(ROOT, "public");
+// Eigen uitvoermap: node --test draait de testbestanden parallel, en de build veegt haar
+// uitvoermap eerst leeg. Bouwen in public/ zou de servertests onder de voeten vandaan halen.
+const PUBLIC = fs.mkdtempSync(path.join(os.tmpdir(), "ty-luwa-geo-"));
 const META = path.join(PUBLIC, "_meta");
 const routes = require("../content/routes.json");
 const content = require("../content/site-content.json");
@@ -18,7 +21,15 @@ const content = require("../content/site-content.json");
 const read = (f) => fs.readFileSync(path.join(META, f), "utf8");
 
 before(() => {
-  execFileSync(process.execPath, ["scripts/build-site.js"], { cwd: ROOT, stdio: "ignore" });
+  execFileSync(process.execPath, ["scripts/build-site.js"], {
+    cwd: ROOT,
+    stdio: "ignore",
+    env: { ...process.env, SITE_OUT: PUBLIC },
+  });
+});
+
+after(() => {
+  fs.rmSync(PUBLIC, { recursive: true, force: true });
 });
 
 describe("robots.txt", () => {

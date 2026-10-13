@@ -116,6 +116,7 @@ app.use((req, res, next) => {
 for (const [file, name] of [
   ["sitemap", "sitemap.xml"],
   ["robots", "robots.txt"],
+  ["llms", "llms.txt"],
 ]) {
   app.get(`/${name}`, (req, res, next) => {
     const host = normalizeHost(req);

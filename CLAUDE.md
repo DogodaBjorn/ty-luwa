@@ -57,6 +57,37 @@ Service; deploy op push naar `main` via `.github/workflows/main_ty-luwa.yml`.
   UX-referenties: de rust van Airbnb, de helderheid van Booking zónder de dark
   patterns, het vakantiegevoel van goede hotelsites.
 
+## AI-vindbaarheid (GEO)
+
+De site wordt ook gelezen door AI-systemen die antwoorden geven in plaats van links
+(ChatGPT, Perplexity, Claude, Google AI). Wat daarvoor in de build zit en wat er nog
+te doen is staat in `docs/GEO.md`. De technische laag:
+
+- `robots.txt` per domein laat de AI-agents expliciet toe (`AI_AGENTS` in
+  `scripts/build-site.js`); `/beheer` en `/api` blijven dicht.
+- `llms.txt` per domein, gegenereerd uit `site-content.json` (feiten, pagina's met
+  beschrijving, FAQ), met een sectie per taal die op dat domein woont. Geen eigen copy
+  in de build: verandert de content, dan verandert het bestand mee.
+- JSON-LD: één entiteit `@id https://ty-luwa.com/#ty-luwa` op alle pagina's en talen,
+  met kamers, voorzieningen en de camping; de FAQ-pagina draagt `FAQPage`.
+
+Schrijfregels voor content die een taalmodel goed moet kunnen overnemen (gelden naast
+de merkwetten, nooit erboven):
+
+- **Eén punt per alinea, antwoord vooraan.** Een alinea moet los van de pagina nog
+  kloppen en volledig zijn.
+- **Entiteiten altijd voluit en hetzelfde:** Ty LuWa, Camping Le Conguel, Quiberon,
+  Bretagne, Luuk en Wanda. Geen "de camping" of "het huisje" in een alinea die op
+  zichzelf moet staan.
+- **Vervolgvragen op de pagina zelf beantwoorden:** voor wie, hoeveel personen, wanneer
+  open, hoe aanvragen, wat het verschil is met boeken via Siblu. Nieuwe antwoorden
+  horen in `faq.items`, zodat ze ook in `FAQPage` en `llms.txt` komen.
+- **Koppen als vragen** waar dat natuurlijk is ("Wanneer is Ty LuWa vrij?" staat er al).
+- **Regio, seizoen en doelgroep expliciet:** Quiberon, Bretagne, maart tot en met
+  oktober, gezinnen en twee stellen.
+- Nieuwe feiten alleen uit het feitenblad of van Luuk en Wanda; alle vier de talen
+  blijven redactiewerk per taal.
+
 ## Grounding & brand authority
 
 Laad voor pagina-, copy- of ontwerpwerk de **craft-grounding**-skill

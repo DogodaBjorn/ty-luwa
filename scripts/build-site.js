@@ -180,6 +180,7 @@ function head(ctx) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
+    "@id": "https://ty-luwa.com/#ty-luwa",
     name: "Ty LuWa",
     description: desc,
     url,
@@ -194,7 +195,14 @@ function head(ctx) {
     containedInPlace: {
       "@type": "Campground",
       name: "Camping Le Conguel",
+      url: "https://leconguel.fr/",
     },
+    numberOfRooms: 2,
+    amenityFeature: t.stay.amenities.map((name) => ({
+      "@type": "LocationFeatureSpecification",
+      name,
+      value: true,
+    })),
   };
   if (pageId === "faq") {
     jsonLd["@type"] = ["LodgingBusiness", "FAQPage"];
@@ -677,6 +685,44 @@ function pageContact(ctx) {
     </section>`;
 }
 
+// ── AI-vindbaarheid (GEO): robots.txt met expliciete AI-agents en llms.txt per domein ──
+// Alles hieronder komt uit site-content.json en routes.json; deze functies bevatten geen
+// eigen copy. Waarom en wat er nog aan content te doen is: docs/GEO.md.
+const AI_AGENTS = [
+  "GPTBot", "ChatGPT-User", "OAI-SearchBot",
+  "ClaudeBot", "Claude-User", "Claude-SearchBot",
+  "PerplexityBot", "Perplexity-User",
+  "Google-Extended", "Applebot-Extended",
+  "Meta-ExternalAgent", "Meta-ExternalFetcher",
+];
+
+function robotsTxt(host) {
+  const block = (ua) => `User-agent: ${ua}\nAllow: /\nDisallow: /beheer\nDisallow: /api\n`;
+  return [block("*"), ...AI_AGENTS.map(block)].join("\n") + `\nSitemap: https://${host}/sitemap.xml\n`;
+}
+
+// llms.txt: één bestand per domein, met een sectie per taal die op dat domein woont
+// (ty-luwa.com draagt Engels en Duits). Feiten, pagina's met beschrijving en de FAQ,
+// zodat een taalmodel het verblijf in één keer goed samenvat.
+function llmsTxt(host, langsHere) {
+  const sections = langsHere.map((lang) => {
+    const t = content[lang];
+    const lines = [`# Ty LuWa (${lang})`, "", `> ${t.home.heroBody}`, ""];
+    lines.push(...t.home.facts.map((f) => `- ${f.title}: ${f.sub}`));
+    lines.push(...t.stay.sleeping.map((s) => `- ${s.title}: ${s.detail}`));
+    lines.push(`- ${t.stay.amenitiesTitle}: ${t.stay.amenities.join(", ")}`);
+    lines.push("", `## ${pageUrl("home", lang)}`, "");
+    for (const pageId of Object.keys(PAGES)) {
+      lines.push(`- [${t.titles[LEGACY_KEY[pageId]]}](${pageUrl(pageId, lang)}): ${description(t, pageId)}`);
+    }
+    lines.push("", `## ${t.faq.title}`, "");
+    for (const it of t.faq.items) lines.push(`- ${it.q.trim()} ${it.a.trim()}`);
+    lines.push("", t.availability.note.trim(), "", t.conguel.cards[0].body.trim());
+    return lines.join("\n");
+  });
+  return sections.join("\n\n---\n\n") + "\n";
+}
+
 const PAGES = {
   home: pageHome,
   stay: pageStay,
@@ -799,10 +845,8 @@ function build() {
         "\n"
       )}\n</urlset>\n`
     );
-    fs.writeFileSync(
-      path.join(meta, `robots.${host}.txt`),
-      `User-agent: *\nAllow: /\nDisallow: /beheer\nDisallow: /api\n\nSitemap: https://${host}/sitemap.xml\n`
-    );
+    fs.writeFileSync(path.join(meta, `robots.${host}.txt`), robotsTxt(host));
+    fs.writeFileSync(path.join(meta, `llms.${host}.txt`), llmsTxt(host, langsHere));
   }
 
   console.log(

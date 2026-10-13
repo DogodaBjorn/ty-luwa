@@ -82,7 +82,7 @@
         "body": "De mobil-home is ingericht voor vier personen, met plek voor twee kinderen extra. De hoofdslaapkamer heeft een tweepersoonsbed en inloopkast, de tweede slaapkamer twee eenpersoonsbedden en de hoekbank kan worden omgebouwd tot slaapplaats voor twee kinderen.",
         "features": [
           "2 aparte slaapkamers + slaapbank voor 2 kinderen",
-          "Badkamer met ruime douche en wasmachine",
+          "Badkamer met ruime douche; wasmachine in een apart hok",
           "Apart toilet",
           "Vaatwasser en complete keuken"
         ],
@@ -181,7 +181,7 @@
           "alt": "Badkamer met ruime douche",
           "category": "Badkamer",
           "title": "De badkamer",
-          "caption": "Een ruime douche voor het zand van de dag, en een wasmachine voor de handdoeken. Het toilet is apart, wel zo praktisch met een vol huis."
+          "caption": "Een ruime douche voor het zand van de dag. Het toilet is apart, wel zo praktisch met een vol huis. De wasmachine voor de handdoeken staat in een eigen hok."
         },
         "closet": {
           "alt": "Inloopkast bij de hoofdslaapkamer",
@@ -327,8 +327,48 @@
           "a": "Voor 4 personen in de twee slaapkamers, plus hooguit 2 kinderen op de slaapbank in de woonkamer."
         },
         {
+          "q": "Voor wie is Ty LuWa geschikt?",
+          "a": "Voor een gezin met tot vier kinderen, twee stellen met hooguit twee kinderen, of een groep vrienden tot vier volwassenen. Vier personen slapen in de twee slaapkamers: een tweepersoonsbed in de hoofdslaapkamer en twee eenpersoonsbedden in de tweede slaapkamer. Op de slaapbank in de woonkamer kunnen hooguit twee kinderen bij. Nooit meer dan vier volwassenen en nooit meer dan zes gasten in totaal."
+        },
+        {
+          "q": "Kunnen we met zes personen komen?",
+          "a": "Ja, als er hooguit vier volwassenen bij zijn: vier personen in de twee slaapkamers en twee kinderen op de slaapbank in de woonkamer. Meer dan zes gasten past niet."
+        },
+        {
           "q": "Kan ik direct boeken?",
           "a": "Nee. Ty LuWa is alleen op aanvraag beschikbaar. Luuk en Wanda bevestigen een verblijf persoonlijk."
+        },
+        {
+          "q": "Wat kost een verblijf in Ty LuWa?",
+          "a": "Er staat geen prijslijst online. Stuur je gewenste periode en gezelschap door via de beschikbaarheidspagina; Luuk en Wanda sturen persoonlijk een prijs en bevestigen of de periode vrij is. Er is geen betaling vooraf."
+        },
+        {
+          "q": "Wanneer is Ty LuWa open?",
+          "a": "Van maart tot en met oktober. Van november tot en met februari is Camping Le Conguel gesloten."
+        },
+        {
+          "q": "Wat is het verschil tussen Ty LuWa aanvragen en boeken via Siblu?",
+          "a": "Ty LuWa is het privéverblijf van Luuk en Wanda op Camping Le Conguel van Siblu. Via deze site vraag je rechtstreeks bij hen aan, met persoonlijk contact en zonder boekingsmachine. In een deel van het jaar verhuurt Siblu Ty LuWa zelf; die periodes staan in de kalender gemarkeerd en boek je op leconguel.fr."
+        },
+        {
+          "q": "Zijn het zwembad en de animatie van de camping inbegrepen?",
+          "a": "Nee. Ty LuWa is een privéverblijf op Camping Le Conguel; het zwembad, de animatie en de andere campingfaciliteiten horen bij de camping en zitten niet in de prijs van Ty LuWa. Je kunt ze voordelig bijboeken bij de camping zelf, via de Fun Pass van Siblu. Vraag bij je aanvraag aan Luuk en Wanda hoe dat voor jouw periode werkt."
+        },
+        {
+          "q": "Hoe lang kunnen we blijven?",
+          "a": "Een aanvraag kan tot 28 nachten zijn. Wil je langer, stuur dan een kortere aanvraag met een opmerking erbij."
+        },
+        {
+          "q": "Waar ligt Ty LuWa precies?",
+          "a": "Op Camping Le Conguel van Siblu, een viersterrencamping aan de zuidoostpunt van het schiereiland Quiberon in Bretagne, vlak bij zee."
+        },
+        {
+          "q": "Wat is er in de keuken?",
+          "a": "Gasfornuis, gasoven, magnetron, koelkast met vriesvak en vaatwasser."
+        },
+        {
+          "q": "Is er een wasmachine?",
+          "a": "Ja, de wasmachine staat in een apart hok. De badkamer heeft een ruime douche; het toilet is apart."
         },
         {
           "q": "Kan ik bij de mobil-home parkeren?",
@@ -426,7 +466,7 @@
         "body": "The mobile home sleeps four, with room for two extra children. The main bedroom has a double bed and walk-in wardrobe, the second bedroom has two single beds, and the corner sofa converts into a sleeping place for two children.",
         "features": [
           "2 separate bedrooms + sofa bed for 2 children",
-          "Bathroom with spacious shower and washing machine",
+          "Bathroom with spacious shower; washing machine in a separate utility room",
           "Separate toilet",
           "Dishwasher and complete kitchen"
         ],
@@ -525,7 +565,7 @@
           "alt": "Bathroom with spacious shower",
           "category": "Bathroom",
           "title": "The bathroom",
-          "caption": "A spacious shower for the sand of the day, and a washing machine for the towels. The toilet is separate, which matters with a full house."
+          "caption": "A spacious shower for the sand of the day. The toilet is separate, which matters with a full house. The washing machine for the towels has its own utility room."
         },
         "closet": {
           "alt": "Walk-in wardrobe by the main bedroom",
@@ -671,8 +711,48 @@
           "a": "Four people in the two bedrooms, plus at most two children on the sofa bed in the living room."
         },
         {
+          "q": "Who is Ty LuWa suitable for?",
+          "a": "A family with up to four children, two couples with at most two children, or a group of friends of up to four adults. Four people sleep in the two bedrooms: a double bed in the main bedroom and two single beds in the second bedroom. The sofa bed in the living room takes at most two children. Never more than four adults and never more than six guests in total."
+        },
+        {
+          "q": "Can we come with six people?",
+          "a": "Yes, as long as there are at most four adults: four people in the two bedrooms and two children on the sofa bed in the living room. More than six guests will not fit."
+        },
+        {
           "q": "Can I book directly?",
           "a": "No. Ty LuWa is available on request only. Luuk and Wanda confirm every stay personally."
+        },
+        {
+          "q": "What does a stay at Ty LuWa cost?",
+          "a": "There is no price list online. Send your preferred dates and party size via the availability page; Luuk and Wanda will send you a price personally and confirm whether the period is free. There is no payment in advance."
+        },
+        {
+          "q": "When is Ty LuWa open?",
+          "a": "From March to October. From November to February Camping Le Conguel is closed."
+        },
+        {
+          "q": "What is the difference between requesting Ty LuWa and booking through Siblu?",
+          "a": "Ty LuWa is Luuk and Wanda's private holiday home on Camping Le Conguel, a Siblu site. Through this website you ask them directly, with personal contact and no booking engine. For part of the year Siblu rents out Ty LuWa itself; those periods are marked in the calendar and are booked on leconguel.fr."
+        },
+        {
+          "q": "Are the campsite's pool and entertainment included?",
+          "a": "No. Ty LuWa is a private holiday home on Camping Le Conguel; the pool, the entertainment and the other campsite facilities belong to the campsite and are not part of the price of Ty LuWa. You can add them at a good rate at the campsite itself, through Siblu's Fun Pass. Ask Luuk and Wanda with your request how that works for your dates."
+        },
+        {
+          "q": "How long can we stay?",
+          "a": "A request can be for up to 28 nights. Want to stay longer? Send a shorter request with a note."
+        },
+        {
+          "q": "Where exactly is Ty LuWa?",
+          "a": "On Camping Le Conguel, a Siblu four-star campsite at the south-eastern tip of the Quiberon peninsula in Brittany, close to the sea."
+        },
+        {
+          "q": "What is in the kitchen?",
+          "a": "Gas hob, gas oven, microwave, fridge with freezer compartment and dishwasher."
+        },
+        {
+          "q": "Is there a washing machine?",
+          "a": "Yes, the washing machine is in a separate utility room. The bathroom has a spacious shower; the toilet is separate."
         },
         {
           "q": "Can I park at the mobile home?",
@@ -770,7 +850,7 @@
         "body": "Das Mobilheim ist für vier Personen eingerichtet, mit Platz für zwei Kinder extra. Das Hauptschlafzimmer hat ein Doppelbett und einen begehbaren Kleiderschrank, das zweite Schlafzimmer zwei Einzelbetten, und das Ecksofa lässt sich zum Schlafplatz für zwei Kinder umbauen.",
         "features": [
           "2 separate Schlafzimmer + Schlafsofa für 2 Kinder",
-          "Bad mit großer Dusche und Waschmaschine",
+          "Bad mit großer Dusche; Waschmaschine in einem separaten Hauswirtschaftsraum",
           "Separates WC",
           "Spülmaschine und komplette Küche"
         ],
@@ -869,7 +949,7 @@
           "alt": "Badezimmer mit großer Dusche",
           "category": "Bad",
           "title": "Das Badezimmer",
-          "caption": "Eine große Dusche für den Sand des Tages und eine Waschmaschine für die Handtücher. Die Toilette ist separat, was bei vollem Haus zählt."
+          "caption": "Eine große Dusche für den Sand des Tages. Die Toilette ist separat, was bei vollem Haus zählt. Die Waschmaschine für die Handtücher steht in einem eigenen Hauswirtschaftsraum."
         },
         "closet": {
           "alt": "Begehbarer Kleiderschrank am Hauptschlafzimmer",
@@ -1015,8 +1095,48 @@
           "a": "Für 4 Personen in den beiden Schlafzimmern, plus höchstens 2 Kinder auf dem Schlafsofa im Wohnzimmer."
         },
         {
+          "q": "Für wen ist Ty LuWa geeignet?",
+          "a": "Für eine Familie mit bis zu vier Kindern, zwei Paare mit höchstens zwei Kindern oder eine Gruppe von Freunden mit bis zu vier Erwachsenen. Vier Personen schlafen in den beiden Schlafzimmern: ein Doppelbett im Hauptschlafzimmer und zwei Einzelbetten im zweiten Schlafzimmer. Auf dem Schlafsofa im Wohnzimmer finden höchstens zwei Kinder Platz. Nie mehr als vier Erwachsene und nie mehr als sechs Gäste insgesamt."
+        },
+        {
+          "q": "Können wir zu sechst kommen?",
+          "a": "Ja, wenn höchstens vier Erwachsene dabei sind: vier Personen in den beiden Schlafzimmern und zwei Kinder auf dem Schlafsofa im Wohnzimmer. Mehr als sechs Gäste passen nicht."
+        },
+        {
           "q": "Kann ich direkt buchen?",
           "a": "Nein. Ty LuWa ist nur auf Anfrage verfügbar. Luuk und Wanda bestätigen jeden Aufenthalt persönlich."
+        },
+        {
+          "q": "Was kostet ein Aufenthalt in Ty LuWa?",
+          "a": "Es gibt keine Preisliste online. Schickt euren Wunschzeitraum und wer mitkommt über die Verfügbarkeitsseite; Luuk und Wanda nennen euch persönlich einen Preis und bestätigen, ob der Zeitraum frei ist. Es gibt keine Vorauszahlung."
+        },
+        {
+          "q": "Wann ist Ty LuWa geöffnet?",
+          "a": "Von März bis Oktober. Von November bis Februar ist Camping Le Conguel geschlossen."
+        },
+        {
+          "q": "Was ist der Unterschied zwischen einer Anfrage bei Ty LuWa und einer Buchung über Siblu?",
+          "a": "Ty LuWa ist die private Unterkunft von Luuk und Wanda auf dem Camping Le Conguel von Siblu. Über diese Website fragt ihr direkt bei ihnen an, mit persönlichem Kontakt und ohne Buchungsmaschine. In einem Teil des Jahres vermietet Siblu Ty LuWa selbst; diese Zeiträume sind im Kalender markiert und werden auf leconguel.fr gebucht."
+        },
+        {
+          "q": "Sind Schwimmbad und Animation des Campingplatzes inbegriffen?",
+          "a": "Nein. Ty LuWa ist eine private Unterkunft auf dem Camping Le Conguel; Schwimmbad, Animation und die übrigen Einrichtungen gehören zum Campingplatz und sind nicht im Preis von Ty LuWa enthalten. Ihr könnt sie günstig direkt beim Campingplatz dazubuchen, über den Fun Pass von Siblu. Fragt bei eurer Anfrage Luuk und Wanda, wie das für euren Zeitraum läuft."
+        },
+        {
+          "q": "Wie lange können wir bleiben?",
+          "a": "Eine Anfrage kann bis zu 28 Nächte umfassen. Wollt ihr länger bleiben, schickt eine kürzere Anfrage mit einer Anmerkung."
+        },
+        {
+          "q": "Wo genau liegt Ty LuWa?",
+          "a": "Auf dem Camping Le Conguel von Siblu, einem Vier-Sterne-Campingplatz an der Südostspitze der Halbinsel Quiberon in der Bretagne, nahe am Meer."
+        },
+        {
+          "q": "Was gibt es in der Küche?",
+          "a": "Gasherd, Gasbackofen, Mikrowelle, Kühlschrank mit Gefrierfach und Spülmaschine."
+        },
+        {
+          "q": "Gibt es eine Waschmaschine?",
+          "a": "Ja, die Waschmaschine steht in einem separaten Hauswirtschaftsraum. Das Bad hat eine große Dusche; die Toilette ist separat."
         },
         {
           "q": "Kann ich am Mobilheim parken?",
@@ -1114,7 +1234,7 @@
         "body": "Le mobil-home est aménagé pour quatre personnes, avec de la place pour deux enfants en plus. La chambre principale dispose d’un lit double et d’un dressing, la seconde chambre de deux lits simples, et le canapé d’angle se transforme en couchage pour deux enfants.",
         "features": [
           "2 chambres séparées + canapé-lit pour 2 enfants",
-          "Salle de bain avec grande douche et lave-linge",
+          "Salle de bain avec grande douche ; lave-linge dans un local séparé",
           "WC séparés",
           "Lave-vaisselle et cuisine complète"
         ],
@@ -1213,7 +1333,7 @@
           "alt": "Salle de bain avec grande douche",
           "category": "Salle de bain",
           "title": "La salle de bain",
-          "caption": "Une grande douche pour le sable de la journée, et un lave-linge pour les serviettes. Les toilettes sont séparées, ce qui compte à pleine maison."
+          "caption": "Une grande douche pour le sable de la journée. Les toilettes sont séparées, ce qui compte à pleine maison. Le lave-linge pour les serviettes a son propre local."
         },
         "closet": {
           "alt": "Dressing attenant à la chambre principale",
@@ -1359,8 +1479,48 @@
           "a": "Quatre personnes dans les deux chambres, plus deux enfants au maximum sur le canapé-lit du salon."
         },
         {
+          "q": "À qui Ty LuWa convient-il ?",
+          "a": "À une famille avec jusqu’à quatre enfants, à deux couples avec deux enfants au maximum, ou à un groupe d’amis de quatre adultes au plus. Quatre personnes dorment dans les deux chambres : un lit double dans la chambre principale et deux lits simples dans la seconde chambre. Le canapé-lit du salon accueille deux enfants au maximum. Jamais plus de quatre adultes et jamais plus de six personnes au total."
+        },
+        {
+          "q": "Pouvons-nous venir à six ?",
+          "a": "Oui, à condition qu’il n’y ait pas plus de quatre adultes : quatre personnes dans les deux chambres et deux enfants sur le canapé-lit du salon. Au-delà de six personnes, ce n’est pas possible."
+        },
+        {
           "q": "Puis-je réserver directement ?",
           "a": "Non. Ty LuWa est disponible uniquement sur demande. Luuk et Wanda confirment chaque séjour personnellement."
+        },
+        {
+          "q": "Combien coûte un séjour à Ty LuWa ?",
+          "a": "Il n’y a pas de grille tarifaire en ligne. Envoyez vos dates souhaitées et la composition de votre groupe via la page des disponibilités ; Luuk et Wanda vous communiquent un prix personnellement et confirment si la période est libre. Aucun paiement à l’avance."
+        },
+        {
+          "q": "Quand Ty LuWa est-il ouvert ?",
+          "a": "De mars à octobre. De novembre à février, le Camping Le Conguel est fermé."
+        },
+        {
+          "q": "Quelle est la différence entre une demande à Ty LuWa et une réservation via Siblu ?",
+          "a": "Ty LuWa est le logement privé de Luuk et Wanda sur le Camping Le Conguel de Siblu. Par ce site, vous vous adressez directement à eux, avec un contact personnel et sans moteur de réservation. Une partie de l’année, Siblu loue lui-même Ty LuWa ; ces périodes sont indiquées dans le calendrier et se réservent sur leconguel.fr."
+        },
+        {
+          "q": "La piscine et les animations du camping sont-elles comprises ?",
+          "a": "Non. Ty LuWa est un logement privé sur le Camping Le Conguel ; la piscine, les animations et les autres équipements appartiennent au camping et ne sont pas compris dans le prix de Ty LuWa. Vous pouvez les ajouter à bon prix auprès du camping lui-même, via le Fun Pass de Siblu. Demandez à Luuk et Wanda lors de votre demande comment cela fonctionne pour vos dates."
+        },
+        {
+          "q": "Combien de temps pouvons-nous rester ?",
+          "a": "Une demande peut porter sur 28 nuits au maximum. Vous voulez rester plus longtemps ? Envoyez une demande plus courte avec une remarque."
+        },
+        {
+          "q": "Où se trouve exactement Ty LuWa ?",
+          "a": "Sur le Camping Le Conguel de Siblu, un camping quatre étoiles à la pointe sud-est de la presqu’île de Quiberon, en Bretagne, tout près de la mer."
+        },
+        {
+          "q": "Qu’y a-t-il dans la cuisine ?",
+          "a": "Plaque de cuisson au gaz, four à gaz, micro-ondes, réfrigérateur avec compartiment congélateur et lave-vaisselle."
+        },
+        {
+          "q": "Y a-t-il un lave-linge ?",
+          "a": "Oui, le lave-linge se trouve dans un local séparé. La salle de bain a une grande douche ; les toilettes sont séparées."
         },
         {
           "q": "Puis-je me garer près du mobil-home ?",

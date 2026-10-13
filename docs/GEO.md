@@ -35,11 +35,15 @@ het JSON-LD mee. Er staat geen eigen copy in de build.
 6. **Vragende taal.** "Wanneer zouden jullie willen komen?" en "Wanneer is Ty LuWa vrij?"
    zijn al vragen. De FAQ-uitbreiding hieronder voegt de vragen toe die mensen echt stellen.
 
-## Voorstel: FAQ uitbreiden (Nederlands, ter goedkeuring)
+## FAQ uitgebreid (akkoord Bjorn 13 oktober 2026, in vier talen in `faq.items`)
 
-Elk antwoord hieronder gebruikt alleen feiten die al op de site of in het feitenblad staan.
-Na akkoord komen ze in `faq.items` en worden ze per taal geredigeerd, nooit automatisch
-vertaald. Ze landen dan vanzelf in `FAQPage` en in llms.txt.
+Elk antwoord hieronder gebruikt alleen feiten die op de site of in het feitenblad staan, met
+drie correcties van Bjorn: een gezin mag tot vier kinderen meenemen, de wasmachine staat in
+een apart hok (feitenblad, verblijfpagina en fotocaption zijn mee aangepast), en zwembad en
+animatie zijn niet inbegrepen maar voordelig bij te boeken bij de camping. De tien vragen
+staan tussen de drie die er al waren en landen vanzelf in `FAQPage` en llms.txt. De Engelse,
+Duitse en Franse versies zijn per taal geredigeerd in de aanspreekvorm van die taal (you, ihr,
+vous).
 
 **Wat kost een verblijf in Ty LuWa?**
 Er staat geen prijslijst online. Stuur je gewenste periode en gezelschap door via de
@@ -84,12 +88,7 @@ schiereiland Quiberon in Bretagne, vlak bij zee.
 Gasfornuis, gasoven, magnetron, koelkast met vriesvak en vaatwasser.
 
 **Is er een wasmachine?**
-Ja, er is een wasmachine in het verblijf. De badkamer heeft een ruime douche; het toilet is apart.
-
-> Correctie van Bjorn, 13 oktober 2026: de wasmachine staat niet in de badkamer maar in de
-> kamer. Het feitenblad in `CLAUDE.md`, de regel "Badkamer met ruime douche en wasmachine" en
-> de caption van de badkamerfoto in `site-content.json` zeggen nog badkamer, in vier talen.
-> Eerst bevestigen welke kamer bedoeld is, dan alle drie de plekken tegelijk aanpassen.
+Ja, de wasmachine staat in een apart hok. De badkamer heeft een ruime douche; het toilet is apart.
 
 **Kan ik bij de mobil-home parkeren?** *(staat al in de FAQ)*
 

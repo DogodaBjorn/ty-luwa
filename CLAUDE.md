@@ -39,7 +39,7 @@ Service; deploy op push naar `main` via `.github/workflows/main_ty-luwa.yml`.
   meer dan 6 gasten in totaal); hoofdslaapkamer 1 tweepersoonsbed + inloopkast;
   tweede slaapkamer 2 eenpersoonsbedden; slaapbank voor 2 kinderen in de
   woonkamer; keuken met gasfornuis, gasoven, magnetron,
-  koelkast/vriesvak, vaatwasser; badkamer met douche en wasmachine; apart toilet;
+  koelkast/vriesvak, vaatwasser; badkamer met douche; wasmachine in een apart hok; apart toilet;
   ruime overdekte veranda; privé-tuintje met ligbedden; 1 parkeerplek.
 - **Beschikbaar op aanvraag.** Succes is een aanvraag plus persoonlijk contact. Geen
   automatische boeking of betaling suggereren; het beheer bevestigt nooit automatisch aan

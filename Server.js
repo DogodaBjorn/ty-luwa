@@ -130,6 +130,15 @@ for (const [file, name] of [
   });
 }
 
+// Google Analytics staat alleen aan als de App Service GA_MEASUREMENT_ID heeft; de pagina's
+// lezen dit bestandje en tonen dan pas de cookiemelding (assets/site.js, docs/web-analytics.md
+// in de dogoda-repo). Zonder ID: leeg, en er wordt niets geladen.
+app.get("/consent-config.js", (req, res) => {
+  res.type("application/javascript");
+  res.setHeader("Cache-Control", "public, max-age=300");
+  res.send(`window.TL_GA_ID=${JSON.stringify(process.env.GA_MEASUREMENT_ID || "")};`);
+});
+
 app.get("/healthz", (req, res) => res.type("text/plain").send("ok"));
 
 // --- assets ---------------------------------------------------------------

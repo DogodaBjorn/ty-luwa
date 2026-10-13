@@ -7,7 +7,8 @@
       "/quiberon": "Quiberon & Bretagne · Ty LuWa",
       "/beschikbaarheid": "Beschikbaarheid op aanvraag · Ty LuWa",
       "/faq": "Veelgestelde vragen · Ty LuWa",
-      "/contact": "Contact · Ty LuWa"
+      "/contact": "Contact · Ty LuWa",
+      "/privacy": "Privacy · Ty LuWa"
     },
     "layout": {
       "nav": [
@@ -46,6 +47,13 @@
         "prev": "Vorige foto",
         "next": "Volgende foto",
         "counter": "Foto {n} van {total}"
+      },
+      "consent": {
+        "text": "Deze site gebruikt Google Analytics om te zien welke pagina's bezocht worden, alleen met jouw toestemming.",
+        "policy": "Wat we precies bewaren",
+        "accept": "Prima",
+        "decline": "Liever niet",
+        "aria": "Cookiemelding"
       }
     },
     "home": {
@@ -381,7 +389,51 @@
       "title": "Persoonlijk contact met Ty LuWa",
       "text": "Contact verloopt via een beschikbaarheidsaanvraag: laat je gewenste periode en gegevens achter en Luuk en Wanda nemen persoonlijk contact met je op."
     },
-    "mosaicAria": "Foto-impressie van Ty LuWa"
+    "mosaicAria": "Foto-impressie van Ty LuWa",
+    "privacy": {
+      "eyebrow": "Privacy",
+      "title": "Zo gaan we met je gegevens om",
+      "text": "Ty LuWa is het particuliere vakantieverblijf van Luuk en Wanda. De website, de aanvragen en de bezoekstatistieken worden technisch verzorgd en gewaarborgd door DoGoDa (Björn Kats, www.dogoda.nl), als verwerker namens Luuk en Wanda. Hier staat wat we bewaren, waarom, hoe lang en wat je rechten zijn.",
+      "sections": [
+        {
+          "h": "Wat we bewaren als je een aanvraag doet",
+          "p": [
+            "Je naam, e-mailadres, gewenste aankomst- en vertrekdatum, het aantal volwassenen en kinderen, je bericht, de taal en het domein waarop je de aanvraag deed. Dat is nodig om je aanvraag te beantwoorden en het verblijf af te stemmen.",
+            "Je aanvraag gaat per e-mail naar Luuk en Wanda en je krijgt een ontvangstbevestiging. De aanvragen staan in een beveiligde planning die alleen Luuk, Wanda en DoGoDa kunnen zien.",
+            "We bewaren een aanvraag tot twee jaar na het laatste contact, daarna wordt ze verwijderd."
+          ]
+        },
+        {
+          "h": "Bezoekstatistieken zonder cookies",
+          "p": [
+            "De server houdt zelf bij welke pagina's worden opgevraagd, zonder cookie en zonder script in je browser. Per paginaweergave bewaren we het tijdstip, de pagina, de verwijzende website, het type apparaat en de taal van je browser. Je IP-adres en de naam van je browser worden niet opgeslagen: ze worden direct omgezet in een code die elke dag verandert, zodat bezoeken van dezelfde dag bij elkaar horen maar niemand over dagen heen te volgen is.",
+            "Deze statistieken bewaart DoGoDa centraal, samen met die van de andere websites die DoGoDa verzorgt. Ze zijn niet tot een persoon herleidbaar; daarom is hiervoor geen toestemming nodig. Na dertien maanden blijven alleen totalen over."
+          ]
+        },
+        {
+          "id": "cookies",
+          "h": "Cookies",
+          "p": [
+            "De site zet zelf geen cookies voor statistiek. De hosting bij Microsoft Azure plaatst een technische cookie (ARRAffinity) die je bezoek aan één server koppelt; die bevat geen persoonsgegevens en verdwijnt als je de browser sluit.",
+            "Als we Google Analytics gebruiken, vragen we daar eerst om je toestemming met een melding onderaan de pagina. Zonder je ja wordt Google Analytics niet geladen. Je keuze kun je hier altijd veranderen:"
+          ],
+          "reset": "Cookievoorkeur wijzigen"
+        },
+        {
+          "h": "Je rechten",
+          "p": [
+            "Je mag altijd vragen welke gegevens we van je hebben, ze laten corrigeren of laten verwijderen. Mail daarvoor naar bjorn@dogoda.nl; DoGoDa handelt dit af namens Luuk en Wanda. Vind je dat we niet goed met je gegevens omgaan, dan kun je een klacht indienen bij de Autoriteit Persoonsgegevens."
+          ]
+        },
+        {
+          "h": "Hosting en beveiliging",
+          "p": [
+            "De website draait bij Microsoft Azure en alle verbindingen zijn versleuteld. Gegevens worden niet verkocht en niet gebruikt voor advertenties.",
+            "Laatst bijgewerkt: 13 oktober 2026."
+          ]
+        }
+      ]
+    }
   },
   "en": {
     "titles": {
@@ -391,7 +443,8 @@
       "/quiberon": "Quiberon & Brittany · Ty LuWa",
       "/beschikbaarheid": "Availability on request · Ty LuWa",
       "/faq": "Frequently asked questions · Ty LuWa",
-      "/contact": "Contact · Ty LuWa"
+      "/contact": "Contact · Ty LuWa",
+      "/privacy": "Privacy · Ty LuWa"
     },
     "layout": {
       "nav": [
@@ -430,6 +483,13 @@
         "prev": "Previous photo",
         "next": "Next photo",
         "counter": "Photo {n} of {total}"
+      },
+      "consent": {
+        "text": "This site uses Google Analytics to see which pages are visited, only with your consent.",
+        "policy": "What exactly we keep",
+        "accept": "Fine",
+        "decline": "Rather not",
+        "aria": "Cookie notice"
       }
     },
     "home": {
@@ -765,7 +825,51 @@
       "title": "Personal contact with Ty LuWa",
       "text": "Contact starts with an availability request: leave your preferred dates and details, and Luuk and Wanda will get in touch with you personally."
     },
-    "mosaicAria": "Photo impression of Ty LuWa"
+    "mosaicAria": "Photo impression of Ty LuWa",
+    "privacy": {
+      "eyebrow": "Privacy",
+      "title": "How we handle your data",
+      "text": "Ty LuWa is the private holiday home of Luuk and Wanda. The website, the requests and the visitor statistics are run and safeguarded by DoGoDa (Björn Kats, www.dogoda.nl) as processor on behalf of Luuk and Wanda. This page says what we keep, why, for how long and what your rights are.",
+      "sections": [
+        {
+          "h": "What we keep when you send a request",
+          "p": [
+            "Your name, e-mail address, preferred arrival and departure dates, the number of adults and children, your message, the language and the domain you used. We need this to answer your request and arrange the stay.",
+            "Your request goes by e-mail to Luuk and Wanda and you receive a confirmation of receipt. Requests are kept in a secured planning that only Luuk, Wanda and DoGoDa can see.",
+            "We keep a request for up to two years after the last contact, then it is deleted."
+          ]
+        },
+        {
+          "h": "Visitor statistics without cookies",
+          "p": [
+            "The server itself keeps track of which pages are requested, without a cookie and without a script in your browser. Per page view we store the time, the page, the referring website, the device type and your browser language. Your IP address and browser name are not stored: they are turned into a code that changes every day, so visits on the same day belong together but nobody can be followed across days.",
+            "DoGoDa keeps these statistics centrally, together with those of the other websites DoGoDa runs. They cannot be traced back to a person, so no consent is required. After thirteen months only totals remain."
+          ]
+        },
+        {
+          "id": "cookies",
+          "h": "Cookies",
+          "p": [
+            "The site sets no statistics cookies of its own. The Microsoft Azure hosting places one technical cookie (ARRAffinity) that ties your visit to one server; it holds no personal data and disappears when you close the browser.",
+            "If we use Google Analytics, we first ask your consent with a notice at the bottom of the page. Without your yes, Google Analytics is not loaded. You can change your choice here at any time:"
+          ],
+          "reset": "Change cookie preference"
+        },
+        {
+          "h": "Your rights",
+          "p": [
+            "You can always ask which data we hold about you, have it corrected or deleted. E-mail bjorn@dogoda.nl; DoGoDa handles this on behalf of Luuk and Wanda. If you feel we do not handle your data properly, you can lodge a complaint with the Dutch Data Protection Authority (Autoriteit Persoonsgegevens)."
+          ]
+        },
+        {
+          "h": "Hosting and security",
+          "p": [
+            "The website runs on Microsoft Azure and all connections are encrypted. Data is not sold and not used for advertising.",
+            "Last updated: 13 October 2026."
+          ]
+        }
+      ]
+    }
   },
   "de": {
     "titles": {
@@ -775,7 +879,8 @@
       "/quiberon": "Quiberon & Bretagne · Ty LuWa",
       "/beschikbaarheid": "Verfügbarkeit auf Anfrage · Ty LuWa",
       "/faq": "Häufige Fragen · Ty LuWa",
-      "/contact": "Kontakt · Ty LuWa"
+      "/contact": "Kontakt · Ty LuWa",
+      "/privacy": "Datenschutz · Ty LuWa"
     },
     "layout": {
       "nav": [
@@ -814,6 +919,13 @@
         "prev": "Vorheriges Foto",
         "next": "Nächstes Foto",
         "counter": "Foto {n} von {total}"
+      },
+      "consent": {
+        "text": "Diese Website nutzt Google Analytics, um zu sehen, welche Seiten besucht werden, nur mit eurer Einwilligung.",
+        "policy": "Was wir genau speichern",
+        "accept": "In Ordnung",
+        "decline": "Lieber nicht",
+        "aria": "Cookie-Hinweis"
       }
     },
     "home": {
@@ -1149,7 +1261,51 @@
       "title": "Persönlicher Kontakt mit Ty LuWa",
       "text": "Der Kontakt läuft über eine Verfügbarkeitsanfrage: Hinterlasst euren Wunschzeitraum und eure Daten, und Luuk und Wanda melden sich persönlich bei euch."
     },
-    "mosaicAria": "Foto-Eindrücke von Ty LuWa"
+    "mosaicAria": "Foto-Eindrücke von Ty LuWa",
+    "privacy": {
+      "eyebrow": "Datenschutz",
+      "title": "So gehen wir mit euren Daten um",
+      "text": "Ty LuWa ist die private Ferienunterkunft von Luuk und Wanda. Website, Anfragen und Besucherstatistik werden technisch betreut und abgesichert von DoGoDa (Björn Kats, www.dogoda.nl) als Auftragsverarbeiter im Namen von Luuk und Wanda. Hier steht, was wir speichern, warum, wie lange und welche Rechte ihr habt.",
+      "sections": [
+        {
+          "h": "Was wir bei einer Anfrage speichern",
+          "p": [
+            "Euren Namen, die E-Mail-Adresse, den gewünschten An- und Abreisetag, die Zahl der Erwachsenen und Kinder, eure Nachricht, die Sprache und die Domain, über die ihr angefragt habt. Das brauchen wir, um eure Anfrage zu beantworten und den Aufenthalt abzustimmen.",
+            "Eure Anfrage geht per E-Mail an Luuk und Wanda, und ihr bekommt eine Eingangsbestätigung. Die Anfragen liegen in einer gesicherten Planung, die nur Luuk, Wanda und DoGoDa sehen können.",
+            "Wir bewahren eine Anfrage bis zwei Jahre nach dem letzten Kontakt auf, danach wird sie gelöscht."
+          ]
+        },
+        {
+          "h": "Besucherstatistik ohne Cookies",
+          "p": [
+            "Der Server hält selbst fest, welche Seiten aufgerufen werden, ohne Cookie und ohne Skript in eurem Browser. Pro Seitenaufruf speichern wir Zeitpunkt, Seite, verweisende Website, Gerätetyp und Browsersprache. IP-Adresse und Browsername werden nicht gespeichert: Sie werden sofort in einen Code umgewandelt, der sich jeden Tag ändert, sodass Besuche desselben Tages zusammengehören, aber niemand über Tage hinweg verfolgt werden kann.",
+            "Diese Statistik bewahrt DoGoDa zentral auf, zusammen mit der anderer Websites, die DoGoDa betreut. Sie lässt sich keiner Person zuordnen; deshalb ist dafür keine Einwilligung nötig. Nach dreizehn Monaten bleiben nur Summen übrig."
+          ]
+        },
+        {
+          "id": "cookies",
+          "h": "Cookies",
+          "p": [
+            "Die Website setzt selbst keine Statistik-Cookies. Das Hosting bei Microsoft Azure setzt ein technisches Cookie (ARRAffinity), das euren Besuch an einen Server bindet; es enthält keine personenbezogenen Daten und verschwindet beim Schließen des Browsers.",
+            "Wenn wir Google Analytics nutzen, bitten wir zuerst mit einem Hinweis unten auf der Seite um eure Einwilligung. Ohne euer Ja wird Google Analytics nicht geladen. Eure Wahl könnt ihr hier jederzeit ändern:"
+          ],
+          "reset": "Cookie-Einstellung ändern"
+        },
+        {
+          "h": "Eure Rechte",
+          "p": [
+            "Ihr könnt jederzeit fragen, welche Daten wir über euch haben, sie berichtigen oder löschen lassen. Schreibt dafür an bjorn@dogoda.nl; DoGoDa erledigt das im Namen von Luuk und Wanda. Wenn ihr findet, dass wir nicht richtig mit euren Daten umgehen, könnt ihr euch bei der niederländischen Datenschutzbehörde (Autoriteit Persoonsgegevens) beschweren."
+          ]
+        },
+        {
+          "h": "Hosting und Sicherheit",
+          "p": [
+            "Die Website läuft bei Microsoft Azure, alle Verbindungen sind verschlüsselt. Daten werden nicht verkauft und nicht für Werbung genutzt.",
+            "Zuletzt aktualisiert: 13. Oktober 2026."
+          ]
+        }
+      ]
+    }
   },
   "fr": {
     "titles": {
@@ -1159,7 +1315,8 @@
       "/quiberon": "Quiberon & Bretagne · Ty LuWa",
       "/beschikbaarheid": "Disponibilités sur demande · Ty LuWa",
       "/faq": "Questions fréquentes · Ty LuWa",
-      "/contact": "Contact · Ty LuWa"
+      "/contact": "Contact · Ty LuWa",
+      "/privacy": "Confidentialité · Ty LuWa"
     },
     "layout": {
       "nav": [
@@ -1198,6 +1355,13 @@
         "prev": "Photo précédente",
         "next": "Photo suivante",
         "counter": "Photo {n} sur {total}"
+      },
+      "consent": {
+        "text": "Ce site utilise Google Analytics pour voir quelles pages sont consultées, uniquement avec votre consentement.",
+        "policy": "Ce que nous conservons exactement",
+        "accept": "D’accord",
+        "decline": "Plutôt pas",
+        "aria": "Avis cookies"
       }
     },
     "home": {
@@ -1533,6 +1697,50 @@
       "title": "Un contact personnel avec Ty LuWa",
       "text": "Le contact passe par une demande de disponibilités : laissez vos dates souhaitées et vos coordonnées, et Luuk et Wanda vous contacteront personnellement."
     },
-    "mosaicAria": "Impressions photo de Ty LuWa"
+    "mosaicAria": "Impressions photo de Ty LuWa",
+    "privacy": {
+      "eyebrow": "Confidentialité",
+      "title": "Comment nous traitons vos données",
+      "text": "Ty LuWa est l’hébergement de vacances privé de Luuk et Wanda. Le site, les demandes et les statistiques de visite sont gérés et sécurisés par DoGoDa (Björn Kats, www.dogoda.nl), en tant que sous-traitant pour le compte de Luuk et Wanda. Cette page indique ce que nous conservons, pourquoi, pendant combien de temps et quels sont vos droits.",
+      "sections": [
+        {
+          "h": "Ce que nous conservons lors d’une demande",
+          "p": [
+            "Votre nom, votre adresse e-mail, les dates d’arrivée et de départ souhaitées, le nombre d’adultes et d’enfants, votre message, la langue et le domaine utilisés pour la demande. C’est nécessaire pour répondre à votre demande et organiser le séjour.",
+            "Votre demande est envoyée par e-mail à Luuk et Wanda et vous recevez un accusé de réception. Les demandes sont conservées dans un planning sécurisé que seuls Luuk, Wanda et DoGoDa peuvent consulter.",
+            "Nous conservons une demande jusqu’à deux ans après le dernier contact, puis elle est supprimée."
+          ]
+        },
+        {
+          "h": "Statistiques de visite sans cookies",
+          "p": [
+            "Le serveur enregistre lui-même les pages demandées, sans cookie ni script dans votre navigateur. Pour chaque page vue, nous conservons l’heure, la page, le site référent, le type d’appareil et la langue du navigateur. Votre adresse IP et le nom de votre navigateur ne sont pas conservés : ils sont immédiatement transformés en un code qui change chaque jour, de sorte que les visites d’une même journée sont regroupées sans que personne puisse être suivi d’un jour à l’autre.",
+            "DoGoDa conserve ces statistiques de façon centralisée, avec celles des autres sites gérés par DoGoDa. Elles ne permettent pas d’identifier une personne ; aucun consentement n’est donc requis. Après treize mois, seuls des totaux subsistent."
+          ]
+        },
+        {
+          "id": "cookies",
+          "h": "Cookies",
+          "p": [
+            "Le site ne dépose aucun cookie statistique de lui-même. L’hébergement Microsoft Azure place un cookie technique (ARRAffinity) qui rattache votre visite à un serveur ; il ne contient aucune donnée personnelle et disparaît à la fermeture du navigateur.",
+            "Si nous utilisons Google Analytics, nous demandons d’abord votre consentement par un message en bas de page. Sans votre oui, Google Analytics n’est pas chargé. Vous pouvez modifier votre choix ici à tout moment :"
+          ],
+          "reset": "Modifier le choix des cookies"
+        },
+        {
+          "h": "Vos droits",
+          "p": [
+            "Vous pouvez à tout moment demander quelles données nous détenons sur vous, les faire corriger ou supprimer. Écrivez à bjorn@dogoda.nl ; DoGoDa s’en charge pour le compte de Luuk et Wanda. Si vous estimez que vos données ne sont pas traitées correctement, vous pouvez déposer une plainte auprès de l’autorité néerlandaise de protection des données (Autoriteit Persoonsgegevens)."
+          ]
+        },
+        {
+          "h": "Hébergement et sécurité",
+          "p": [
+            "Le site fonctionne sur Microsoft Azure et toutes les connexions sont chiffrées. Les données ne sont ni vendues ni utilisées à des fins publicitaires.",
+            "Dernière mise à jour : 13 octobre 2026."
+          ]
+        }
+      ]
+    }
   }
 }

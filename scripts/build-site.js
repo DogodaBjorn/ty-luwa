@@ -331,6 +331,16 @@ ${main.includes("data-lightbox-item") ? lightbox(ctx) : ""}
     <a class="btn btn-primary" href="${availability}">${esc(t.layout.ctaShort)}</a>
   </div>
 
+  <template id="consent-template">
+    <div class="consent" role="dialog" aria-label="${esc(t.layout.consent.aria)}">
+      <p>${esc(t.layout.consent.text)} <a href="${pagePath("privacy", lang)}#cookies">${esc(t.layout.consent.policy)}</a>.</p>
+      <div class="consent-actions">
+        <button type="button" class="btn btn-secondary" data-consent-decline>${esc(t.layout.consent.decline)}</button>
+        <button type="button" class="btn btn-primary" data-consent-accept>${esc(t.layout.consent.accept)}</button>
+      </div>
+    </div>
+  </template>
+  <script src="/consent-config.js"></script>
   <script src="/assets/site.${ctx.assetHash}.js" defer></script>
 </body>
 </html>
@@ -687,6 +697,31 @@ function pageContact(ctx) {
     </section>`;
 }
 
+// Privacyverklaring: tekst uit site-content.json (privacy.sections), de cookiesectie draagt de
+// verborgen knop waarmee site.js de cookiekeuze laat wijzigen zodra Google Analytics aanstaat.
+function pagePrivacy(ctx) {
+  const { t } = ctx;
+  const p = t.privacy;
+  const sections = p.sections
+    .map((sec) => {
+      const paras = sec.p.map((x) => `        <p>${esc(x)}</p>`).join("\n");
+      const reset = sec.reset
+        ? `\n        <p data-consent-ui hidden><button type="button" class="btn btn-secondary" data-consent-reset>${esc(sec.reset)}</button></p>`
+        : "";
+      return `      <section${sec.id ? ` id="${sec.id}"` : ""} class="privacy-section">
+        <h3>${esc(sec.h)}</h3>
+${paras}${reset}
+      </section>`;
+    })
+    .join("\n");
+  return `    <section class="section page-top">
+      <div class="container narrow">
+        ${sectionHeading(p.eyebrow, p.title, p.text)}
+${sections}
+      </div>
+    </section>`;
+}
+
 // ── AI-vindbaarheid (GEO): robots.txt met expliciete AI-agents en llms.txt per domein ──
 // Alles hieronder komt uit site-content.json en routes.json; deze functies bevatten geen
 // eigen copy. Waarom en wat er nog aan content te doen is: docs/GEO.md.
@@ -733,6 +768,7 @@ const PAGES = {
   availability: pageAvailability,
   faq: pageFaq,
   contact: pageContact,
+  privacy: pagePrivacy,
 };
 
 // De teksten indexeren nog op de oude Nederlandse paden; die blijven de sleutel
@@ -745,6 +781,7 @@ const LEGACY_KEY = {
   availability: "/beschikbaarheid",
   faq: "/faq",
   contact: "/contact",
+  privacy: "/privacy"
 };
 
 // ---------------------------------------------------------------- build
@@ -792,7 +829,7 @@ function build() {
     const byLegacy = Object.fromEntries(t.layout.nav);
     const navLabels = {};
     for (const id of nav) navLabels[id] = byLegacy[LEGACY_KEY[id]];
-    const allLabels = { ...navLabels, faq: "FAQ", contact: t.contact.eyebrow };
+    const allLabels = { ...navLabels, faq: "FAQ", contact: t.contact.eyebrow, privacy: t.privacy.eyebrow };
 
     const dir = path.join(OUT, lang);
     fs.mkdirSync(dir, { recursive: true });

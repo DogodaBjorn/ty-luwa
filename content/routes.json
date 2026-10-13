@@ -43,11 +43,17 @@
       "en": "contact",
       "de": "kontakt",
       "fr": "contact"
+    },
+    "privacy": {
+      "nl": "privacy",
+      "en": "privacy",
+      "de": "datenschutz",
+      "fr": "confidentialite"
     }
   },
 
   "nav": ["home", "stay", "conguel", "quiberon", "availability"],
-  "footerNav": ["home", "stay", "conguel", "quiberon", "availability", "faq", "contact"],
+  "footerNav": ["home", "stay", "conguel", "quiberon", "availability", "faq", "contact", "privacy"],
 
   "legacyPaths": {
     "_comment": "Wat de vorige SPA-opzet als URL had. De server 301't deze naar de nieuwe vorm zodat bestaande links en zoekresultaten niet doodlopen.",

@@ -344,3 +344,55 @@
     window.addEventListener("resize", fit);
   }
 })();
+
+// Cookiemelding en Google Analytics. Doet niets zolang de server geen meet-ID geeft
+// (/consent-config.js leest GA_MEASUREMENT_ID). Met ID: consent default denied, gtag laden,
+// melding tonen; de keuze staat in localStorage en is op de privacypagina te wijzigen.
+(function () {
+  "use strict";
+  var id = window.TL_GA_ID;
+  var tpl = document.getElementById("consent-template");
+  if (!id || !tpl) return;
+  var KEY = "tl_consent";
+  function read() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+  function write(v) { try { v === null ? localStorage.removeItem(KEY) : localStorage.setItem(KEY, v); } catch (e) { /* niet onthouden */ } }
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag("consent", "default", { analytics_storage: "denied", ad_storage: "denied", wait_for_update: 500 });
+  gtag("js", new Date());
+  gtag("config", id);
+  var script = document.createElement("script");
+  script.async = true;
+  script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id);
+  document.head.appendChild(script);
+
+  function apply(granted) {
+    gtag("consent", "update", { analytics_storage: granted ? "granted" : "denied", ad_storage: "denied" });
+  }
+  var stored = read();
+  if (stored !== null) apply(stored === "granted");
+
+  function show() {
+    var old = document.querySelector(".consent");
+    if (old) old.remove();
+    var node = tpl.content.firstElementChild.cloneNode(true);
+    document.body.appendChild(node);
+    requestAnimationFrame(function () { requestAnimationFrame(function () { node.classList.add("is-visible"); }); });
+    function done(granted) {
+      write(granted ? "granted" : "denied");
+      apply(granted);
+      node.classList.remove("is-visible");
+      setTimeout(function () { node.remove(); }, 350);
+    }
+    node.querySelector("[data-consent-accept]").addEventListener("click", function () { done(true); });
+    node.querySelector("[data-consent-decline]").addEventListener("click", function () { done(false); });
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll("[data-consent-ui]"), function (el) { el.hidden = false; });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-consent-reset]"), function (btn) {
+    btn.addEventListener("click", function () { write(null); apply(false); show(); });
+  });
+  if (stored === null) show();
+})();

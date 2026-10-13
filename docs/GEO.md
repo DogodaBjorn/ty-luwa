@@ -50,12 +50,21 @@ periode vrij is. Er is geen betaling vooraf.
 Van maart tot en met oktober. Van november tot en met februari is Camping Le Conguel gesloten.
 
 **Voor wie is Ty LuWa geschikt?**
-Voor een gezin met maximaal twee kinderen, twee stellen of een groep vrienden tot vier
-volwassenen. Vier personen slapen in de twee slaapkamers; op de slaapbank in de woonkamer
-kunnen hooguit twee kinderen bij.
+Voor een gezin met tot vier kinderen, twee stellen met hooguit twee kinderen, of een groep
+vrienden tot vier volwassenen. Vier personen slapen in de twee slaapkamers: een tweepersoonsbed
+in de hoofdslaapkamer en twee eenpersoonsbedden in de tweede slaapkamer. Op de slaapbank in de
+woonkamer kunnen hooguit twee kinderen bij. Nooit meer dan vier volwassenen en nooit meer dan
+zes gasten in totaal.
 
-**Kunnen we met vijf volwassenen komen?**
-Nee. Ty LuWa is er voor maximaal vier volwassenen, plus hooguit twee kinderen op de slaapbank.
+**Kunnen we met zes personen komen?**
+Ja, als er hooguit vier volwassenen bij zijn: vier personen in de twee slaapkamers en twee
+kinderen op de slaapbank in de woonkamer. Meer dan zes gasten past niet.
+
+**Zijn het zwembad en de animatie van de camping inbegrepen?**
+Nee. Ty LuWa is een privéverblijf op Camping Le Conguel; het zwembad, de animatie en de andere
+campingfaciliteiten horen bij de camping en zitten niet in de prijs van Ty LuWa. Je kunt ze
+voordelig bijboeken bij de camping zelf, via de Fun Pass van Siblu. Vraag bij je aanvraag aan
+Luuk en Wanda hoe dat voor jouw periode werkt.
 
 **Hoe lang kunnen we blijven?**
 Een aanvraag kan tot 28 nachten zijn. Wil je langer, stuur dan een kortere aanvraag met een
@@ -75,7 +84,12 @@ schiereiland Quiberon in Bretagne, vlak bij zee.
 Gasfornuis, gasoven, magnetron, koelkast met vriesvak en vaatwasser.
 
 **Is er een wasmachine?**
-Ja, in de badkamer, naast de ruime douche. Het toilet is apart.
+Ja, er is een wasmachine in het verblijf. De badkamer heeft een ruime douche; het toilet is apart.
+
+> Correctie van Bjorn, 13 oktober 2026: de wasmachine staat niet in de badkamer maar in de
+> kamer. Het feitenblad in `CLAUDE.md`, de regel "Badkamer met ruime douche en wasmachine" en
+> de caption van de badkamerfoto in `site-content.json` zeggen nog badkamer, in vier talen.
+> Eerst bevestigen welke kamer bedoeld is, dan alle drie de plekken tegelijk aanpassen.
 
 **Kan ik bij de mobil-home parkeren?** *(staat al in de FAQ)*
 

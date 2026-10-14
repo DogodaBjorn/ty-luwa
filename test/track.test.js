@@ -17,7 +17,8 @@ const {
 } = require("../lib/track");
 
 function fakeReq({ path: p = "/", method = "GET", headers = {}, query = {}, ip = "203.0.113.7", body } = {}) {
-  const h = { host: "www.trainerbjorn.nl", "user-agent": "Mozilla/5.0 (Windows NT 10.0) Chrome/130", ...headers };
+  // A real browser: Mozilla/ user agent plus an Accept-Language header (see browserSignals).
+  const h = { host: "www.trainerbjorn.nl", "user-agent": "Mozilla/5.0 (Windows NT 10.0) Chrome/130", "accept-language": "nl-NL,nl;q=0.9", ...headers };
   return { path: p, method, query, headers: h, body, socket: { remoteAddress: ip }, get: (k) => h[k.toLowerCase()] };
 }
 
@@ -78,6 +79,28 @@ describe("classifyAgent", () => {
     assert.equal(deviceClass("Mozilla/5.0 (iPad; CPU OS 17) Safari", "human"), "tablet");
     assert.equal(deviceClass("Mozilla/5.0 (Windows NT 10.0) Chrome", "human"), "desktop");
     assert.equal(deviceClass("Mozilla/5.0 GPTBot", "ai-crawl"), "bot");
+  });
+});
+
+describe("browserSignals (scanners that copy a browser's user agent)", () => {
+  test("monitors and probes are bots by name", () => {
+    assert.deepEqual(classifyAgent("AlwaysOn"), { cls: "bot", name: "AlwaysOn" });
+    assert.equal(classifyAgent("Mozilla/5.0 (compatible; UptimeRobot/2.0)").cls, "bot");
+    assert.equal(classifyAgent("Site24x7 monitor").cls, "bot");
+  });
+
+  test("a browser user agent without Accept-Language is logged as bot, not human", async () => {
+    const { dir, tracker } = fileTracker();
+    hit(tracker, { path: "/", headers: { "accept-language": undefined } });
+    hit(tracker, { path: "/contact", headers: { "user-agent": "python-urllib/3.12", "accept-language": "en" } });
+    hit(tracker, { path: "/pl-300" });
+    await tracker.flush();
+    const rows = readEvents(dir).map((e) => [e.path, e.agent_class, e.agent_name]);
+    assert.deepEqual(rows, [
+      ["/", "bot", "no-browser-signals"],
+      ["/contact", "bot", "no-browser-signals"],
+      ["/pl-300", "human", null],
+    ]);
   });
 });
 
